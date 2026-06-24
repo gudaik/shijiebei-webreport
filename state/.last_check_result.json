@@ -1,0 +1,4 @@
+{
+  "note": "Migrated to /mnt/c/nginx-1.24.0/html/worldcup2. This file is a legacy reminder-check cache and will be overwritten by future reminder runs.",
+  "state_path": "/mnt/c/nginx-1.24.0/html/worldcup2/state/reminded_matches.json"
+}

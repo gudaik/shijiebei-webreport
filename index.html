@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>2026世界杯北京时间每日报告</title>
+  <link rel="stylesheet" href="assets/styles.css?v=20260624-prediction-export" />
+</head>
+<body>
+  <div class="bg"></div>
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Beijing Time · FIFA World Cup 2026</p>
+      <h1>世界杯每日报告 & 明天全量预测</h1>
+      <p class="sub">自动抓取赛程赛果，按北京时间生成日报；明天比赛每场给出胜平负、3个比分、3个半全场，并统计历史命中率。</p>
+    </div>
+    <div class="hero-card">
+      <div class="label">数据更新时间</div>
+      <div id="generatedAt" class="big">加载中…</div>
+      <button id="refreshBtn" class="btn">重新读取最新数据</button>
+      <div class="mini refresh-hint">后台每 5 分钟自动更新 JSON；此按钮会立即重读本地最新文件。</div>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="页面导航">
+    <button data-tab="report" class="active">每日报告</button>
+    <button data-tab="predictions">明天预测</button>
+    <button data-tab="stats">命中率统计</button>
+    <button data-tab="betAdvisor">购买推荐</button>
+    <button data-tab="matches">全部赛程</button>
+  </nav>
+
+  <main>
+    <section id="report" class="tab-panel active">
+      <div class="grid three" id="summaryCards"></div>
+      <div class="grid two">
+        <article class="panel">
+          <h2>昨日/最近赛果</h2>
+          <div id="yesterdayResults" class="list"></div>
+        </article>
+        <article class="panel">
+          <h2>今日赛程（北京时间）</h2>
+          <div id="todayMatches" class="list"></div>
+        </article>
+      </div>
+      <article class="panel">
+        <h2>明日赛程预览</h2>
+        <div id="tomorrowMatches" class="list compact"></div>
+      </article>
+    </section>
+
+    <section id="predictions" class="tab-panel export-surface">
+      <article class="panel intro">
+        <div class="prediction-toolbar">
+          <div>
+            <h2 id="predictionTitle">明天预测</h2>
+            <p>规则：每场固定展示 <strong>胜平负倾向 + 3个比分预测 + 3个半全场预测</strong>。预测为赛前模型与人工规则结合的娱乐向参考。</p>
+          </div>
+          <div class="toolbar-actions" data-html2canvas-ignore="true">
+            <button id="exportPredictionsBtn" class="btn export-btn" type="button">导出预测图片</button>
+          </div>
+        </div>
+      </article>
+      <div id="predictionCards" class="prediction-grid"></div>
+    </section>
+
+    <section id="stats" class="tab-panel export-surface">
+      <div class="stats-toolbar" data-html2canvas-ignore="true">
+        <div>
+          <div class="eyebrow">Prediction Accuracy</div>
+          <h2>预测命中率总览</h2>
+        </div>
+        <div class="toolbar-actions" data-html2canvas-ignore="true">
+          <button id="exportStatsBtn" class="btn export-btn" type="button">导出PNG图片</button>
+          <button id="exportStatsPdfBtn" class="btn export-btn secondary" type="button">导出PDF</button>
+        </div>
+      </div>
+      <div class="grid three" id="statCards"></div>
+      <div id="liveStatsNotice" class="live-notice"></div>
+      <article class="panel">
+        <h2>每日命中率视图</h2>
+        <p class="section-note">统计从 <code>C:\nginx-1.24.0\html\worldcup2\reports</code> 下的 Markdown 预测报告开始，自动解析比分/胜平负/半全场预测，并与 ESPN 完赛比分核对。</p>
+        <div id="dateBars" class="bars"></div>
+      </article>
+      <article class="panel">
+        <h2>最近已结算预测 · 比分对照</h2>
+        <p class="section-note">颜色说明：<span class="legend-chip predicted">预测</span> <span class="legend-chip actual">实际</span> <span class="legend-chip hit-score">命中</span>。比分和半全场都按“预测 → 实际”的方式对照展示。</p>
+        <div id="recentStats" class="settled-list"></div>
+      </article>
+    </section>
+
+    <section id="betAdvisor" class="tab-panel export-surface">
+      <div class="stats-toolbar bet-export-toolbar" data-html2canvas-ignore="true">
+        <div>
+          <div class="eyebrow">Bet Recommendation Export</div>
+          <h2>购买推荐导出</h2>
+        </div>
+        <div class="toolbar-actions" data-html2canvas-ignore="true">
+          <button id="exportBetBtn" class="btn export-btn" type="button">导出PNG图片</button>
+          <button id="exportBetPdfBtn" class="btn export-btn secondary" type="button">导出PDF</button>
+        </div>
+      </div>
+      <article class="panel intro bet-intro">
+        <div>
+          <div class="eyebrow">China Sports Lottery Style Calculator</div>
+          <h2>购买推荐计算器</h2>
+          <p>输入总预算后，按 2 元/注拆分，结合明天完整预测生成稳健、平衡、激进三种投注分配。支持区分混合过关与同种过关；当前为无赔率模拟版，录入真实赔率后可进一步计算理论奖金。</p>
+        </div>
+        <div class="risk-note">仅作预测分析参考，不保证中奖，请理性投注。</div>
+      </article>
+      <article class="panel bet-controls" data-html2canvas-ignore="true">
+        <label>总投注金额（元）<input id="betBudget" type="number" min="2" step="2" value="52" /></label>
+        <label>风险模式<select id="betRisk"><option value="balanced">平衡型</option><option value="safe">稳健型</option><option value="aggressive">激进型</option></select></label>
+        <label>串关策略<select id="betParlay"><option value="auto">自动推荐</option><option value="single">仅单关</option><option value="parlay">允许串关</option></select></label>
+        <label>玩法选择<select id="betPlayType"><option value="all">全部玩法</option><option value="outcome">胜平负</option><option value="score">比分</option><option value="halfFull">半全场</option></select></label>
+        <label>过关类型<select id="betPassType"><option value="mixed">混合过关</option><option value="same">同种过关</option></select></label>
+        <button id="calcBetBtn" class="btn" type="button">生成推荐</button>
+      </article>
+      <div id="betRecommendation" class="bet-recommendation"></div>
+    </section>
+
+    <section id="matches" class="tab-panel">
+      <article class="panel">
+        <h2>全部已知赛程/赛果</h2>
+        <div class="filters">
+          <input id="matchFilter" placeholder="搜索球队/日期，例如 日本、06-23" />
+        </div>
+        <div id="allMatches" class="list compact"></div>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <span id="sourceLink"></span>
+    <span>预测仅供娱乐和信息参考，不构成投注建议。</span>
+  </footer>
+
+  <script src="assets/app.js?v=20260624-prediction-export"></script>
+</body>
+</html>
