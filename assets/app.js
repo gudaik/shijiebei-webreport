@@ -8,11 +8,21 @@ function fmtDateTime(iso){
 function scoreText(m){ return m.home_score === null || m.away_score === null ? 'vs' : `${m.home_score}-${m.away_score}`; }
 function empty(text){ return `<div class="empty">${text}</div>`; }
 function rowLogo(url, name){ return url ? `<img class="row-logo" src="${esc(url)}" alt="${esc(name)}" loading="lazy" onerror="this.style.display='none'">` : ''; }
+function matchRowCls(m){
+  if(m.completed) return 'completed-row';
+  const isLive = m.status && !['Scheduled','Pre Game','TBD',''].includes(m.status || '');
+  if(isLive) return 'live-row';
+  const msTil = new Date(m.date_bj).getTime() - Date.now();
+  if(msTil <= 0) return 'live-row';
+  if(msTil < 2 * 3600 * 1000) return 'soon-row';
+  return 'upcoming-row';
+}
 function matchRow(m){
   const score = scoreText(m);
-  const isLive = !m.completed && m.status && !['Scheduled','Pre Game','TBD',''].includes(m.status);
+  const cls = matchRowCls(m);
+  const isLive = cls === 'live-row';
   const scoreClass = score === 'vs' ? 'badge' : isLive ? 'score live-score' : 'score';
-  return `<div class="match-row${isLive ? ' live-row' : ''}">
+  return `<div class="match-row ${cls}">
     <div class="time">${fmtDateTime(m.date_bj)}${isLive ? ' <span class="live-pip"></span>' : ''}</div>
     <div class="row-info">
       <div class="teams">${rowLogo(m.home_logo,m.home_zh)}${esc(m.home_zh)} <span class="mini">vs</span> ${esc(m.away_zh)}${rowLogo(m.away_logo,m.away_zh)}</div>
@@ -430,7 +440,29 @@ function renderMatches(data){
   const draw = () => {
     const q = $('matchFilter').value.trim().toLowerCase();
     const rows = state.allMatches.filter(m => !q || `${m.date} ${m.time} ${m.home_zh} ${m.away_zh} ${m.home} ${m.away}`.toLowerCase().includes(q));
-    $('allMatches').innerHTML = rows.length ? rows.map(matchRow).join('') : empty('没有匹配的赛程。');
+    if(!rows.length){ $('allMatches').innerHTML = empty('没有匹配的赛程。'); return; }
+    // 按日期分组，组内正序（按时间），组间倒序（最新日期在前）
+    const groups = {};
+    rows.forEach(m => { const d = m.date || String(m.date_bj||'').slice(0,10); (groups[d]||=[]).push(m); });
+    const html = Object.entries(groups)
+      .sort(([a],[b]) => b.localeCompare(a))
+      .map(([date, ms]) => {
+        const doneN = ms.filter(m => m.completed).length;
+        const liveN = ms.filter(m => matchRowCls(m) === 'live-row').length;
+        const soonN = ms.filter(m => matchRowCls(m) === 'soon-row').length;
+        const upN   = ms.filter(m => matchRowCls(m) === 'upcoming-row').length;
+        const badges = [
+          doneN ? `<span class="ms-badge done-badge">${doneN} 场已完赛</span>` : '',
+          liveN ? `<span class="ms-badge live-badge"><span class="live-pip" style="margin:0 4px 0 0"></span>${liveN} 场进行中</span>` : '',
+          soonN ? `<span class="ms-badge soon-badge">⏳ ${soonN} 场即将开赛</span>` : '',
+          upN   ? `<span class="ms-badge up-badge">${upN} 场待赛</span>` : '',
+        ].filter(Boolean).join('');
+        return `<div class="match-day-group">
+          <div class="match-day-head"><strong>${esc(date)}</strong><div class="ms-badges">${badges}</div></div>
+          <div class="list">${ms.map(matchRow).join('')}</div>
+        </div>`;
+      }).join('');
+    $('allMatches').innerHTML = html;
   };
   $('matchFilter').oninput = draw;
   draw();
