@@ -255,3 +255,80 @@
   .pred-logo,.pred-logo-ph{width:32px;height:32px}
   .pred-teams-visual h3{font-size:16px}
 }
+
+/* ── Bet advisor: new overview bar ─────────────────────────── */
+.bet-overview{padding:18px 20px}
+.bet-kpi-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) 1.4fr;gap:18px;align-items:start}
+.bet-kpi .label{margin-bottom:6px}
+.bet-kpi-num{font-size:32px;font-weight:900;line-height:1.1;margin:2px 0 4px}
+.bet-kpi-num em{font-size:16px;font-weight:500;color:var(--muted);font-style:normal;margin-left:2px}
+.bet-kpi-tag{display:inline-flex;align-items:center;border-radius:999px;padding:5px 12px;font-size:14px;font-weight:900;margin:4px 0}
+.bet-kpi-tag.safe{background:rgba(85,227,155,.14);border:1px solid rgba(85,227,155,.38);color:var(--green)}
+.bet-kpi-tag.balanced{background:rgba(93,215,255,.12);border:1px solid rgba(93,215,255,.3);color:var(--blue)}
+.bet-kpi-tag.aggressive{background:rgba(255,107,122,.13);border:1px solid rgba(255,107,122,.35);color:var(--red)}
+.bet-alloc .label{margin-bottom:8px}
+.alloc-row{display:grid;grid-template-columns:52px 1fr 38px;gap:8px;align-items:center;margin-bottom:7px;font-size:13px;color:var(--muted)}
+.alloc-track{height:8px;background:rgba(255,255,255,.09);border-radius:999px;overflow:hidden}
+.alloc-track .fill{height:100%;border-radius:999px;min-width:4px}
+.alloc-row b{text-align:right;color:var(--text);font-weight:800}
+@media(max-width:900px){.bet-kpi-row{grid-template-columns:1fr 1fr;row-gap:14px}}
+@media(max-width:540px){.bet-kpi-row{grid-template-columns:1fr}}
+
+/* ── Quick table: one-glance bet sheet ─────────────────────── */
+.bet-quick-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.bet-copy-btn{background:rgba(255,255,255,.1);border:1px solid rgba(93,215,255,.3);color:var(--blue);border-radius:14px;padding:10px 16px;font-size:14px;font-weight:800;cursor:pointer;white-space:nowrap;transition:background .2s,color .2s}
+.bet-copy-btn:hover{background:rgba(93,215,255,.14)}
+.bet-copy-btn.copied{background:rgba(85,227,155,.16);border-color:rgba(85,227,155,.4);color:var(--green)}
+.qt-wrap{overflow-x:auto;border-radius:18px;border:1px solid rgba(255,255,255,.1)}
+.bet-qt{width:100%;border-collapse:collapse;font-size:14px}
+.bet-qt th,.bet-qt td{padding:10px 12px;text-align:center;border-bottom:1px solid rgba(255,255,255,.07)}
+.qt-th-match,.qt-cell.qt-match,.qt-foot-label{text-align:left}
+.qt-th{font-size:12px;font-weight:900;letter-spacing:.05em;color:var(--muted);background:rgba(255,255,255,.04);padding:10px 12px}
+.qt-th.qt-blue{color:var(--blue)}
+.qt-th.qt-yellow{color:var(--yellow)}
+.qt-th.qt-green{color:var(--green)}
+.qt-cell.qt-blue .qt-pick{color:var(--blue)}
+.qt-cell.qt-yellow .qt-pick{color:var(--yellow)}
+.qt-cell.qt-green .qt-pick{color:var(--green)}
+.qt-cell{background:rgba(255,255,255,.02)}
+.qt-cell.qt-nil{color:rgba(255,255,255,.18);font-size:18px}
+.qt-pick{font-weight:900;font-size:15px;margin-bottom:2px}
+.qt-units{font-size:12px;color:var(--muted)}
+.qt-match{display:flex;align-items:center;gap:6px;font-weight:700;font-size:13px;min-width:160px}
+.qt-logo{width:20px;height:20px;border-radius:50%;object-fit:contain;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);flex:0 0 auto}
+.qt-sub{font-weight:900;color:var(--text);font-size:14px;white-space:nowrap}
+.qt-parlay-row{background:rgba(255,209,102,.06)}
+.qt-parlay-tag{display:inline-flex;align-items:center;border-radius:999px;padding:2px 8px;background:rgba(255,209,102,.14);border:1px solid rgba(255,209,102,.3);color:var(--yellow);font-size:11px;font-weight:900;margin-right:8px}
+.bet-qt tfoot td{background:rgba(255,255,255,.04);border-top:2px solid rgba(255,255,255,.14);border-bottom:0;padding:11px 12px}
+.qt-foot-label{color:var(--muted);font-size:13px;font-weight:900}
+.qt-foot{font-size:13px;font-weight:800}
+.qt-foot.qt-blue{color:var(--blue)}
+.qt-foot.qt-yellow{color:var(--yellow)}
+.qt-foot.qt-green{color:var(--green)}
+.qt-foot-total{font-size:15px;font-weight:900;color:var(--text);white-space:nowrap}
+@media(max-width:700px){.qt-match span{max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+
+/* ── Detail panels: color-coded by bet type ────────────────── */
+.bet-match-no{color:var(--yellow);font-weight:900;letter-spacing:.04em;font-size:14px}
+.bet-option.opt-blue{border-left:3px solid var(--blue)}
+.bet-option.opt-yellow{border-left:3px solid var(--yellow)}
+.bet-option.opt-green{border-left:3px solid var(--green)}
+.bet-option.opt-parlay{border-left:3px solid var(--purple)}
+.bet-choice-lg{display:inline-flex;border-radius:14px;padding:6px 14px;font-size:17px;font-weight:900;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);color:var(--text);letter-spacing:.02em}
+.opt-blue .bet-choice-lg{background:rgba(93,215,255,.11);border-color:rgba(93,215,255,.3);color:var(--blue)}
+.opt-yellow .bet-choice-lg{background:rgba(255,209,102,.11);border-color:rgba(255,209,102,.3);color:var(--yellow)}
+.opt-green .bet-choice-lg{background:rgba(85,227,155,.1);border-color:rgba(85,227,155,.28);color:var(--green)}
+.opt-parlay .bet-choice-lg{background:rgba(180,148,255,.1);border-color:rgba(180,148,255,.28);color:var(--purple)}
+.bet-opt-main{display:flex;align-items:center;gap:10px;padding:12px 16px;flex:1}
+.bet-opt-stake{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;padding:10px 16px;gap:5px;min-width:96px}
+.bet-option{display:grid;grid-template-columns:1fr auto;align-items:center;padding:0;border-bottom:1px solid rgba(255,255,255,.07);border-left-width:3px;border-left-style:solid;border-left-color:transparent}
+.bet-option:last-child{border-bottom:0}
+.bet-udots{display:flex;flex-wrap:wrap;gap:3px;justify-content:flex-end;margin-bottom:4px}
+.udot{display:inline-block;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.28);border:1px solid rgba(255,255,255,.2)}
+.opt-blue .udot{background:rgba(93,215,255,.5);border-color:rgba(93,215,255,.3)}
+.opt-yellow .udot{background:rgba(255,209,102,.5);border-color:rgba(255,209,102,.3)}
+.opt-green .udot{background:rgba(85,227,155,.45);border-color:rgba(85,227,155,.28)}
+.opt-parlay .udot{background:rgba(180,148,255,.45);border-color:rgba(180,148,255,.28)}
+.bet-stake-row{font-size:13px;color:var(--muted);text-align:right;white-space:nowrap}
+.bet-stake-row b{color:var(--text);font-size:16px;margin-right:3px}
+.bet-yuan{color:var(--yellow);font-weight:800}

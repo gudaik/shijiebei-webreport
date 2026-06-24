@@ -370,65 +370,217 @@ function allocateBetUnits(totalUnits, candidates){
   rows.sort((a,b)=>b.fraction-a.fraction).forEach(r=>{ if(used < totalUnits){ r.units += 1; used += 1; } });
   return rows.filter(r=>r.units > 0).sort((a,b)=> b.units-a.units || b.weight-a.weight);
 }
+// ── 帮助函数 ───────────────────────────────────────────────
+const BET_TYPE_CLS = {胜平负:'opt-blue', 比分:'opt-yellow', 半全场:'opt-green'};
+const BET_TYPE_FILL = {胜平负:'outcome', 比分:'score-fill', 半全场:'hf-fill'};
+function unitDots(n){ return n<=6 ? '<span class="udot"></span>'.repeat(n) : `<span class="udot"></span>×${n}`; }
+
+// ── 明细面板（色块区分玩法类型）────────────────────────────
 function groupedBetPanels(plan){
   const singles = plan.filter(c=>c.play === '单关');
   const parlays = plan.filter(c=>c.play !== '单关');
   const groups = [];
   singles.forEach(c=>{
     let g = groups.find(x=>x.title === c.title);
-    if(!g){ g = {title:c.title, matchNo:c.matchNo || '', matchIndex:c.matchIndex ?? 99, rows:[]}; groups.push(g); }
+    if(!g){ g = {title:c.title, matchNo:c.matchNo||'', matchIndex:c.matchIndex??99, rows:[]}; groups.push(g); }
     g.rows.push(c);
   });
   groups.sort((a,b)=>a.matchIndex-b.matchIndex);
   const matchPanels = groups.map(g=>`<section class="bet-match-panel">
-    <div class="bet-match-head"><span>${esc(g.matchNo)}</span><strong>${esc(g.title)}</strong></div>
-    <div class="bet-options">${g.rows.map(c=>`<div class="bet-option">
-      <div><span class="bet-type">${esc(c.type)}</span><span class="bet-choice">${esc(c.pick)}</span></div>
-      <div class="bet-stake"><b>${c.units}</b>注 / ${c.units*2}元</div>
-      <div class="bet-reason">${esc(c.reason)}</div>
+    <div class="bet-match-head"><span class="bet-match-no">${esc(g.matchNo)}</span><strong>${esc(g.title)}</strong></div>
+    <div class="bet-options">${g.rows.map(c=>`<div class="bet-option ${BET_TYPE_CLS[c.type]||''}">
+      <div class="bet-opt-main">
+        <span class="bet-type">${esc(c.type)}</span>
+        <span class="bet-choice-lg">${esc(c.pick)}</span>
+      </div>
+      <div class="bet-opt-stake">
+        <div class="bet-udots">${unitDots(c.units)}</div>
+        <div class="bet-stake-row"><b>${c.units}</b>注 <span class="bet-yuan">${c.units*2}元</span></div>
+      </div>
     </div>`).join('')}</div>
   </section>`).join('');
   const parlayPanel = parlays.length ? `<section class="bet-match-panel parlay-panel">
-    <div class="bet-match-head"><span>串关</span><strong>过关组合</strong></div>
-    <div class="bet-options">${parlays.map(c=>`<div class="bet-option">
-      <div><span class="bet-type">${esc(c.play)}</span><span class="bet-choice">${esc(c.pick)}</span></div>
-      <div class="bet-stake"><b>${c.units}</b>注 / ${c.units*2}元</div>
-      <div class="bet-reason">${esc(c.reason)}</div>
+    <div class="bet-match-head"><span class="bet-match-no">串关</span><strong>过关组合</strong></div>
+    <div class="bet-options">${parlays.map(c=>`<div class="bet-option opt-parlay">
+      <div class="bet-opt-main">
+        <span class="bet-type">${esc(c.play)}</span>
+        <span class="bet-choice-lg">${esc(c.pick)}</span>
+      </div>
+      <div class="bet-opt-stake">
+        <div class="bet-udots">${unitDots(c.units)}</div>
+        <div class="bet-stake-row"><b>${c.units}</b>注 <span class="bet-yuan">${c.units*2}元</span></div>
+      </div>
     </div>`).join('')}</div>
   </section>` : '';
   return matchPanels + parlayPanel;
 }
 
+// ── 一览表（核心：一行=一场比赛，三列=三种玩法）─────────────
+function betQuickTable(plan, matches){
+  const singles = plan.filter(c=>c.play==='单关');
+  const parlays  = plan.filter(c=>c.play!=='单关');
+  const groups = [];
+  singles.forEach(c=>{
+    let g=groups.find(x=>x.title===c.title);
+    if(!g){ g={title:c.title,matchNo:c.matchNo||'',matchIndex:c.matchIndex??99,byType:{}}; groups.push(g); }
+    g.byType[c.type]=c;
+  });
+  groups.sort((a,b)=>a.matchIndex-b.matchIndex);
+
+  const cell=(c,cls)=>c
+    ? `<td class="qt-cell ${cls}"><div class="qt-pick">${esc(c.pick)}</div><div class="qt-units">${c.units}注·${c.units*2}元</div></td>`
+    : `<td class="qt-cell qt-nil">—</td>`;
+
+  const bodyRows = groups.map((g,i)=>{
+    const sub = Object.values(g.byType).reduce((a,c)=>a+c.units*2,0);
+    const m = matches.find(m=>`${m.home_zh} vs ${m.away_zh}`===g.title)||{};
+    const lg=(url,nm)=>url?`<img class="qt-logo" src="${esc(url)}" alt="${esc(nm)}" onerror="this.style.display='none'">`:'';
+    return `<tr>
+      <td class="qt-match">${lg(m.home_logo,m.home_zh)}<span>${esc(g.title)}</span>${lg(m.away_logo,m.away_zh)}</td>
+      ${cell(g.byType['胜平负'],'qt-blue')}
+      ${cell(g.byType['比分'],'qt-yellow')}
+      ${cell(g.byType['半全场'],'qt-green')}
+      <td class="qt-sub">${sub}元</td>
+    </tr>`;
+  }).join('');
+
+  const parlayRows = parlays.map(c=>`<tr class="qt-parlay-row">
+    <td class="qt-match" colspan="3"><span class="qt-parlay-tag">${esc(c.play)}</span>${esc(c.pick)}</td>
+    <td class="qt-cell qt-yellow"><div class="qt-pick">${c.units}注</div></td>
+    <td class="qt-sub">${c.units*2}元</td>
+  </tr>`).join('');
+
+  // 合计行
+  const sumByType = (t)=>{ const r=singles.filter(c=>c.type===t); const n=r.reduce((a,c)=>a+c.units,0); const y=r.reduce((a,c)=>a+c.units*2,0); return n?`${n}注·${y}元`:'—'; };
+  const totalN=plan.reduce((a,c)=>a+c.units,0), totalY=plan.reduce((a,c)=>a+c.units*2,0);
+
+  return `<div class="qt-wrap">
+  <table class="bet-qt">
+    <thead><tr>
+      <th class="qt-th-match">场次</th>
+      <th class="qt-th qt-blue">胜平负</th>
+      <th class="qt-th qt-yellow">比分</th>
+      <th class="qt-th qt-green">半全场</th>
+      <th class="qt-th">小计</th>
+    </tr></thead>
+    <tbody>${bodyRows}${parlayRows}</tbody>
+    <tfoot><tr>
+      <td class="qt-foot-label">合计</td>
+      <td class="qt-foot qt-blue">${sumByType('胜平负')}</td>
+      <td class="qt-foot qt-yellow">${sumByType('比分')}</td>
+      <td class="qt-foot qt-green">${sumByType('半全场')}</td>
+      <td class="qt-foot-total"><b>${totalN}注</b><br>${totalY}元</td>
+    </tr></tfoot>
+  </table></div>`;
+}
+
+// ── 拷贝文本生成 ────────────────────────────────────────────
+function buildBetCopyText(plan, budget, spent, cfg, data){
+  const date = data?.dates?.prediction_target || '';
+  const singles = plan.filter(c=>c.play==='单关');
+  const parlays  = plan.filter(c=>c.play!=='单关');
+  const groups = [];
+  singles.forEach(c=>{
+    let g=groups.find(x=>x.title===c.title);
+    if(!g){ g={title:c.title,matchIndex:c.matchIndex??99,rows:[]}; groups.push(g); }
+    g.rows.push(c);
+  });
+  groups.sort((a,b)=>a.matchIndex-b.matchIndex);
+  const lines=[
+    `🏆 世界杯购买推荐 ${date}`,
+    `💰 预算 ${budget}元  策略：${cfg.label}  实际分配 ${spent}元`,
+    '',
+  ];
+  groups.forEach((g,i)=>{
+    lines.push(`${i+1}. ${g.title}`);
+    g.rows.forEach(c=>{
+      const pad = c.type==='半全场'?'  ': c.type.length===3?'    ':'      ';
+      lines.push(`   ${c.type}${pad}${c.pick}   ×${c.units}注/${c.units*2}元`);
+    });
+  });
+  if(parlays.length){
+    lines.push('');
+    lines.push('🔗 过关组合');
+    parlays.forEach(c=>lines.push(`   ${c.play}：${c.pick}   ×${c.units}注/${c.units*2}元`));
+  }
+  const totalN=plan.reduce((a,c)=>a+c.units,0), totalY=plan.reduce((a,c)=>a+c.units*2,0);
+  const byT=plan.reduce((acc,c)=>{ if(c.play==='单关'){acc[c.type]=(acc[c.type]||{n:0,y:0});acc[c.type].n+=c.units;acc[c.type].y+=c.units*2;} return acc;},{});
+  lines.push('');
+  lines.push(`📊 合计：${totalN}注 / ${totalY}元`);
+  lines.push('   '+Object.entries(byT).map(([k,v])=>`${k} ${v.n}注·${v.y}元`).join('  |  '));
+  return lines.join('\n');
+}
+
+async function copyBetText(plan, budget, spent, cfg, data){
+  const text = buildBetCopyText(plan, budget, spent, cfg, data);
+  const btn = $('copyBetBtn');
+  const ok = ()=>{ if(btn){btn.textContent='✅ 已复制！';btn.classList.add('copied');setTimeout(()=>{btn.textContent='📋 拷贝文本';btn.classList.remove('copied');},2200);} };
+  try{ await navigator.clipboard.writeText(text); ok(); }
+  catch{
+    const ta=document.createElement('textarea'); ta.value=text;
+    ta.style.cssText='position:fixed;opacity:0;top:0;left:0;width:1px;height:1px';
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    document.execCommand('copy'); ta.remove(); ok();
+  }
+}
+
+// ── 主渲染函数（新布局）────────────────────────────────────
 function renderBetAdvisor(data){
   const box = $('betRecommendation');
   if(!box) return;
   const budgetInput = Number($('betBudget')?.value || 52);
   const budget = Math.max(2, Math.floor(budgetInput / 2) * 2);
-  const units = Math.floor(budget / 2);
-  const risk = $('betRisk')?.value || 'balanced';
-  const parlayMode = $('betParlay')?.value || 'auto';
-  const passType = $('betPassType')?.value || 'mixed';
-  const playType = $('betPlayType')?.value || 'all';
-  const passTypeLabel = passType === 'same' ? '同种过关' : '混合过关';
+  const units  = Math.floor(budget / 2);
+  const risk      = $('betRisk')?.value    || 'balanced';
+  const parlayMode= $('betParlay')?.value  || 'auto';
+  const passType  = $('betPassType')?.value|| 'mixed';
+  const playType  = $('betPlayType')?.value|| 'all';
+  const passTypeLabel = passType==='same'?'同种过关':'混合过关';
   const cfg = betPlanConfig(risk);
   const matches = data.sections?.day_after_predictions || [];
   if(!matches.length){ box.innerHTML = empty('暂无明天预测，无法生成购买推荐。'); return; }
-  const plan = allocateBetUnits(units, buildBetCandidates(matches, risk, parlayMode, passType, playType));
+  const plan  = allocateBetUnits(units, buildBetCandidates(matches, risk, parlayMode, passType, playType));
   const spent = plan.reduce((a,c)=>a+c.units*2,0);
-  const byType = plan.reduce((acc,c)=>{ acc[c.type]=(acc[c.type]||0)+c.units*2; return acc; },{});
-  box.innerHTML = `<article class="panel bet-summary">
-    <div><div class="label">总预算</div><div class="num">${budget} 元</div><div class="hint">${units} 注 · 2元/注 · 实际分配 ${spent} 元</div></div>
-    <div><div class="label">策略</div><div class="num">${cfg.label}</div><div class="hint">${cfg.desc} 当前玩法：${playTypeLabel(playType)}；过关类型：${passTypeLabel}。</div></div>
-    <div><div class="label">资金结构</div><div class="bet-tags">${Object.entries(byType).map(([k,v])=>`<span>${k} ${v}元</span>`).join('')}</div></div>
+  const totalN= plan.reduce((a,c)=>a+c.units,0);
+  const byType= plan.reduce((acc,c)=>{ if(c.play==='单关'){acc[c.type]=(acc[c.type]||{n:0,y:0});acc[c.type].n+=c.units;acc[c.type].y+=c.units*2;} return acc;},{});
+
+  // 资金结构迷你条
+  const allocBar=(t,fill)=>{
+    const d=byType[t]; if(!d) return '';
+    const w=Math.round(d.y/spent*100);
+    return `<div class="alloc-row"><span>${t}</span><div class="alloc-track"><div class="fill ${fill}" style="width:${w}%"></div></div><b>${d.y}元</b></div>`;
+  };
+
+  box.innerHTML = `
+  <article class="panel bet-overview">
+    <div class="bet-kpi-row">
+      <div class="bet-kpi"><div class="label">总预算</div><div class="bet-kpi-num">${budget}<em>元</em></div><div class="hint">${units}注上限</div></div>
+      <div class="bet-kpi"><div class="label">实际分配</div><div class="bet-kpi-num">${spent}<em>元</em></div><div class="hint">${totalN}注合计</div></div>
+      <div class="bet-kpi"><div class="label">策略</div><div class="bet-kpi-tag ${risk}">${cfg.label}</div><div class="hint">${playTypeLabel(playType)} · ${passTypeLabel}</div></div>
+      <div class="bet-alloc"><div class="label">资金结构</div>
+        ${allocBar('胜平负','outcome')}${allocBar('比分','score-fill')}${allocBar('半全场','hf-fill')}
+      </div>
+    </div>
   </article>
+
+  <article class="panel">
+    <div class="bet-quick-head">
+      <div><h2 style="margin:0">一览投注单</h2><p class="section-note" style="margin:4px 0 0">每行一场比赛，三列对应三种玩法，串关在底部。</p></div>
+      <button id="copyBetBtn" class="btn bet-copy-btn" type="button">📋 拷贝文本</button>
+    </div>
+    ${betQuickTable(plan, matches)}
+  </article>
+
   <article class="panel bet-ticket grouped">
-    <h2>按场次推荐投注单</h2>
-    <p class="section-note">同一场比赛的胜平负、比分、半全场集中在一个面板里，方便像体彩计算器一样逐场查看；串关单独放在底部。</p>
+    <h2>逐场明细</h2>
     <div class="bet-match-list">${groupedBetPanels(plan)}</div>
   </article>
+
   <article class="panel bet-warning">
-    <strong>说明：</strong>这是基于当前预测的模拟推荐，不是官方投注指令；赔率、临场首发、伤停、盘口变化会明显影响最优分配。请勿超预算投注。
+    <strong>说明：</strong>模拟推荐，不是官方投注指令；赔率、首发、伤停和盘口变化会影响最优分配。请勿超预算。
   </article>`;
+
+  $('copyBetBtn')?.addEventListener('click', ()=>copyBetText(plan, budget, spent, cfg, data));
 }
 function bindBetAdvisor(){
   ['betBudget','betRisk','betParlay','betPlayType','betPassType'].forEach(id=>{ const el=$(id); if(el) el.addEventListener('input',()=>state.data && renderBetAdvisor(state.data)); });
