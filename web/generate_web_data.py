@@ -47,13 +47,34 @@ ZH = {
 }
 
 STRENGTH = {
-    "Brazil": 96, "Spain": 94, "Argentina": 94, "France": 94, "England": 91, "Germany": 90,
-    "Portugal": 90, "Netherlands": 88, "Belgium": 86, "Uruguay": 84, "Japan": 80,
-    "Sweden": 78, "Ecuador": 78, "Morocco": 78, "United States": 77, "Croatia": 82,
-    "Denmark": 80, "Switzerland": 79, "Serbia": 76, "Iran": 75, "Tunisia": 73,
-    "Ivory Coast": 74, "Egypt": 74, "Paraguay": 73, "Saudi Arabia": 70, "New Zealand": 68,
-    "Cape Verde": 68, "Curacao": 64, "Curaçao": 64, "Haiti": 63, "Australia": 74, "Scotland": 75,
-    "Turkiye": 77, "Turkey": 77, "Austria": 79, "Iraq": 67, "Norway": 78, "Jordan": 65, "Algeria": 76,
+    # S级：世界顶尖强队
+    "Brazil": 96, "Spain": 94, "Argentina": 94, "France": 94,
+    # A+级
+    "England": 91, "Germany": 90, "Portugal": 90,
+    # A级
+    "Netherlands": 88, "Belgium": 86, "Croatia": 82, "Colombia": 82,
+    # A-级
+    "Uruguay": 84, "Italy": 83,
+    # B+级
+    "Denmark": 80, "Japan": 80, "Switzerland": 79, "Austria": 79,
+    "Sweden": 78, "Ecuador": 78, "Morocco": 78, "Norway": 78, "Senegal": 78,
+    "United States": 77, "Turkiye": 77, "Turkey": 77, "Poland": 77, "Korea Republic": 77, "South Korea": 77,
+    "Algeria": 76, "Czechia": 76, "Mexico": 77,
+    # B级
+    "Scotland": 75, "Canada": 75, "Iran": 75,
+    "Australia": 74, "Ivory Coast": 74, "Egypt": 74,
+    "Nigeria": 73, "Tunisia": 73, "Bosnia-Herzegovina": 73, "Paraguay": 73,
+    "Serbia": 76,
+    # B-级
+    "Cameroon": 72, "South Africa": 70, "Saudi Arabia": 70, "Ghana": 70,
+    # C+级
+    "Congo DR": 69, "Congo Democratic Republic": 69,
+    "New Zealand": 68, "Cape Verde": 68, "Panama": 68,
+    "Uzbekistan": 66, "Iraq": 67,
+    "Jordan": 65, "Qatar": 65,
+    # C级
+    "Curacao": 64, "Curaçao": 64,
+    "Haiti": 63,
 }
 
 @dataclass
@@ -225,33 +246,74 @@ def make_prediction(m: Match) -> dict:
     hs = team_strength(m.home) + 2  # mild home designation advantage even on neutral-ish tournament listing
     aws = team_strength(m.away)
     diff = hs - aws
-    if diff >= 9:
+
+    if diff >= 18:
+        # 碾压级优势：强队对弱旅，大比分碾压概率高
         tendency = "主胜"
-        scores = [(2, 0), (2, 1), (3, 1)]
+        scores = [(3, 0), (2, 0), (4, 1)]
         htft = [("主胜", "主胜"), ("平", "主胜"), ("主胜", "平")]
-        risk = "热门方优势明显，但需防守转攻失误导致小比分。"
-    elif diff >= 4:
+        risk = "主队实力大幅领先，压迫性节奏下大比分概率较高，需防慢热开局。"
+    elif diff >= 12:
+        # 明显优势：主队更强但不至于碾压
+        tendency = "主胜"
+        scores = [(2, 0), (3, 1), (2, 1)]
+        htft = [("主胜", "主胜"), ("平", "主胜"), ("主胜", "平")]
+        risk = "主队整体实力占优明显，但世界杯氛围下弱队防守投入度高，首球关键。"
+    elif diff >= 9:
+        # 较大优势
+        tendency = "主胜"
+        scores = [(2, 1), (2, 0), (1, 0)]
+        htft = [("平", "主胜"), ("主胜", "主胜"), ("主胜", "平")]
+        risk = "主队占优，但世界杯大赛节奏谨慎，防守密度会压制进球数。"
+    elif diff >= 5:
+        # 小优势偏主队
         tendency = "主胜，防平"
         scores = [(2, 1), (1, 0), (1, 1)]
         htft = [("平", "主胜"), ("主胜", "主胜"), ("平", "平")]
         risk = "主队纸面与节奏略优，平局风险来自打不开局面。"
+    elif diff >= 2:
+        # 微弱主队优势
+        tendency = "主胜，防平"
+        scores = [(1, 0), (2, 1), (1, 1)]
+        htft = [("平", "主胜"), ("平", "平"), ("主胜", "主胜")]
+        risk = "主队略有上风，但差距有限，平局仍是合理结局。"
+    elif diff <= -18:
+        # 客队碾压
+        tendency = "客胜"
+        scores = [(0, 3), (0, 2), (1, 3)]
+        htft = [("客胜", "客胜"), ("平", "客胜"), ("客胜", "平")]
+        risk = "客队实力大幅领先，高比分客胜概率较高，主队难以组织有效进攻。"
+    elif diff <= -12:
+        # 客队明显优势
+        tendency = "客胜"
+        scores = [(0, 2), (1, 3), (0, 1)]
+        htft = [("客胜", "客胜"), ("平", "客胜"), ("主胜", "客胜")]
+        risk = "客队整体更强，但在中立/主场氛围下主队会拼死防守，需防低比分意外。"
     elif diff <= -9:
+        # 较大客队优势
         tendency = "客胜"
         scores = [(0, 2), (1, 2), (0, 1)]
-        htft = [("客胜", "客胜"), ("平", "客胜"), ("主胜", "客胜")]
+        htft = [("平", "客胜"), ("客胜", "客胜"), ("主胜", "客胜")]
         risk = "客队优势更清晰，若早段进球会扩大控场。"
-    elif diff <= -4:
+    elif diff <= -5:
+        # 小优势偏客队
         tendency = "客胜，防平"
         scores = [(1, 2), (0, 1), (1, 1)]
         htft = [("平", "客胜"), ("客胜", "客胜"), ("平", "平")]
         risk = "客队整体更稳，但杯赛小组赛节奏可能偏谨慎。"
+    elif diff <= -2:
+        # 微弱客队优势
+        tendency = "客胜，防平"
+        scores = [(0, 1), (1, 2), (1, 1)]
+        htft = [("平", "客胜"), ("平", "平"), ("客胜", "客胜")]
+        risk = "客队略有上风，主队主场动力可能制造变数，平局可防。"
     else:
+        # diff 在 -1 到 1：真正均势
         tendency = "平局倾向，双方不败均可防"
-        scores = [(1, 1), (0, 0), (2, 1 if diff >= 0 else 2)]
-        if diff < 0:
-            scores = [(1, 1), (0, 0), (1, 2)]
-        htft = [("平", "平"), ("主胜" if diff >= 0 else "客胜", "平"), ("平", "主胜" if diff >= 0 else "客胜")]
-        risk = "实力接近，首球和定位球会显著改变走势。"
+        scores = [(1, 1), (0, 0), (1, 0)]
+        htft = [("平", "平"), ("平", "主胜"), ("主胜", "平")]
+        risk = "两队实力几乎相当，首球与定位球将主导走势，低比分平局概率最高。"
+
     main_outcome = outcome(*scores[0])
     return {
         "match_id": m.id,
@@ -269,12 +331,18 @@ def make_prediction(m: Match) -> dict:
 def build_analysis(m: Match, diff: int, risk: str) -> str:
     stronger = m.home_zh if diff >= 0 else m.away_zh
     weaker = m.away_zh if diff >= 0 else m.home_zh
-    if abs(diff) >= 9:
-        edge = f"{stronger}整体实力、阵地推进和替补深度更占优。"
-    elif abs(diff) >= 4:
+    if abs(diff) >= 18:
+        edge = f"{stronger}实力大幅领先，技术、体系和阵容深度全面压制{weaker}。"
+    elif abs(diff) >= 12:
+        edge = f"{stronger}整体实力、阵地推进和替补深度明显占优，{weaker}需要高效反击才能制造变数。"
+    elif abs(diff) >= 9:
+        edge = f"{stronger}整体实力占优，但世界杯大赛节奏下{weaker}防守投入度更高。"
+    elif abs(diff) >= 5:
         edge = f"{stronger}略占上风，但{weaker}具备通过防守密度和转换制造麻烦的空间。"
+    elif abs(diff) >= 2:
+        edge = f"两队差距有限，{stronger}略有上风，但首球和定位球将显著改变比赛走势。"
     else:
-        edge = "两队差距不算大，比赛更可能由临场效率、定位球和换人质量决定。"
+        edge = "两队实力几乎相当，比赛更可能由临场效率、定位球和换人质量决定。"
     return f"{edge}{risk} 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
 
 

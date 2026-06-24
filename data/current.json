@@ -1,13 +1,13 @@
 {
-  "generated_at_bj": "2026-06-24T22:39:00.843919+08:00",
-  "generated_at_label": "2026-06-24 22:39:00 北京时间",
+  "generated_at_bj": "2026-06-24T22:57:09.626891+08:00",
+  "generated_at_label": "2026-06-24 22:57:09 北京时间",
   "timezone": "Asia/Shanghai",
   "source": {
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260614-20260629&limit=300"
   },
   "report_source": {
-    "directory": "/mnt/c/nginx-1.24.0/html/worldcup2/reports",
+    "directory": "C:\\nginx-1.29.8\\html\\cup\\reports",
     "windows_directory": "C:\\nginx-1.24.0\\html\\worldcup2\\reports",
     "files_total": 10,
     "predictions_total": 32,
@@ -350,47 +350,47 @@
         "prediction": {
           "match_id": "760462",
           "generated_for_date": "2026-06-25",
-          "tendency": "平局倾向，双方不败均可防",
-          "primary_outcome": "平",
+          "tendency": "主胜",
+          "primary_outcome": "主胜",
           "scores": [
-            "1-1",
-            "0-0",
-            "2-1"
+            "2-1",
+            "2-0",
+            "1-0"
           ],
           "score_pairs": [
             [
-              1,
+              2,
               1
-            ],
-            [
-              0,
-              0
             ],
             [
               2,
-              1
+              0
+            ],
+            [
+              1,
+              0
             ]
           ],
           "half_full": [
-            "平平",
-            "胜平",
-            "平胜"
+            "平胜",
+            "胜胜",
+            "胜平"
           ],
           "half_full_pairs": [
             [
               "平",
-              "平"
+              "主胜"
+            ],
+            [
+              "主胜",
+              "主胜"
             ],
             [
               "主胜",
               "平"
-            ],
-            [
-              "平",
-              "主胜"
             ]
           ],
-          "analysis": "两队差距不算大，比赛更可能由临场效率、定位球和换人质量决定。实力接近，首球和定位球会显著改变走势。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+          "analysis": "波黑整体实力占优，但世界杯大赛节奏下卡塔尔防守投入度更高。主队占优，但世界杯大赛节奏谨慎，防守密度会压制进球数。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
         }
       },
       {
@@ -416,47 +416,47 @@
         "prediction": {
           "match_id": "760463",
           "generated_for_date": "2026-06-25",
-          "tendency": "主胜",
+          "tendency": "主胜，防平",
           "primary_outcome": "主胜",
           "scores": [
-            "2-0",
             "2-1",
-            "3-1"
+            "1-0",
+            "1-1"
           ],
           "score_pairs": [
             [
               2,
-              0
-            ],
-            [
-              2,
               1
             ],
             [
-              3,
+              1,
+              0
+            ],
+            [
+              1,
               1
             ]
           ],
           "half_full": [
-            "胜胜",
             "平胜",
-            "胜平"
+            "胜胜",
+            "平平"
           ],
           "half_full_pairs": [
-            [
-              "主胜",
-              "主胜"
-            ],
             [
               "平",
               "主胜"
             ],
             [
               "主胜",
+              "主胜"
+            ],
+            [
+              "平",
               "平"
             ]
           ],
-          "analysis": "瑞士整体实力、阵地推进和替补深度更占优。热门方优势明显，但需防守转攻失误导致小比分。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+          "analysis": "瑞士略占上风，但加拿大具备通过防守密度和转换制造麻烦的空间。主队纸面与节奏略优，平局风险来自打不开局面。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
         }
       },
       {
@@ -486,8 +486,8 @@
           "primary_outcome": "主胜",
           "scores": [
             "2-0",
-            "2-1",
-            "3-1"
+            "3-1",
+            "2-1"
           ],
           "score_pairs": [
             [
@@ -495,11 +495,11 @@
               0
             ],
             [
-              2,
+              3,
               1
             ],
             [
-              3,
+              2,
               1
             ]
           ],
@@ -522,7 +522,7 @@
               "平"
             ]
           ],
-          "analysis": "摩洛哥整体实力、阵地推进和替补深度更占优。热门方优势明显，但需防守转攻失误导致小比分。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+          "analysis": "摩洛哥整体实力、阵地推进和替补深度明显占优，海地需要高效反击才能制造变数。主队整体实力占优明显，但世界杯氛围下弱队防守投入度高，首球关键。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
         }
       },
       {
@@ -551,28 +551,28 @@
           "tendency": "客胜",
           "primary_outcome": "客胜",
           "scores": [
+            "0-3",
             "0-2",
-            "1-2",
-            "0-1"
+            "1-3"
           ],
           "score_pairs": [
+            [
+              0,
+              3
+            ],
             [
               0,
               2
             ],
             [
               1,
-              2
-            ],
-            [
-              0,
-              1
+              3
             ]
           ],
           "half_full": [
             "负负",
             "平负",
-            "胜负"
+            "负平"
           ],
           "half_full_pairs": [
             [
@@ -584,11 +584,11 @@
               "客胜"
             ],
             [
-              "主胜",
-              "客胜"
+              "客胜",
+              "平"
             ]
           ],
-          "analysis": "巴西整体实力、阵地推进和替补深度更占优。客队优势更清晰，若早段进球会扩大控场。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+          "analysis": "巴西实力大幅领先，技术、体系和阵容深度全面压制苏格兰。客队实力大幅领先，高比分客胜概率较高，主队难以组织有效进攻。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
         }
       },
       {
@@ -619,7 +619,7 @@
           "scores": [
             "1-1",
             "0-0",
-            "2-1"
+            "1-0"
           ],
           "score_pairs": [
             [
@@ -631,14 +631,14 @@
               0
             ],
             [
-              2,
-              1
+              1,
+              0
             ]
           ],
           "half_full": [
             "平平",
-            "胜平",
-            "平胜"
+            "平胜",
+            "胜平"
           ],
           "half_full_pairs": [
             [
@@ -646,15 +646,15 @@
               "平"
             ],
             [
-              "主胜",
-              "平"
-            ],
-            [
               "平",
               "主胜"
+            ],
+            [
+              "主胜",
+              "平"
             ]
           ],
-          "analysis": "两队差距不算大，比赛更可能由临场效率、定位球和换人质量决定。实力接近，首球和定位球会显著改变走势。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+          "analysis": "两队实力几乎相当，比赛更可能由临场效率、定位球和换人质量决定。两队实力几乎相当，首球与定位球将主导走势，低比分平局概率最高。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
         }
       },
       {
@@ -680,54 +680,54 @@
         "prediction": {
           "match_id": "760466",
           "generated_for_date": "2026-06-25",
-          "tendency": "平局倾向，双方不败均可防",
-          "primary_outcome": "平",
+          "tendency": "客胜，防平",
+          "primary_outcome": "客胜",
           "scores": [
-            "1-1",
-            "0-0",
-            "2-1"
+            "1-2",
+            "0-1",
+            "1-1"
           ],
           "score_pairs": [
             [
               1,
-              1
+              2
             ],
             [
               0,
-              0
+              1
             ],
             [
-              2,
+              1,
               1
             ]
           ],
           "half_full": [
-            "平平",
-            "胜平",
-            "平胜"
+            "平负",
+            "负负",
+            "平平"
           ],
           "half_full_pairs": [
             [
               "平",
-              "平"
+              "客胜"
             ],
             [
-              "主胜",
-              "平"
+              "客胜",
+              "客胜"
             ],
             [
               "平",
-              "主胜"
+              "平"
             ]
           ],
-          "analysis": "两队差距不算大，比赛更可能由临场效率、定位球和换人质量决定。实力接近，首球和定位球会显著改变走势。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+          "analysis": "韩国略占上风，但南非具备通过防守密度和转换制造麻烦的空间。客队整体更稳，但杯赛小组赛节奏可能偏谨慎。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
         }
       }
     ],
     "report_predictions": [
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-16.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-16.md",
         "source_file_name": "2026-06-16.md",
         "source_report_date": "2026-06-16",
         "source_index": 1,
@@ -776,7 +776,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-16.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-16.md",
         "source_file_name": "2026-06-16.md",
         "source_report_date": "2026-06-16",
         "source_index": 2,
@@ -825,7 +825,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-16.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-16.md",
         "source_file_name": "2026-06-16.md",
         "source_report_date": "2026-06-16",
         "source_index": 3,
@@ -874,7 +874,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-18.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-18.md",
         "source_file_name": "2026-06-18.md",
         "source_report_date": "2026-06-18",
         "source_index": 1,
@@ -923,7 +923,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-18.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-18.md",
         "source_file_name": "2026-06-18.md",
         "source_report_date": "2026-06-18",
         "source_index": 2,
@@ -972,7 +972,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-18.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-18.md",
         "source_file_name": "2026-06-18.md",
         "source_report_date": "2026-06-18",
         "source_index": 3,
@@ -1021,7 +1021,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-18.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-18.md",
         "source_file_name": "2026-06-18.md",
         "source_report_date": "2026-06-18",
         "source_index": 4,
@@ -1070,7 +1070,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-19.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-19.md",
         "source_file_name": "2026-06-19.md",
         "source_report_date": "2026-06-19",
         "source_index": 4,
@@ -1119,7 +1119,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-19.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-19.md",
         "source_file_name": "2026-06-19.md",
         "source_report_date": "2026-06-19",
         "source_index": 5,
@@ -1168,7 +1168,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-19.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-19.md",
         "source_file_name": "2026-06-19.md",
         "source_report_date": "2026-06-19",
         "source_index": 6,
@@ -1217,7 +1217,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-19.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-19.md",
         "source_file_name": "2026-06-19.md",
         "source_report_date": "2026-06-19",
         "source_index": 7,
@@ -1266,7 +1266,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-20.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-20.md",
         "source_file_name": "2026-06-20.md",
         "source_report_date": "2026-06-20",
         "source_index": 1,
@@ -1315,7 +1315,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-20.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-20.md",
         "source_file_name": "2026-06-20.md",
         "source_report_date": "2026-06-20",
         "source_index": 2,
@@ -1364,7 +1364,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-20.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-20.md",
         "source_file_name": "2026-06-20.md",
         "source_report_date": "2026-06-20",
         "source_index": 3,
@@ -1413,7 +1413,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-20.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-20.md",
         "source_file_name": "2026-06-20.md",
         "source_report_date": "2026-06-20",
         "source_index": 4,
@@ -1462,7 +1462,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-21.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-21.md",
         "source_file_name": "2026-06-21.md",
         "source_report_date": "2026-06-21",
         "source_index": 1,
@@ -1511,7 +1511,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-21.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-21.md",
         "source_file_name": "2026-06-21.md",
         "source_report_date": "2026-06-21",
         "source_index": 2,
@@ -1560,7 +1560,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-21.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-21.md",
         "source_file_name": "2026-06-21.md",
         "source_report_date": "2026-06-21",
         "source_index": 3,
@@ -1609,7 +1609,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-21.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-21.md",
         "source_file_name": "2026-06-21.md",
         "source_report_date": "2026-06-21",
         "source_index": 4,
@@ -1658,7 +1658,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-22.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-22.md",
         "source_file_name": "2026-06-22.md",
         "source_report_date": "2026-06-22",
         "source_index": 1,
@@ -1703,7 +1703,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-22.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-22.md",
         "source_file_name": "2026-06-22.md",
         "source_report_date": "2026-06-22",
         "source_index": 2,
@@ -1748,7 +1748,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-22.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-22.md",
         "source_file_name": "2026-06-22.md",
         "source_report_date": "2026-06-22",
         "source_index": 3,
@@ -1793,7 +1793,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-22.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-22.md",
         "source_file_name": "2026-06-22.md",
         "source_report_date": "2026-06-22",
         "source_index": 4,
@@ -1838,7 +1838,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-23.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-23.md",
         "source_file_name": "2026-06-23.md",
         "source_report_date": "2026-06-23",
         "source_index": 1,
@@ -1887,7 +1887,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-23.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-23.md",
         "source_file_name": "2026-06-23.md",
         "source_report_date": "2026-06-23",
         "source_index": 2,
@@ -1936,7 +1936,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-23.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-23.md",
         "source_file_name": "2026-06-23.md",
         "source_report_date": "2026-06-23",
         "source_index": 3,
@@ -1985,7 +1985,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-23.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-23.md",
         "source_file_name": "2026-06-23.md",
         "source_report_date": "2026-06-23",
         "source_index": 4,
@@ -2034,7 +2034,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-24.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-24.md",
         "source_file_name": "2026-06-24.md",
         "source_report_date": "2026-06-24",
         "source_index": 1,
@@ -2083,7 +2083,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-24.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-24.md",
         "source_file_name": "2026-06-24.md",
         "source_report_date": "2026-06-24",
         "source_index": 2,
@@ -2118,7 +2118,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-24.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-24.md",
         "source_file_name": "2026-06-24.md",
         "source_report_date": "2026-06-24",
         "source_index": 3,
@@ -2153,7 +2153,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-24.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-24.md",
         "source_file_name": "2026-06-24.md",
         "source_report_date": "2026-06-24",
         "source_index": 4,
@@ -2188,7 +2188,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-24.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-24.md",
         "source_file_name": "2026-06-24.md",
         "source_report_date": "2026-06-24",
         "source_index": 5,
@@ -3676,7 +3676,7 @@
   },
   "stats": {
     "source": "reports",
-    "source_label": "/mnt/c/nginx-1.24.0/html/worldcup2/reports Markdown 报告",
+    "source_label": "C:\\nginx-1.29.8\\html\\cup\\reports Markdown 报告",
     "report_files_total": 10,
     "report_files_with_predictions": 8,
     "report_predictions_total": 32,
@@ -3794,7 +3794,7 @@
     "recent": [
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-24.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-24.md",
         "source_file_name": "2026-06-24.md",
         "source_report_date": "2026-06-24",
         "source_index": 1,
@@ -3843,7 +3843,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-23.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-23.md",
         "source_file_name": "2026-06-23.md",
         "source_report_date": "2026-06-23",
         "source_index": 4,
@@ -3892,7 +3892,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-23.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-23.md",
         "source_file_name": "2026-06-23.md",
         "source_report_date": "2026-06-23",
         "source_index": 3,
@@ -3941,7 +3941,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-23.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-23.md",
         "source_file_name": "2026-06-23.md",
         "source_report_date": "2026-06-23",
         "source_index": 2,
@@ -3990,7 +3990,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-23.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-23.md",
         "source_file_name": "2026-06-23.md",
         "source_report_date": "2026-06-23",
         "source_index": 1,
@@ -4039,7 +4039,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-22.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-22.md",
         "source_file_name": "2026-06-22.md",
         "source_report_date": "2026-06-22",
         "source_index": 4,
@@ -4084,7 +4084,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-22.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-22.md",
         "source_file_name": "2026-06-22.md",
         "source_report_date": "2026-06-22",
         "source_index": 3,
@@ -4129,7 +4129,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-22.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-22.md",
         "source_file_name": "2026-06-22.md",
         "source_report_date": "2026-06-22",
         "source_index": 2,
@@ -4174,7 +4174,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-22.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-22.md",
         "source_file_name": "2026-06-22.md",
         "source_report_date": "2026-06-22",
         "source_index": 1,
@@ -4219,7 +4219,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-21.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-21.md",
         "source_file_name": "2026-06-21.md",
         "source_report_date": "2026-06-21",
         "source_index": 4,
@@ -4268,7 +4268,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-21.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-21.md",
         "source_file_name": "2026-06-21.md",
         "source_report_date": "2026-06-21",
         "source_index": 3,
@@ -4317,7 +4317,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-21.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-21.md",
         "source_file_name": "2026-06-21.md",
         "source_report_date": "2026-06-21",
         "source_index": 2,
@@ -4366,7 +4366,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-21.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-21.md",
         "source_file_name": "2026-06-21.md",
         "source_report_date": "2026-06-21",
         "source_index": 1,
@@ -4415,7 +4415,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-20.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-20.md",
         "source_file_name": "2026-06-20.md",
         "source_report_date": "2026-06-20",
         "source_index": 4,
@@ -4464,7 +4464,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-20.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-20.md",
         "source_file_name": "2026-06-20.md",
         "source_report_date": "2026-06-20",
         "source_index": 3,
@@ -4513,7 +4513,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-20.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-20.md",
         "source_file_name": "2026-06-20.md",
         "source_report_date": "2026-06-20",
         "source_index": 2,
@@ -4562,7 +4562,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-20.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-20.md",
         "source_file_name": "2026-06-20.md",
         "source_report_date": "2026-06-20",
         "source_index": 1,
@@ -4611,7 +4611,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-19.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-19.md",
         "source_file_name": "2026-06-19.md",
         "source_report_date": "2026-06-19",
         "source_index": 7,
@@ -4660,7 +4660,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-19.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-19.md",
         "source_file_name": "2026-06-19.md",
         "source_report_date": "2026-06-19",
         "source_index": 6,
@@ -4709,7 +4709,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-19.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-19.md",
         "source_file_name": "2026-06-19.md",
         "source_report_date": "2026-06-19",
         "source_index": 5,
@@ -4758,7 +4758,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-19.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-19.md",
         "source_file_name": "2026-06-19.md",
         "source_report_date": "2026-06-19",
         "source_index": 4,
@@ -4807,7 +4807,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-18.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-18.md",
         "source_file_name": "2026-06-18.md",
         "source_report_date": "2026-06-18",
         "source_index": 4,
@@ -4856,7 +4856,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-18.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-18.md",
         "source_file_name": "2026-06-18.md",
         "source_report_date": "2026-06-18",
         "source_index": 3,
@@ -4905,7 +4905,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-18.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-18.md",
         "source_file_name": "2026-06-18.md",
         "source_report_date": "2026-06-18",
         "source_index": 2,
@@ -4954,7 +4954,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-18.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-18.md",
         "source_file_name": "2026-06-18.md",
         "source_report_date": "2026-06-18",
         "source_index": 1,
@@ -5003,7 +5003,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-16.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-16.md",
         "source_file_name": "2026-06-16.md",
         "source_report_date": "2026-06-16",
         "source_index": 3,
@@ -5052,7 +5052,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-16.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-16.md",
         "source_file_name": "2026-06-16.md",
         "source_report_date": "2026-06-16",
         "source_index": 2,
@@ -5101,7 +5101,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-16.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-16.md",
         "source_file_name": "2026-06-16.md",
         "source_report_date": "2026-06-16",
         "source_index": 1,
@@ -5152,7 +5152,7 @@
     "pending": [
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-24.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-24.md",
         "source_file_name": "2026-06-24.md",
         "source_report_date": "2026-06-24",
         "source_index": 2,
@@ -5187,7 +5187,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-24.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-24.md",
         "source_file_name": "2026-06-24.md",
         "source_report_date": "2026-06-24",
         "source_index": 3,
@@ -5222,7 +5222,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-24.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-24.md",
         "source_file_name": "2026-06-24.md",
         "source_report_date": "2026-06-24",
         "source_index": 4,
@@ -5257,7 +5257,7 @@
       },
       {
         "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-24.md",
+        "source_file": "C:\\nginx-1.29.8\\html\\cup\\reports\\2026-06-24.md",
         "source_file_name": "2026-06-24.md",
         "source_report_date": "2026-06-24",
         "source_index": 5,
