@@ -112,3 +112,75 @@
   .prediction-toolbar .toolbar-actions{width:100%}
   .prediction-toolbar .toolbar-actions .btn{width:100%}
 }
+
+/* Accuracy trend chart */
+.chart-panel .chart-wrap{
+  position:relative;
+  height:300px;
+  margin-top:8px;
+}
+.chart-panel canvas{
+  display:block;
+  width:100%!important;
+}
+
+/* Prediction card: logos + confidence */
+.pred-header-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:8px;
+}
+.pred-header-row .label{margin-bottom:0}
+.conf-badge{
+  display:inline-flex;
+  align-items:center;
+  border-radius:999px;
+  padding:3px 9px;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.04em;
+  white-space:nowrap;
+}
+.conf-badge.conf-high{background:rgba(85,227,155,.15);border:1px solid rgba(85,227,155,.4);color:var(--green)}
+.conf-badge.conf-warn{background:rgba(255,209,102,.12);border:1px solid rgba(255,209,102,.35);color:var(--yellow)}
+.conf-badge.conf-low{background:rgba(93,215,255,.1);border:1px solid rgba(93,215,255,.28);color:var(--blue)}
+.pred-teams-visual{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:4px 0 6px;
+}
+.pred-teams-visual h3{margin:0;font-size:20px;flex:1;min-width:0}
+.vs-mini{
+  color:var(--muted);
+  font-size:14px;
+  font-weight:400;
+  margin:0 2px;
+}
+.pred-logo{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,.18);
+  object-fit:contain;
+  background:rgba(255,255,255,.06);
+  flex:0 0 auto;
+}
+.pred-logo-ph{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,.12);
+  display:grid;
+  place-items:center;
+  font-weight:900;
+  font-size:12px;
+  color:var(--muted);
+  background:rgba(255,255,255,.06);
+  flex:0 0 auto;
+}
+@media(max-width:600px){
+  .pred-logo,.pred-logo-ph{width:32px;height:32px}
+  .pred-teams-visual h3{font-size:16px}
+}

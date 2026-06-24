@@ -1,4 +1,4 @@
-const state = { data: null, allMatches: [], exporting: false, autoRefreshTimer: null };
+const state = { data: null, allMatches: [], exporting: false, autoRefreshTimer: null, chartInstance: null };
 const $ = (id) => document.getElementById(id);
 
 function fmtDateTime(iso){
@@ -129,22 +129,44 @@ function renderSummary(data){
   renderList('tomorrowMatches', data.sections.tomorrow_matches, '明日暂无已确认世界杯比赛。');
 }
 
+function predConfidence(pred){
+  const t=pred?.tendency||'';
+  const sp=pred?.score_pairs?.[0];
+  const diff=sp?Math.abs(sp[0]-sp[1]):0;
+  if((t==='主胜'||t==='客胜')&&diff>=2) return {label:'优势明显',cls:'conf-high'};
+  if(t.includes('防平')) return {label:'防平注意',cls:'conf-warn'};
+  if(t.includes('平局')) return {label:'均势对决',cls:'conf-low'};
+  return {label:'小胜倾向',cls:'conf-warn'};
+}
 function renderPredictions(data){
   const rows = data.sections.day_after_predictions || [];
   $('predictionTitle').textContent = `${data.dates.prediction_target} 明天${rows.length || ''}场预测（北京时间）`;
   $('predictionCards').innerHTML = rows.length ? rows.map((m, i)=>{
     const p = m.prediction;
+    const conf=predConfidence(p);
+    const logoHtml=(url,name)=>url?`<img class="pred-logo" src="${esc(url)}" alt="${esc(name)}" loading="lazy" onerror="this.style.display='none'">`:`<div class="pred-logo-ph">${esc((name||'?').slice(0,2))}</div>`;
     return `<article class="prediction-card">
-      <div class="prediction-head">
-        <div><div class="label">第 ${i+1} 场 · ${fmtDateTime(m.date_bj)}</div><h3>${m.home_zh} vs ${m.away_zh}</h3><div class="meta">${m.note || '世界杯'} · ${m.venue}</div></div>
-        <div class="badge">${m.status}</div>
+  <div class="prediction-head">
+    <div>
+      <div class="pred-header-row">
+        <div class="label">第 ${i+1} 场 · ${fmtDateTime(m.date_bj)}</div>
+        ${conf?`<span class="conf-badge ${conf.cls}">${conf.label}</span>`:''}
       </div>
-      <p class="tendency">胜平负倾向：${p.tendency}</p>
-      <div class="label">3个比分预测</div><div class="pill-row">${p.scores.map(x=>`<span class="pill">${x}</span>`).join('')}</div>
-      <div class="label">3个半全场预测</div><div class="pill-row hf">${p.half_full.map(x=>`<span class="pill">${x}</span>`).join('')}</div>
-      <p class="analysis">${p.analysis}</p>
-      <a href="${m.link}" target="_blank" rel="noopener">ESPN 比赛页</a>
-    </article>`;
+      <div class="pred-teams-visual">
+        ${logoHtml(m.home_logo,m.home_zh)}
+        <h3>${esc(m.home_zh)} <span class="vs-mini">vs</span> ${esc(m.away_zh)}</h3>
+        ${logoHtml(m.away_logo,m.away_zh)}
+      </div>
+      <div class="meta">${esc(m.note||'世界杯')} · ${esc(m.venue)}</div>
+    </div>
+    <div class="badge">${esc(m.status)}</div>
+  </div>
+  <p class="tendency">胜平负倾向：${esc(p.tendency)}</p>
+  <div class="label">3个比分预测</div><div class="pill-row">${p.scores.map(x=>`<span class="pill">${esc(x)}</span>`).join('')}</div>
+  <div class="label">3个半全场预测</div><div class="pill-row hf">${p.half_full.map(x=>`<span class="pill">${esc(x)}</span>`).join('')}</div>
+  <p class="analysis">${esc(p.analysis)}</p>
+  <a href="${esc(m.link)}" target="_blank" rel="noopener">ESPN 比赛页</a>
+</article>`;
   }).join('') : empty('明天暂未检索到可确认比赛，数据源更新后会自动显示。');
 }
 
@@ -225,6 +247,7 @@ function renderStats(data){
     <div class="bar-metric"><span>半全场 ${d.half_full_hits ?? 0}/${d.half_full_total ?? 0}</span><div class="track"><div class="fill hf-fill" style="width:${d.half_full_rate ?? 0}%"></div></div><b>${d.half_full_rate == null ? '待' : `${d.half_full_rate}%`}</b></div>
   </div>`).join('') : empty('暂无已结算历史预测；reports 中的预测比赛完赛后会自动累计。');
   $('recentStats').innerHTML = renderSettledGroups(st.recent, st.half_full_note || '暂无统计。');
+  renderAccuracyChart(data);
 }
 
 function outcomeShort(pred){
@@ -415,6 +438,70 @@ function ensureJsPdf(){
     script.onerror = ()=> reject(new Error('无法加载PDF导出组件，请检查网络后重试'));
     document.head.appendChild(script);
   });
+}
+function ensureChartJs(){
+  if(window.Chart) return Promise.resolve(window.Chart);
+  return new Promise((resolve,reject)=>{
+    const script=document.createElement('script');
+    script.src='https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';
+    script.async=true; script.dataset.lib='chartjs';
+    script.onload=()=>window.Chart?resolve(window.Chart):reject(new Error('Chart.js 加载失败'));
+    script.onerror=()=>reject(new Error('无法加载 Chart.js，请检查网络'));
+    document.head.appendChild(script);
+  });
+}
+async function renderAccuracyChart(data){
+  const canvas=$('accuracyChart');
+  if(!canvas) return;
+  const st=data.stats||{};
+  const byDate=(st.by_date||[]).slice().sort((a,b)=>String(a.date||'').localeCompare(String(b.date||'')));
+  if(!byDate.length){ canvas.parentElement.insertAdjacentHTML('beforeend','<p class="empty">暂无多日数据</p>'); return; }
+  try{
+    const ChartJs=await ensureChartJs();
+    if(state.chartInstance){state.chartInstance.destroy();state.chartInstance=null;}
+    const labels=byDate.map(d=>String(d.date||'').slice(5));
+    const mkAvgLine=(val,len)=>val==null?[]:Array(len).fill(val);
+    state.chartInstance=new ChartJs(canvas,{
+      type:'line',
+      data:{
+        labels,
+        datasets:[
+          {label:`胜平负 (均值 ${st.outcome_rate??'-'}%)`,data:byDate.map(d=>d.outcome_rate??null),borderColor:'#5dd7ff',backgroundColor:'rgba(93,215,255,0.07)',pointBackgroundColor:'#5dd7ff',fill:true,tension:0.35,pointRadius:5,pointHoverRadius:7,borderWidth:2.5},
+          {label:`比分命中 (均值 ${st.exact_score_rate??'-'}%)`,data:byDate.map(d=>d.score_rate??null),borderColor:'#ffd166',backgroundColor:'rgba(255,209,102,0.07)',pointBackgroundColor:'#ffd166',fill:true,tension:0.35,pointRadius:5,pointHoverRadius:7,borderWidth:2.5},
+          {label:`半全场 (均值 ${st.half_full_rate??'-'}%)`,data:byDate.map(d=>d.half_full_rate??null),borderColor:'#55e39b',backgroundColor:'rgba(85,227,155,0.07)',pointBackgroundColor:'#55e39b',fill:true,tension:0.35,pointRadius:5,pointHoverRadius:7,borderWidth:2.5,spanGaps:true},
+          {label:'胜平负均线',data:mkAvgLine(st.outcome_rate,labels.length),borderColor:'rgba(93,215,255,0.4)',borderDash:[5,4],borderWidth:1.5,pointRadius:0,fill:false,tension:0},
+          {label:'比分均线',data:mkAvgLine(st.exact_score_rate,labels.length),borderColor:'rgba(255,209,102,0.4)',borderDash:[5,4],borderWidth:1.5,pointRadius:0,fill:false,tension:0},
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:'index',intersect:false},
+        plugins:{
+          legend:{position:'top',labels:{color:'#9fb2d1',padding:16,font:{size:12,weight:'bold'},usePointStyle:true,filter:item=>!item.text.includes('均线')}},
+          tooltip:{backgroundColor:'rgba(6,16,35,0.94)',titleColor:'#eaf2ff',bodyColor:'#9fb2d1',borderColor:'rgba(93,215,255,0.3)',borderWidth:1,padding:12,
+            callbacks:{
+              title:items=>`${items[0].label} 比赛日`,
+              label:ctx=>{
+                const d=byDate[ctx.dataIndex]||{};
+                if(ctx.dataset.borderDash) return '';
+                if(ctx.datasetIndex===0) return ` 胜平负 ${ctx.parsed.y??'-'}%  (${d.outcome_hits??'-'}/${d.total??'-'})`;
+                if(ctx.datasetIndex===1) return ` 比分 ${ctx.parsed.y??'-'}%  (${d.score_hits??'-'}/${d.total??'-'})`;
+                if(ctx.datasetIndex===2){const hft=d.half_full_total??0;return ` 半全场 ${ctx.parsed.y??'-'}%  (${d.half_full_hits??'-'}/${hft})`;}
+                return '';
+              },
+              filter:item=>!item.dataset.borderDash
+            }
+          }
+        },
+        scales:{
+          x:{grid:{color:'rgba(255,255,255,0.06)'},ticks:{color:'#9fb2d1',font:{size:12}},border:{color:'rgba(255,255,255,0.12)'}},
+          y:{min:0,max:100,grid:{color:'rgba(255,255,255,0.06)'},ticks:{color:'#9fb2d1',font:{size:12},callback:v=>`${v}%`,stepSize:25},border:{color:'rgba(255,255,255,0.12)'}}
+        }
+      }
+    });
+  }catch(e){
+    canvas.insertAdjacentHTML('afterend',`<p class="empty">图表加载失败：${e.message}</p>`);
+  }
 }
 async function renderSectionCanvas(sectionId){
   const html2canvas = await ensureHtml2Canvas();
