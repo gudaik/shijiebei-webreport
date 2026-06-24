@@ -113,6 +113,42 @@
   .prediction-toolbar .toolbar-actions .btn{width:100%}
 }
 
+/* Next match countdown */
+.next-match-cd{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 18px;
+  margin-bottom:18px;
+  border:1px solid rgba(93,215,255,.2);
+  border-radius:18px;
+  background:linear-gradient(135deg,rgba(93,215,255,.07),rgba(85,227,155,.04));
+  min-height:50px;
+  flex-wrap:wrap;
+}
+.next-match-cd:empty{display:none}
+.cd-label{color:var(--muted);font-size:13px;font-weight:700;white-space:nowrap}
+.cd-teams{font-weight:900;font-size:15px;flex:1;min-width:120px}
+.cd-time{font-size:22px;font-weight:900;color:var(--blue);letter-spacing:.03em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cd-live{color:var(--green);font-weight:900;display:flex;align-items:center;gap:8px}
+
+/* Match rows with logos */
+.row-logo{
+  width:22px;height:22px;border-radius:50%;
+  object-fit:contain;vertical-align:middle;
+  background:rgba(255,255,255,.06);
+  margin:0 4px;border:1px solid rgba(255,255,255,.12);
+}
+.row-info{display:flex;flex-direction:column;gap:3px}
+.live-row{border-color:rgba(255,209,102,.35)!important;background:rgba(255,209,102,.06)!important}
+.live-score{color:var(--yellow)!important}
+.live-pip{
+  display:inline-block;width:7px;height:7px;border-radius:50%;
+  background:var(--yellow);margin-left:5px;vertical-align:middle;
+  animation:pulse-pip 1.2s ease-in-out infinite;
+}
+@keyframes pulse-pip{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+
 /* Accuracy trend chart */
 .chart-panel .chart-wrap{
   position:relative;

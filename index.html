@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>2026世界杯北京时间每日报告</title>
-  <link rel="stylesheet" href="assets/styles.css?v=20260624-chart" />
+  <link rel="stylesheet" href="assets/styles.css?v=20260624-b" />
 </head>
 <body>
   <div class="bg"></div>
@@ -33,6 +33,7 @@
   <main>
     <section id="report" class="tab-panel active">
       <div class="grid three" id="summaryCards"></div>
+      <div id="nextMatchCountdown" class="next-match-cd"></div>
       <div class="grid two">
         <article class="panel">
           <h2>昨日/最近赛果</h2>
@@ -86,7 +87,7 @@
       </article>
       <article class="panel">
         <h2>每日命中率视图</h2>
-        <p class="section-note">统计从 <code>C:\nginx-1.24.0\html\worldcup2\reports</code> 下的 Markdown 预测报告开始，自动解析比分/胜平负/半全场预测，并与 ESPN 完赛比分核对。</p>
+        <p class="section-note" id="dateBarsNote">统计从本地 Markdown 预测报告开始，自动解析比分/胜平负/半全场预测，并与 ESPN 完赛比分核对。</p>
         <div id="dateBars" class="bars"></div>
       </article>
       <article class="panel">
@@ -142,6 +143,6 @@
     <span>预测仅供娱乐和信息参考，不构成投注建议。</span>
   </footer>
 
-  <script src="assets/app.js?v=20260624-chart"></script>
+  <script src="assets/app.js?v=20260624-b"></script>
 </body>
 </html>

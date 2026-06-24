@@ -1,4 +1,4 @@
-const state = { data: null, allMatches: [], exporting: false, autoRefreshTimer: null, chartInstance: null };
+const state = { data: null, allMatches: [], exporting: false, autoRefreshTimer: null, chartInstance: null, countdownTimer: null };
 const $ = (id) => document.getElementById(id);
 
 function fmtDateTime(iso){
@@ -7,13 +7,17 @@ function fmtDateTime(iso){
 }
 function scoreText(m){ return m.home_score === null || m.away_score === null ? 'vs' : `${m.home_score}-${m.away_score}`; }
 function empty(text){ return `<div class="empty">${text}</div>`; }
+function rowLogo(url, name){ return url ? `<img class="row-logo" src="${esc(url)}" alt="${esc(name)}" loading="lazy" onerror="this.style.display='none'">` : ''; }
 function matchRow(m){
   const score = scoreText(m);
-  const scoreClass = score === 'vs' ? 'badge' : 'score';
-  return `<div class="match-row">
-    <div class="time">${fmtDateTime(m.date_bj)}</div>
-    <div><div class="teams">${m.home_zh} <span class="mini">vs</span> ${m.away_zh}</div>
-      <div class="meta">${m.status}${m.status_detail ? ' · '+m.status_detail : ''} · ${m.venue || '场地待核实'}</div></div>
+  const isLive = !m.completed && m.status && !['Scheduled','Pre Game','TBD',''].includes(m.status);
+  const scoreClass = score === 'vs' ? 'badge' : isLive ? 'score live-score' : 'score';
+  return `<div class="match-row${isLive ? ' live-row' : ''}">
+    <div class="time">${fmtDateTime(m.date_bj)}${isLive ? ' <span class="live-pip"></span>' : ''}</div>
+    <div class="row-info">
+      <div class="teams">${rowLogo(m.home_logo,m.home_zh)}${esc(m.home_zh)} <span class="mini">vs</span> ${esc(m.away_zh)}${rowLogo(m.away_logo,m.away_zh)}</div>
+      <div class="meta">${esc(m.status)}${m.status_detail ? ' · '+esc(m.status_detail) : ''} · ${esc(m.venue || '场地待核实')}</div>
+    </div>
     <div class="${scoreClass}">${score}</div>
   </div>`;
 }
@@ -115,15 +119,41 @@ function renderLiveStatsNotice(data){
   }
 }
 
+function renderNextCountdown(data){
+  const el = $('nextMatchCountdown');
+  if(!el) return;
+  if(state.countdownTimer){ clearInterval(state.countdownTimer); state.countdownTimer = null; }
+  const all = (data.sections.all_known_matches || []);
+  const now = Date.now();
+  const next = all.filter(m => !m.completed && new Date(m.date_bj).getTime() > now)
+                   .sort((a,b) => new Date(a.date_bj) - new Date(b.date_bj))[0];
+  if(!next){ el.innerHTML = ''; return; }
+  const target = new Date(next.date_bj).getTime();
+  function tick(){
+    const diff = target - Date.now();
+    if(diff <= 0){
+      el.innerHTML = `<span class="cd-live">⚽ ${esc(next.home_zh)} vs ${esc(next.away_zh)} 比赛可能已开始</span>`;
+      clearInterval(state.countdownTimer); state.countdownTimer = null; return;
+    }
+    const h = Math.floor(diff / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    const timeStr = (h ? `${h}时` : '') + `${m}分${String(s).padStart(2,'0')}秒`;
+    el.innerHTML = `<span class="cd-label">距下一场</span><span class="cd-teams">${esc(next.home_zh)} vs ${esc(next.away_zh)}</span><span class="cd-time">${timeStr}</span>`;
+  }
+  tick();
+  state.countdownTimer = setInterval(tick, 1000);
+}
 function renderSummary(data){
   const s = data.summary;
   $('generatedAt').textContent = data.generated_at_label;
-  $('sourceLink').innerHTML = `<a href="${data.source.url}" target="_blank" rel="noopener">ESPN 数据源</a>`;
+  $('sourceLink').innerHTML = `<a href="${esc(data.source.url)}" target="_blank" rel="noopener">ESPN 数据源</a>`;
   $('summaryCards').innerHTML = [
     ['今日比赛', s.today_count, data.dates.today],
     ['明日比赛', s.tomorrow_count, data.dates.tomorrow],
     ['明天预测', s.prediction_count, data.dates.prediction_target],
-  ].map(([label,num,hint])=>`<div class="summary-card"><div class="label">${label}</div><div class="num">${num}</div><div class="hint">${hint} 北京时间</div></div>`).join('');
+  ].map(([label,num,hint])=>`<div class="summary-card"><div class="label">${label}</div><div class="num">${num}</div><div class="hint">${esc(hint)} 北京时间</div></div>`).join('');
+  renderNextCountdown(data);
   renderList('yesterdayResults', data.sections.yesterday_results, '暂无昨日赛果。');
   renderList('todayMatches', data.sections.today_matches, '今日暂无已确认世界杯比赛。');
   renderList('tomorrowMatches', data.sections.tomorrow_matches, '明日暂无已确认世界杯比赛。');
@@ -231,6 +261,8 @@ function renderSettledGroups(rows, fallback){
 function renderStats(data){
   const st = data.stats;
   const src = data.report_source || {};
+  const noteEl = $('dateBarsNote');
+  if(noteEl && src.windows_directory) noteEl.innerHTML = `统计从 <code>${esc(src.windows_directory)}</code> 下的 Markdown 预测报告开始，自动解析比分/胜平负/半全场预测，并与 ESPN 完赛比分核对。`;
   $('statCards').innerHTML = [
     ['报告预测总数', st.report_predictions_total ?? 0, `来源：${src.windows_directory || st.source_label || 'reports'}；${st.report_files_total ?? 0} 个报告文件 / ${st.report_files_with_predictions ?? 0} 个含预测`],
     ['已结算场次', st.completed_total, `待结算 ${st.pending_total ?? 0} 场`],
