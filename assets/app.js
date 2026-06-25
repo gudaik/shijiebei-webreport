@@ -204,9 +204,9 @@ function renderPredictions(data){
   </div>
   <p class="tendency">胜平负倾向：${esc(p.tendency)} ${oddsBadge(odds.outcome_pick?.odds)}</p>
   <div class="sporttery-odds-block">
-    <div class="odds-title">中国体彩胜平负参考赔率</div>
+    <div class="odds-title">胜平负模型参考系数（体彩玩法格式）</div>
     <div class="pill-row odds-row">${['胜','平','负'].map(k=>oddsPill(k, odds.outcome?.[k])).join('')}</div>
-    <div class="odds-source">${esc(odds.source || '中国体彩格式参考赔率')}</div>
+    <div class="odds-source">${esc(odds.source || '模型参考赔付系数，非体彩官方实际赔率')}</div>
   </div>
   <div class="label">3个比分预测</div><div class="pill-row">${p.scores.map(x=>oddsPill(x, odds.scores?.[x])).join('')}</div>
   <div class="label">3个半全场预测</div><div class="pill-row hf">${p.half_full.map(x=>oddsPill(x, odds.half_full?.[x])).join('')}</div>
@@ -332,7 +332,7 @@ function candidateOdds(match, type, pick){
   return null;
 }
 function oddsBadge(v){
-  return `<span class="odds-badge">赔率 ${fmtOdds(v)}</span>`;
+  return `<span class="odds-badge">参考系数 ${fmtOdds(v)}</span>`;
 }
 function oddsPill(label, v){
   return `<span class="pill odds-pill"><span>${esc(label)}</span><b>${fmtOdds(v)}</b></span>`;
@@ -633,7 +633,7 @@ function renderBetAdvisor(data){
   </article>
 
   <article class="panel bet-warning">
-    <strong>说明：</strong>模拟推荐，不是官方投注指令；当前赔率为中国体彩玩法格式的本地模型参考值，非官方实时赔率。实际购买前请以体彩终端/官方渠道即时赔率为准，请勿超预算。
+    <strong>说明：</strong>模拟推荐，不是官方投注指令；页面数字是按体彩玩法格式推算的模型参考赔付系数，不是体彩官方实际赔率，可能与终端即时赔率不一致。实际购买前请只以体彩终端/官方渠道即时赔率为准，请勿超预算。
   </article>`;
 
   $('copyBetBtn')?.addEventListener('click', ()=>copyBetText(plan, budget, spent, cfg, data));

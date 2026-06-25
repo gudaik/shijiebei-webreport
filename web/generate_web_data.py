@@ -310,7 +310,7 @@ def make_sporttery_reference_odds(diff: int, scores: list[tuple[int, int]], half
     half_full_odds = {h: decimal_odds(hf_probs.get(h, 0.01), payout=0.82, lo=3.2, hi=80) for h in half_full}
     pick = home_outcome_code(main_outcome)
     return {
-        "source": "中国体彩格式参考赔率（本地模型估算，非官方实时赔率）",
+        "source": "模型参考赔付系数（按体彩玩法格式推算，非体彩官方实际赔率）",
         "outcome": outcome_odds,
         "outcome_pick": {"label": pick, "odds": outcome_odds.get(pick)},
         "scores": score_odds,
