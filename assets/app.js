@@ -183,6 +183,7 @@ function renderPredictions(data){
   $('predictionTitle').textContent = `${data.dates.prediction_target} 明天${rows.length || ''}场预测（北京时间）`;
   $('predictionCards').innerHTML = rows.length ? rows.map((m, i)=>{
     const p = m.prediction;
+    const odds = p.odds || {};
     const conf=predConfidence(p);
     const logoHtml=(url,name)=>url?`<img class="pred-logo" src="${esc(url)}" alt="${esc(name)}" loading="lazy" onerror="this.style.display='none'">`:`<div class="pred-logo-ph">${esc((name||'?').slice(0,2))}</div>`;
     return `<article class="prediction-card">
@@ -201,9 +202,14 @@ function renderPredictions(data){
     </div>
     <div class="badge">${esc(m.status)}</div>
   </div>
-  <p class="tendency">胜平负倾向：${esc(p.tendency)}</p>
-  <div class="label">3个比分预测</div><div class="pill-row">${p.scores.map(x=>`<span class="pill">${esc(x)}</span>`).join('')}</div>
-  <div class="label">3个半全场预测</div><div class="pill-row hf">${p.half_full.map(x=>`<span class="pill">${esc(x)}</span>`).join('')}</div>
+  <p class="tendency">胜平负倾向：${esc(p.tendency)} ${oddsBadge(odds.outcome_pick?.odds)}</p>
+  <div class="sporttery-odds-block">
+    <div class="odds-title">中国体彩胜平负参考赔率</div>
+    <div class="pill-row odds-row">${['胜','平','负'].map(k=>oddsPill(k, odds.outcome?.[k])).join('')}</div>
+    <div class="odds-source">${esc(odds.source || '中国体彩格式参考赔率')}</div>
+  </div>
+  <div class="label">3个比分预测</div><div class="pill-row">${p.scores.map(x=>oddsPill(x, odds.scores?.[x])).join('')}</div>
+  <div class="label">3个半全场预测</div><div class="pill-row hf">${p.half_full.map(x=>oddsPill(x, odds.half_full?.[x])).join('')}</div>
   <p class="analysis">${esc(p.analysis)}</p>
   <a href="${esc(m.link)}" target="_blank" rel="noopener">ESPN 比赛页</a>
 </article>`;
@@ -274,7 +280,7 @@ function renderStats(data){
   const noteEl = $('dateBarsNote');
   if(noteEl && src.windows_directory) noteEl.innerHTML = `统计从 <code>${esc(src.windows_directory)}</code> 下的 Markdown 预测报告开始，自动解析比分/胜平负/半全场预测，并与 ESPN 完赛比分核对。`;
   $('statCards').innerHTML = [
-    ['报告预测总数', st.report_predictions_total ?? 0, `来源：${src.windows_directory || st.source_label || 'reports'}；${st.report_files_total ?? 0} 个报告文件 / ${st.report_files_with_predictions ?? 0} 个含预测`],
+    ['预测审计总数', st.audited_predictions_total ?? st.report_predictions_total ?? 0, `来源：${src.windows_directory || st.source_label || 'reports'}；报告 ${st.report_predictions_total ?? 0} 条 / 自动历史 ${st.dashboard_history_predictions_total ?? 0} 条`],
     ['已结算场次', st.completed_total, `待结算 ${st.pending_total ?? 0} 场`],
     ['比分命中率', pct(st.exact_score_rate), `${st.exact_score_hits}/${st.completed_total}`],
     ['胜平负命中率', pct(st.outcome_rate), `${st.outcome_hits}/${st.completed_total}`],
@@ -308,6 +314,37 @@ function betPlanConfig(risk){
 function playTypeLabel(playType){
   return {all:'全部玩法', outcome:'胜平负', score:'比分', halfFull:'半全场'}[playType] || '全部玩法';
 }
+function fmtOdds(v){
+  const n = Number(v);
+  return Number.isFinite(n) ? n.toFixed(2) : '—';
+}
+function outcomeCode(pred){
+  const raw = String(pred?.primary_outcome || pred?.tendency || '');
+  if(raw.includes('客胜')) return '负';
+  if(raw.includes('平')) return '平';
+  return '胜';
+}
+function candidateOdds(match, type, pick){
+  const odds = match?.prediction?.odds || {};
+  if(type === '胜平负') return odds.outcome?.[outcomeCode(match?.prediction)];
+  if(type === '比分') return odds.scores?.[pick];
+  if(type === '半全场') return odds.half_full?.[pick];
+  return null;
+}
+function oddsBadge(v){
+  return `<span class="odds-badge">赔率 ${fmtOdds(v)}</span>`;
+}
+function oddsPill(label, v){
+  return `<span class="pill odds-pill"><span>${esc(label)}</span><b>${fmtOdds(v)}</b></span>`;
+}
+function estimatedReturn(c){
+  const n = Number(c?.odds);
+  return Number.isFinite(n) ? (c.units * 2 * n).toFixed(1) : '—';
+}
+function parlayOddsFromLegs(legs){
+  const vals = (legs || []).map(x=>Number(x)).filter(Number.isFinite);
+  return vals.length ? Number(vals.reduce((a,b)=>a*b,1).toFixed(2)) : null;
+}
 function buildBetCandidates(matches, risk, parlayMode, passType, playType='all'){
   const cfg = betPlanConfig(risk);
   const candidates = [];
@@ -319,9 +356,12 @@ function buildBetCandidates(matches, risk, parlayMode, passType, playType='all')
     const p = m.prediction || {}; const title = `${m.home_zh} vs ${m.away_zh}`;
     const confidence = p.primary_outcome === '主胜' ? 1.08 : p.primary_outcome === '客胜' ? 0.96 : 0.86;
     const matchNo = `周${'日一二三四五六'[new Date(m.date_bj).getDay()]}${String(idx+1).padStart(3,'0')}`;
-    if(useOutcome) candidates.push({type:'胜平负', play:'单关', title, matchNo, matchIndex:idx, pick:p.primary_outcome || p.tendency || outcomeShort(p), weight:cfg.weights.outcome * confidence, reason:'作为主预测方向，适合承担基础仓位。'});
-    if(useScore) (p.scores || []).slice(0,cfg.maxScores).forEach((s, j)=>candidates.push({type:'比分', play:'单关', title, matchNo, matchIndex:idx, pick:s, weight:cfg.weights.score * (j ? 0.72 : 1), reason:j ? '次选比分，小额覆盖波动。' : '首选比分，用于提高潜在回报。'}));
-    if(useHalfFull) (p.half_full || []).slice(0,cfg.maxHalfFull).forEach((h, j)=>candidates.push({type:'半全场', play:'单关', title, matchNo, matchIndex:idx, pick:h, weight:cfg.weights.halfFull * (j ? 0.7 : 1), reason:j ? '半全场次选，小额博高赔。' : '半全场主选，配合比分方向。'}));
+    if(useOutcome){
+      const pick = p.primary_outcome || p.tendency || outcomeShort(p);
+      candidates.push({type:'胜平负', play:'单关', title, matchNo, matchIndex:idx, pick, odds:candidateOdds(m, '胜平负', pick), weight:cfg.weights.outcome * confidence, reason:'作为主预测方向，适合承担基础仓位。'});
+    }
+    if(useScore) (p.scores || []).slice(0,cfg.maxScores).forEach((s, j)=>candidates.push({type:'比分', play:'单关', title, matchNo, matchIndex:idx, pick:s, odds:candidateOdds(m, '比分', s), weight:cfg.weights.score * (j ? 0.72 : 1), reason:j ? '次选比分，小额覆盖波动。' : '首选比分，用于提高潜在回报。'}));
+    if(useHalfFull) (p.half_full || []).slice(0,cfg.maxHalfFull).forEach((h, j)=>candidates.push({type:'半全场', play:'单关', title, matchNo, matchIndex:idx, pick:h, odds:candidateOdds(m, '半全场', h), weight:cfg.weights.halfFull * (j ? 0.7 : 1), reason:j ? '半全场次选，小额博高赔。' : '半全场主选，配合比分方向。'}));
   });
   const allowParlay = parlayMode === 'parlay' || (parlayMode === 'auto' && risk !== 'safe');
   const selectedSamePick = (m) => {
@@ -330,6 +370,12 @@ function buildBetCandidates(matches, risk, parlayMode, passType, playType='all')
     if(playType === 'halfFull') return `${m.home_zh} ${p.half_full?.[0] || '半全场主选'}`;
     return `${m.home_zh}${outcomeShort(p)}`;
   };
+  const selectedSameOdds = (m) => {
+    const p = m.prediction || {};
+    if(playType === 'score') return candidateOdds(m, '比分', p.scores?.[0]);
+    if(playType === 'halfFull') return candidateOdds(m, '半全场', p.half_full?.[0]);
+    return candidateOdds(m, '胜平负', p.primary_outcome || outcomeShort(p));
+  };
   const selectedSameType = playType === 'score' ? '比分' : playType === 'halfFull' ? '半全场' : '胜平负';
   if(allowParlay && rows.length >= 2){
     if(passType === 'mixed' && playType === 'all'){
@@ -337,10 +383,11 @@ function buildBetCandidates(matches, risk, parlayMode, passType, playType='all')
       const p2 = m2.prediction || {};
       const leg1 = `胜平负 ${m1.home_zh}${outcomeShort(m1.prediction)}`;
       const leg2 = `比分 ${m2.home_zh} ${p2.scores?.[0] || outcomeShort(p2)}`;
-      candidates.push({type:'混合过关', play:'2串1', title:'混合过关组合', pick:`${leg1} × ${leg2}`, weight:cfg.weights.parlay * 1.15, reason:'不同玩法混合串关，回报弹性更高，风险也高于同种过关。'});
+      const parlayOdds = parlayOddsFromLegs([candidateOdds(m1, '胜平负', m1.prediction?.primary_outcome), candidateOdds(m2, '比分', p2.scores?.[0])]);
+      candidates.push({type:'混合过关', play:'2串1', title:'混合过关组合', pick:`${leg1} × ${leg2}`, odds:parlayOdds, weight:cfg.weights.parlay * 1.15, reason:'不同玩法混合串关，回报弹性更高，风险也高于同种过关。'});
     }else{
       const legs2 = rows.slice(0,2).map(selectedSamePick).join(' × ');
-      candidates.push({type:'同种过关', play:'2串1', title:'同种过关组合', pick:`${selectedSameType}：${legs2}`, weight:cfg.weights.parlay * 1.15, reason:`只使用${selectedSameType}玩法串关，结构更清晰。`});
+      candidates.push({type:'同种过关', play:'2串1', title:'同种过关组合', pick:`${selectedSameType}：${legs2}`, odds:parlayOddsFromLegs(rows.slice(0,2).map(selectedSameOdds)), weight:cfg.weights.parlay * 1.15, reason:`只使用${selectedSameType}玩法串关，结构更清晰。`});
     }
   }
   if(allowParlay && risk === 'aggressive' && rows.length >= 3){
@@ -349,10 +396,15 @@ function buildBetCandidates(matches, risk, parlayMode, passType, playType='all')
       const leg1 = `胜平负 ${m1.home_zh}${outcomeShort(m1.prediction)}`;
       const leg2 = `比分 ${m2.home_zh} ${m2.prediction?.scores?.[0] || outcomeShort(m2.prediction)}`;
       const leg3 = `半全场 ${m3.home_zh} ${m3.prediction?.half_full?.[0] || outcomeShort(m3.prediction)}`;
-      candidates.push({type:'混合过关', play:'3串1', title:'进取混合过关', pick:`${leg1} × ${leg2} × ${leg3}`, weight:cfg.weights.parlay * 0.9, reason:'胜平负、比分、半全场混合，适合小仓位博高回报。'});
+      const parlayOdds = parlayOddsFromLegs([
+        candidateOdds(m1, '胜平负', m1.prediction?.primary_outcome),
+        candidateOdds(m2, '比分', m2.prediction?.scores?.[0]),
+        candidateOdds(m3, '半全场', m3.prediction?.half_full?.[0]),
+      ]);
+      candidates.push({type:'混合过关', play:'3串1', title:'进取混合过关', pick:`${leg1} × ${leg2} × ${leg3}`, odds:parlayOdds, weight:cfg.weights.parlay * 0.9, reason:'胜平负、比分、半全场混合，适合小仓位博高回报。'});
     }else{
       const legs3 = rows.slice(0,3).map(selectedSamePick).join(' × ');
-      candidates.push({type:'同种过关', play:'3串1', title:'进取同种过关', pick:`${selectedSameType}：${legs3}`, weight:cfg.weights.parlay * 0.9, reason:`${selectedSameType}同种3串1，风险较高，建议只用小仓位。`});
+      candidates.push({type:'同种过关', play:'3串1', title:'进取同种过关', pick:`${selectedSameType}：${legs3}`, odds:parlayOddsFromLegs(rows.slice(0,3).map(selectedSameOdds)), weight:cfg.weights.parlay * 0.9, reason:`${selectedSameType}同种3串1，风险较高，建议只用小仓位。`});
     }
   }
   if(parlayMode === 'single') return candidates.filter(c=>c.play === '单关');
@@ -392,10 +444,12 @@ function groupedBetPanels(plan){
       <div class="bet-opt-main">
         <span class="bet-type">${esc(c.type)}</span>
         <span class="bet-choice-lg">${esc(c.pick)}</span>
+        ${oddsBadge(c.odds)}
       </div>
       <div class="bet-opt-stake">
         <div class="bet-udots">${unitDots(c.units)}</div>
         <div class="bet-stake-row"><b>${c.units}</b>注 <span class="bet-yuan">${c.units*2}元</span></div>
+        <div class="bet-return">预估返奖 ${estimatedReturn(c)}元</div>
       </div>
     </div>`).join('')}</div>
   </section>`).join('');
@@ -405,10 +459,12 @@ function groupedBetPanels(plan){
       <div class="bet-opt-main">
         <span class="bet-type">${esc(c.play)}</span>
         <span class="bet-choice-lg">${esc(c.pick)}</span>
+        ${oddsBadge(c.odds)}
       </div>
       <div class="bet-opt-stake">
         <div class="bet-udots">${unitDots(c.units)}</div>
         <div class="bet-stake-row"><b>${c.units}</b>注 <span class="bet-yuan">${c.units*2}元</span></div>
+        <div class="bet-return">预估返奖 ${estimatedReturn(c)}元</div>
       </div>
     </div>`).join('')}</div>
   </section>` : '';
@@ -428,7 +484,7 @@ function betQuickTable(plan, matches){
   groups.sort((a,b)=>a.matchIndex-b.matchIndex);
 
   const cell=(c,cls)=>c
-    ? `<td class="qt-cell ${cls}"><div class="qt-pick">${esc(c.pick)}</div><div class="qt-units">${c.units}注·${c.units*2}元</div></td>`
+    ? `<td class="qt-cell ${cls}"><div class="qt-pick">${esc(c.pick)} ${oddsBadge(c.odds)}</div><div class="qt-units">${c.units}注·${c.units*2}元 · 预估返奖${estimatedReturn(c)}元</div></td>`
     : `<td class="qt-cell qt-nil">—</td>`;
 
   const bodyRows = groups.map((g,i)=>{
@@ -445,8 +501,8 @@ function betQuickTable(plan, matches){
   }).join('');
 
   const parlayRows = parlays.map(c=>`<tr class="qt-parlay-row">
-    <td class="qt-match" colspan="3"><span class="qt-parlay-tag">${esc(c.play)}</span>${esc(c.pick)}</td>
-    <td class="qt-cell qt-yellow"><div class="qt-pick">${c.units}注</div></td>
+    <td class="qt-match" colspan="3"><span class="qt-parlay-tag">${esc(c.play)}</span>${esc(c.pick)} ${oddsBadge(c.odds)}</td>
+    <td class="qt-cell qt-yellow"><div class="qt-pick">${c.units}注</div><div class="qt-units">预估返奖${estimatedReturn(c)}元</div></td>
     <td class="qt-sub">${c.units*2}元</td>
   </tr>`).join('');
 
@@ -495,13 +551,13 @@ function buildBetCopyText(plan, budget, spent, cfg, data){
     lines.push(`${i+1}. ${g.title}`);
     g.rows.forEach(c=>{
       const pad = c.type==='半全场'?'  ': c.type.length===3?'    ':'      ';
-      lines.push(`   ${c.type}${pad}${c.pick}   ×${c.units}注/${c.units*2}元`);
+      lines.push(`   ${c.type}${pad}${c.pick} @${fmtOdds(c.odds)}   ×${c.units}注/${c.units*2}元  预估返${estimatedReturn(c)}元`);
     });
   });
   if(parlays.length){
     lines.push('');
     lines.push('🔗 过关组合');
-    parlays.forEach(c=>lines.push(`   ${c.play}：${c.pick}   ×${c.units}注/${c.units*2}元`));
+    parlays.forEach(c=>lines.push(`   ${c.play}：${c.pick} @${fmtOdds(c.odds)}   ×${c.units}注/${c.units*2}元  预估返${estimatedReturn(c)}元`));
   }
   const totalN=plan.reduce((a,c)=>a+c.units,0), totalY=plan.reduce((a,c)=>a+c.units*2,0);
   const byT=plan.reduce((acc,c)=>{ if(c.play==='单关'){acc[c.type]=(acc[c.type]||{n:0,y:0});acc[c.type].n+=c.units;acc[c.type].y+=c.units*2;} return acc;},{});
@@ -577,7 +633,7 @@ function renderBetAdvisor(data){
   </article>
 
   <article class="panel bet-warning">
-    <strong>说明：</strong>模拟推荐，不是官方投注指令；赔率、首发、伤停和盘口变化会影响最优分配。请勿超预算。
+    <strong>说明：</strong>模拟推荐，不是官方投注指令；当前赔率为中国体彩玩法格式的本地模型参考值，非官方实时赔率。实际购买前请以体彩终端/官方渠道即时赔率为准，请勿超预算。
   </article>`;
 
   $('copyBetBtn')?.addEventListener('click', ()=>copyBetText(plan, budget, spent, cfg, data));

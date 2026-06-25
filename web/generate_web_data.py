@@ -242,6 +242,82 @@ def clamp(v: int, lo: int, hi: int) -> int:
     return max(lo, min(hi, v))
 
 
+def decimal_odds(prob: float, payout: float = 0.88, lo: float = 1.15, hi: float = 120.0) -> float:
+    prob = max(0.001, min(0.95, prob))
+    return round(max(lo, min(hi, payout / prob)), 2)
+
+
+def home_outcome_code(label: str) -> str:
+    if label in {"主胜", "胜"}:
+        return "胜"
+    if label in {"客胜", "负"}:
+        return "负"
+    return "平"
+
+
+def poisson_pmf(k: int, lam: float) -> float:
+    return math.exp(-lam) * (lam ** k) / math.factorial(k)
+
+
+def model_outcome_probs(diff: int) -> dict[str, float]:
+    draw = max(0.16, min(0.32, 0.29 - abs(diff) * 0.0045))
+    home_share = 1 / (1 + math.exp(-diff / 7.0))
+    home = (1 - draw) * home_share
+    away = 1 - draw - home
+    return {"胜": home, "平": draw, "负": away}
+
+
+def model_score_probs(diff: int) -> dict[str, float]:
+    # Home-team perspective Poisson grid, tuned to football-score ranges.
+    home_lam = max(0.45, min(3.2, 1.28 + diff * 0.035))
+    away_lam = max(0.35, min(3.0, 1.08 - diff * 0.028))
+    out: dict[str, float] = {}
+    for h in range(0, 6):
+        for a in range(0, 6):
+            out[f"{h}-{a}"] = poisson_pmf(h, home_lam) * poisson_pmf(a, away_lam)
+    return out
+
+
+def model_half_full_probs(outcome_probs: dict[str, float]) -> dict[str, float]:
+    half = {
+        "胜": outcome_probs["胜"] * 0.54 + 0.08,
+        "平": 0.44,
+        "负": outcome_probs["负"] * 0.54 + 0.08,
+    }
+    s = sum(half.values())
+    half = {k: v / s for k, v in half.items()}
+    out: dict[str, float] = {}
+    for h, hp in half.items():
+        for f, fp in outcome_probs.items():
+            corr = 1.42 if h == f else 0.78 if h == "平" else 0.58
+            out[f"{h}{f}"] = hp * fp * corr
+    total = sum(out.values()) or 1
+    return {k: v / total for k, v in out.items()}
+
+
+def make_sporttery_reference_odds(diff: int, scores: list[tuple[int, int]], half_full: list[str], main_outcome: str) -> dict:
+    """China Sports Lottery-style decimal odds from the local model.
+
+    This project has no authenticated official Sporttery odds feed.  Values are
+    model-estimated decimal odds in the same play categories: 胜平负 / 比分 / 半全场.
+    """
+    outcome_probs = model_outcome_probs(diff)
+    score_probs = model_score_probs(diff)
+    hf_probs = model_half_full_probs(outcome_probs)
+    score_labels = [f"{a}-{b}" for a, b in scores]
+    outcome_odds = {k: decimal_odds(v, payout=0.89, lo=1.18, hi=12) for k, v in outcome_probs.items()}
+    score_odds = {s: decimal_odds(score_probs.get(s, 0.01), payout=0.80, lo=4.0, hi=90) for s in score_labels}
+    half_full_odds = {h: decimal_odds(hf_probs.get(h, 0.01), payout=0.82, lo=3.2, hi=80) for h in half_full}
+    pick = home_outcome_code(main_outcome)
+    return {
+        "source": "中国体彩格式参考赔率（本地模型估算，非官方实时赔率）",
+        "outcome": outcome_odds,
+        "outcome_pick": {"label": pick, "odds": outcome_odds.get(pick)},
+        "scores": score_odds,
+        "half_full": half_full_odds,
+    }
+
+
 def make_prediction(m: Match) -> dict:
     hs = team_strength(m.home) + 2  # mild home designation advantage even on neutral-ish tournament listing
     aws = team_strength(m.away)
@@ -315,6 +391,8 @@ def make_prediction(m: Match) -> dict:
         risk = "两队实力几乎相当，首球与定位球将主导走势，低比分平局概率最高。"
 
     main_outcome = outcome(*scores[0])
+    half_full = adjust_half_full_predictions(tendency, [format_half_full_home(h, f) for h, f in htft])
+    odds = make_sporttery_reference_odds(diff, scores, half_full, main_outcome)
     return {
         "match_id": m.id,
         "generated_for_date": m.bj_date,
@@ -322,8 +400,9 @@ def make_prediction(m: Match) -> dict:
         "primary_outcome": main_outcome,
         "scores": [f"{a}-{b}" for a, b in scores],
         "score_pairs": scores,
-        "half_full": adjust_half_full_predictions(tendency, [format_half_full_home(h, f) for h, f in htft]),
+        "half_full": half_full,
         "half_full_pairs": htft,
+        "odds": odds,
         "analysis": build_analysis(m, diff, risk),
     }
 
@@ -556,12 +635,19 @@ def calc_stats_from_records(rows: list[dict]) -> dict:
         item["score_rate"] = round(item["score_hits"] / item["total"] * 100, 1) if item["total"] else 0
         item["outcome_rate"] = round(item["outcome_hits"] / item["total"] * 100, 1) if item["total"] else 0
         item["half_full_rate"] = round(item["half_full_hits"] / item["half_full_total"] * 100, 1) if item["half_full_total"] else None
+    report_rows = [r for r in rows if r.get("source_type") != "dashboard_history"]
+    dashboard_history_rows = [r for r in rows if r.get("source_type") == "dashboard_history"]
+    report_files_with_predictions = {
+        r.get("source_file_name") for r in report_rows if r.get("source_file_name")
+    }
     return {
-        "source": "reports",
-        "source_label": f"{REPORTS_DIR} Markdown 报告",
+        "source": "reports+dashboard_history",
+        "source_label": f"{REPORTS_DIR} Markdown 报告 + 页面自动预测历史",
         "report_files_total": len([p for p in REPORTS_DIR.glob("*.md") if p.name not in EXCLUDED_REPORT_FILES]) if REPORTS_DIR.exists() else 0,
-        "report_files_with_predictions": len({r.get("source_file_name") for r in rows}),
-        "report_predictions_total": len(rows),
+        "report_files_with_predictions": len(report_files_with_predictions),
+        "report_predictions_total": len(report_rows),
+        "dashboard_history_predictions_total": len(dashboard_history_rows),
+        "audited_predictions_total": len(rows),
         "pending_total": len(pending),
         "completed_total": total,
         "exact_score_hits": exact,
@@ -576,6 +662,41 @@ def calc_stats_from_records(rows: list[dict]) -> dict:
         "recent": sorted(completed, key=lambda r: r.get("date_bj", ""), reverse=True)[:30],
         "pending": sorted(pending, key=lambda r: r.get("date_bj", ""))[:30],
     }
+
+
+def merge_history_records_for_stats(report_rows: list[dict], history: dict) -> list[dict]:
+    """Merge durable dashboard predictions with parsed Markdown reports for stats.
+
+    The report parser only sees matches that were written into local Markdown files.
+    When ESPN later exposes a fuller slate, update_history() keeps the dashboard's own
+    pre-match predictions in history.json. Include those records here so the
+    "recent settled" comparison does not silently drop same-day matches that were
+    predicted by the dashboard but missing from a Markdown report.
+    """
+    merged: dict[str, dict] = {}
+
+    def row_key(r: dict) -> str:
+        return str(r.get("match_id") or "|".join([
+            str(r.get("date_bj") or r.get("date") or ""),
+            str(r.get("title") or ""),
+        ]))
+
+    for row in report_rows:
+        merged[row_key(row)] = row
+
+    for rec in history.get("predictions", {}).values():
+        if not rec.get("completed") or not rec.get("hit"):
+            continue
+        key = row_key(rec)
+        if key in merged:
+            continue
+        row = dict(rec)
+        row["source_type"] = "dashboard_history"
+        row["source_file_name"] = row.get("source_file_name") or "页面自动预测历史"
+        row.setdefault("matched", True)
+        merged[key] = row
+
+    return list(merged.values())
 
 
 def load_history() -> dict:
@@ -719,7 +840,8 @@ def main() -> int:
     update_history(history, matches, target_matches)
     save_history(history)
     report_predictions = reconcile_report_predictions(report_rows, matches)
-    stats = calc_stats_from_records(report_predictions)
+    audited_predictions = merge_history_records_for_stats(report_predictions, history)
+    stats = calc_stats_from_records(audited_predictions)
 
     current = {
         "generated_at_bj": now.isoformat(),
@@ -731,7 +853,7 @@ def main() -> int:
             "windows_directory": "C:\\nginx-1.24.0\\html\\worldcup2\\reports",
             "files_total": stats.get("report_files_total", 0),
             "predictions_total": stats.get("report_predictions_total", 0),
-            "description": "命中率统计以本地 Markdown 预测报告为主数据源，再与 ESPN 完赛比分核对。",
+            "description": "命中率统计以本地 Markdown 预测报告为主数据源；若报告漏掉同日已预测比赛，会补入页面自动预测历史，再与 ESPN 完赛比分核对。",
         },
         "dates": {
             "today": today.isoformat(), "yesterday": yesterday.isoformat(),

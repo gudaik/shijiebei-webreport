@@ -2659,3 +2659,113 @@
 [2026-06-24 22:39:06] WSL: - 06-25 09:00 南非 vs 韩国
 [2026-06-24 22:39:06] WSL: Report source /mnt/c/nginx-1.24.0/html/worldcup2/reports, files=10, parsed_predictions=32, completed=28
 [2026-06-24 22:39:06] WSL generation exit code: 0
+[2026-06-25 00:19:00] Refreshing dashboard data via WSL: /mnt/c/nginx-1.24.0/html/worldcup2/web/generate_web_data.py
+[2026-06-25 00:19:04] WSL: Generated /mnt/c/nginx-1.24.0/html/worldcup2/data/current.json
+[2026-06-25 00:19:04] WSL: Prediction target 2026-06-26, matches=6
+[2026-06-25 00:19:04] WSL: - 06-26 04:00 库拉索 vs 科特迪瓦
+[2026-06-25 00:19:04] WSL: - 06-26 04:00 厄瓜多尔 vs 德国
+[2026-06-25 00:19:04] WSL: - 06-26 07:00 日本 vs 瑞典
+[2026-06-25 00:19:04] WSL: - 06-26 07:00 突尼斯 vs 荷兰
+[2026-06-25 00:19:04] WSL: - 06-26 10:00 巴拉圭 vs 澳大利亚
+[2026-06-25 00:19:04] WSL: - 06-26 10:00 土耳其 vs 美国
+[2026-06-25 00:19:04] WSL: Report source /mnt/c/nginx-1.24.0/html/worldcup2/reports, files=10, parsed_predictions=32, completed=28
+[2026-06-25 00:19:04] WSL generation exit code: 0
+[2026-06-25 12:14:01] Refreshing dashboard data via WSL: /mnt/c/nginx-1.24.0/html/worldcup2/web/generate_web_data.py
+[2026-06-25 12:14:10] WSL: Generated /mnt/c/nginx-1.24.0/html/worldcup2/data/current.json
+[2026-06-25 12:14:10] WSL: Prediction target 2026-06-26, matches=6
+[2026-06-25 12:14:10] WSL: - 06-26 04:00 库拉索 vs 科特迪瓦
+[2026-06-25 12:14:10] WSL: - 06-26 04:00 厄瓜多尔 vs 德国
+[2026-06-25 12:14:10] WSL: - 06-26 07:00 日本 vs 瑞典
+[2026-06-25 12:14:10] WSL: - 06-26 07:00 突尼斯 vs 荷兰
+[2026-06-25 12:14:10] WSL: - 06-26 10:00 巴拉圭 vs 澳大利亚
+[2026-06-25 12:14:10] WSL: - 06-26 10:00 土耳其 vs 美国
+[2026-06-25 12:14:10] WSL: Report source /mnt/c/nginx-1.24.0/html/worldcup2/reports, files=10, parsed_predictions=32, completed=32
+[2026-06-25 12:14:10] WSL generation exit code: 0
+[2026-06-25 12:19:01] Refreshing dashboard data via WSL: /mnt/c/nginx-1.24.0/html/worldcup2/web/generate_web_data.py
+[2026-06-25 12:19:08] WSL: Generated /mnt/c/nginx-1.24.0/html/worldcup2/data/current.json
+[2026-06-25 12:19:08] WSL: Prediction target 2026-06-26, matches=6
+[2026-06-25 12:19:08] WSL: - 06-26 04:00 库拉索 vs 科特迪瓦
+[2026-06-25 12:19:08] WSL: - 06-26 04:00 厄瓜多尔 vs 德国
+[2026-06-25 12:19:08] WSL: - 06-26 07:00 日本 vs 瑞典
+[2026-06-25 12:19:08] WSL: - 06-26 07:00 突尼斯 vs 荷兰
+[2026-06-25 12:19:08] WSL: - 06-26 10:00 巴拉圭 vs 澳大利亚
+[2026-06-25 12:19:08] WSL: - 06-26 10:00 土耳其 vs 美国
+[2026-06-25 12:19:08] WSL: Report source /mnt/c/nginx-1.24.0/html/worldcup2/reports, files=10, parsed_predictions=32, completed=32
+[2026-06-25 12:19:08] WSL generation exit code: 0
+[2026-06-25 12:24:01] Refreshing dashboard data via WSL: /mnt/c/nginx-1.24.0/html/worldcup2/web/generate_web_data.py
+[2026-06-25 12:24:04] WSL: Generated /mnt/c/nginx-1.24.0/html/worldcup2/data/current.json
+[2026-06-25 12:24:04] WSL: Prediction target 2026-06-26, matches=6
+[2026-06-25 12:24:04] WSL: - 06-26 04:00 库拉索 vs 科特迪瓦
+[2026-06-25 12:24:04] WSL: - 06-26 04:00 厄瓜多尔 vs 德国
+[2026-06-25 12:24:04] WSL: - 06-26 07:00 日本 vs 瑞典
+[2026-06-25 12:24:04] WSL: - 06-26 07:00 突尼斯 vs 荷兰
+[2026-06-25 12:24:04] WSL: - 06-26 10:00 巴拉圭 vs 澳大利亚
+[2026-06-25 12:24:04] WSL: - 06-26 10:00 土耳其 vs 美国
+[2026-06-25 12:24:04] WSL: Report source /mnt/c/nginx-1.24.0/html/worldcup2/reports, files=10, parsed_predictions=32, completed=32
+[2026-06-25 12:24:04] WSL generation exit code: 0
+[2026-06-25 12:29:01] Refreshing dashboard data via WSL: /mnt/c/nginx-1.24.0/html/worldcup2/web/generate_web_data.py
+[2026-06-25 12:29:06] WSL: Generated /mnt/c/nginx-1.24.0/html/worldcup2/data/current.json
+[2026-06-25 12:29:06] WSL: Prediction target 2026-06-26, matches=6
+[2026-06-25 12:29:06] WSL: - 06-26 04:00 库拉索 vs 科特迪瓦
+[2026-06-25 12:29:06] WSL: - 06-26 04:00 厄瓜多尔 vs 德国
+[2026-06-25 12:29:06] WSL: - 06-26 07:00 日本 vs 瑞典
+[2026-06-25 12:29:06] WSL: - 06-26 07:00 突尼斯 vs 荷兰
+[2026-06-25 12:29:06] WSL: - 06-26 10:00 巴拉圭 vs 澳大利亚
+[2026-06-25 12:29:06] WSL: - 06-26 10:00 土耳其 vs 美国
+[2026-06-25 12:29:06] WSL: Report source /mnt/c/nginx-1.24.0/html/worldcup2/reports, files=10, parsed_predictions=32, completed=34
+[2026-06-25 12:29:06] WSL generation exit code: 0
+[2026-06-25 12:34:01] Refreshing dashboard data via WSL: /mnt/c/nginx-1.24.0/html/worldcup2/web/generate_web_data.py
+[2026-06-25 12:34:03] WSL: Generated /mnt/c/nginx-1.24.0/html/worldcup2/data/current.json
+[2026-06-25 12:34:03] WSL: Prediction target 2026-06-26, matches=6
+[2026-06-25 12:34:03] WSL: - 06-26 04:00 库拉索 vs 科特迪瓦
+[2026-06-25 12:34:04] WSL: - 06-26 04:00 厄瓜多尔 vs 德国
+[2026-06-25 12:34:04] WSL: - 06-26 07:00 日本 vs 瑞典
+[2026-06-25 12:34:04] WSL: - 06-26 07:00 突尼斯 vs 荷兰
+[2026-06-25 12:34:04] WSL: - 06-26 10:00 巴拉圭 vs 澳大利亚
+[2026-06-25 12:34:04] WSL: - 06-26 10:00 土耳其 vs 美国
+[2026-06-25 12:34:04] WSL: Report source /mnt/c/nginx-1.24.0/html/worldcup2/reports, files=10, parsed_predictions=32, completed=34
+[2026-06-25 12:34:04] WSL generation exit code: 0
+[2026-06-25 12:39:01] Refreshing dashboard data via WSL: /mnt/c/nginx-1.24.0/html/worldcup2/web/generate_web_data.py
+[2026-06-25 12:39:04] WSL: Generated /mnt/c/nginx-1.24.0/html/worldcup2/data/current.json
+[2026-06-25 12:39:04] WSL: Prediction target 2026-06-26, matches=6
+[2026-06-25 12:39:04] WSL: - 06-26 04:00 库拉索 vs 科特迪瓦
+[2026-06-25 12:39:04] WSL: - 06-26 04:00 厄瓜多尔 vs 德国
+[2026-06-25 12:39:04] WSL: - 06-26 07:00 日本 vs 瑞典
+[2026-06-25 12:39:04] WSL: - 06-26 07:00 突尼斯 vs 荷兰
+[2026-06-25 12:39:04] WSL: - 06-26 10:00 巴拉圭 vs 澳大利亚
+[2026-06-25 12:39:04] WSL: - 06-26 10:00 土耳其 vs 美国
+[2026-06-25 12:39:04] WSL: Report source /mnt/c/nginx-1.24.0/html/worldcup2/reports, files=10, parsed_predictions=32, completed=34
+[2026-06-25 12:39:04] WSL generation exit code: 0
+[2026-06-25 12:44:01] Refreshing dashboard data via WSL: /mnt/c/nginx-1.24.0/html/worldcup2/web/generate_web_data.py
+[2026-06-25 12:44:03] WSL: Generated /mnt/c/nginx-1.24.0/html/worldcup2/data/current.json
+[2026-06-25 12:44:03] WSL: Prediction target 2026-06-26, matches=6
+[2026-06-25 12:44:03] WSL: - 06-26 04:00 库拉索 vs 科特迪瓦
+[2026-06-25 12:44:03] WSL: - 06-26 04:00 厄瓜多尔 vs 德国
+[2026-06-25 12:44:03] WSL: - 06-26 07:00 日本 vs 瑞典
+[2026-06-25 12:44:03] WSL: - 06-26 07:00 突尼斯 vs 荷兰
+[2026-06-25 12:44:03] WSL: - 06-26 10:00 巴拉圭 vs 澳大利亚
+[2026-06-25 12:44:03] WSL: - 06-26 10:00 土耳其 vs 美国
+[2026-06-25 12:44:03] WSL: Report source /mnt/c/nginx-1.24.0/html/worldcup2/reports, files=10, parsed_predictions=32, completed=34
+[2026-06-25 12:44:03] WSL generation exit code: 0
+[2026-06-25 12:49:01] Refreshing dashboard data via WSL: /mnt/c/nginx-1.24.0/html/worldcup2/web/generate_web_data.py
+[2026-06-25 12:49:05] WSL: Generated /mnt/c/nginx-1.24.0/html/worldcup2/data/current.json
+[2026-06-25 12:49:05] WSL: Prediction target 2026-06-26, matches=6
+[2026-06-25 12:49:05] WSL: - 06-26 04:00 库拉索 vs 科特迪瓦
+[2026-06-25 12:49:05] WSL: - 06-26 04:00 厄瓜多尔 vs 德国
+[2026-06-25 12:49:05] WSL: - 06-26 07:00 日本 vs 瑞典
+[2026-06-25 12:49:05] WSL: - 06-26 07:00 突尼斯 vs 荷兰
+[2026-06-25 12:49:05] WSL: - 06-26 10:00 巴拉圭 vs 澳大利亚
+[2026-06-25 12:49:05] WSL: - 06-26 10:00 土耳其 vs 美国
+[2026-06-25 12:49:05] WSL: Report source /mnt/c/nginx-1.24.0/html/worldcup2/reports, files=10, parsed_predictions=32, completed=34
+[2026-06-25 12:49:05] WSL generation exit code: 0
+[2026-06-25 12:54:01] Refreshing dashboard data via WSL: /mnt/c/nginx-1.24.0/html/worldcup2/web/generate_web_data.py
+[2026-06-25 12:54:03] WSL: Generated /mnt/c/nginx-1.24.0/html/worldcup2/data/current.json
+[2026-06-25 12:54:03] WSL: Prediction target 2026-06-26, matches=6
+[2026-06-25 12:54:03] WSL: - 06-26 04:00 库拉索 vs 科特迪瓦
+[2026-06-25 12:54:03] WSL: - 06-26 04:00 厄瓜多尔 vs 德国
+[2026-06-25 12:54:03] WSL: - 06-26 07:00 日本 vs 瑞典
+[2026-06-25 12:54:03] WSL: - 06-26 07:00 突尼斯 vs 荷兰
+[2026-06-25 12:54:03] WSL: - 06-26 10:00 巴拉圭 vs 澳大利亚
+[2026-06-25 12:54:03] WSL: - 06-26 10:00 土耳其 vs 美国
+[2026-06-25 12:54:03] WSL: Report source /mnt/c/nginx-1.24.0/html/worldcup2/reports, files=10, parsed_predictions=32, completed=34
+[2026-06-25 12:54:03] WSL generation exit code: 0

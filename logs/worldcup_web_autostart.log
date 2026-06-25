@@ -72,3 +72,18 @@
 [2026-06-24 08:33:07] Starting nginx: C:\nginx-1.24.0\nginx.exe
 [2026-06-24 08:33:09] Opening dashboard: http://localhost/worldcup/
 [2026-06-24 08:33:09] WorldCup dashboard autostart finished.
+[2026-06-25 12:13:57] WorldCup dashboard autostart triggered.
+[2026-06-25 12:14:05] Generating dashboard data via WSL: /mnt/c/nginx-1.24.0/html/worldcup2/web/generate_web_data.py
+[2026-06-25 12:14:12] WSL: Generated /mnt/c/nginx-1.24.0/html/worldcup2/data/current.json
+[2026-06-25 12:14:12] WSL: Prediction target 2026-06-26, matches=6
+[2026-06-25 12:14:12] WSL: - 06-26 04:00 库拉索 vs 科特迪瓦
+[2026-06-25 12:14:12] WSL: - 06-26 04:00 厄瓜多尔 vs 德国
+[2026-06-25 12:14:12] WSL: - 06-26 07:00 日本 vs 瑞典
+[2026-06-25 12:14:12] WSL: - 06-26 07:00 突尼斯 vs 荷兰
+[2026-06-25 12:14:12] WSL: - 06-26 10:00 巴拉圭 vs 澳大利亚
+[2026-06-25 12:14:12] WSL: - 06-26 10:00 土耳其 vs 美国
+[2026-06-25 12:14:12] WSL: Report source /mnt/c/nginx-1.24.0/html/worldcup2/reports, files=10, parsed_predictions=32, completed=32
+[2026-06-25 12:14:12] WSL generation exit code: 0
+[2026-06-25 12:14:12] Starting nginx: C:\nginx-1.24.0\nginx.exe
+[2026-06-25 12:14:15] Opening dashboard: http://localhost/worldcup2/
+[2026-06-25 12:14:15] WorldCup dashboard autostart finished.
