@@ -621,20 +621,24 @@ def calc_stats_from_records(rows: list[dict]) -> dict:
     outcome_hits = sum(1 for r in completed if r["hit"].get("outcome"))
     half_full_known = [r for r in completed if r["hit"].get("half_full") is not None]
     half_full_hits = sum(1 for r in half_full_known if r["hit"].get("half_full"))
+    half_full_missing = total - len(half_full_known)
     by_date = {}
     for r in completed:
         d = r.get("date") or (r.get("date_bj", "")[:10])
-        item = by_date.setdefault(d, {"date": d, "total": 0, "score_hits": 0, "outcome_hits": 0, "half_full_hits": 0, "half_full_total": 0})
+        item = by_date.setdefault(d, {"date": d, "total": 0, "score_hits": 0, "outcome_hits": 0, "half_full_hits": 0, "half_full_checked": 0, "half_full_missing": 0})
         item["total"] += 1
         item["score_hits"] += 1 if r["hit"].get("exact_score") else 0
         item["outcome_hits"] += 1 if r["hit"].get("outcome") else 0
         if r["hit"].get("half_full") is not None:
-            item["half_full_total"] += 1
+            item["half_full_checked"] += 1
             item["half_full_hits"] += 1 if r["hit"].get("half_full") else 0
+        else:
+            item["half_full_missing"] += 1
     for item in by_date.values():
+        item["half_full_total"] = item["total"]
         item["score_rate"] = round(item["score_hits"] / item["total"] * 100, 1) if item["total"] else 0
         item["outcome_rate"] = round(item["outcome_hits"] / item["total"] * 100, 1) if item["total"] else 0
-        item["half_full_rate"] = round(item["half_full_hits"] / item["half_full_total"] * 100, 1) if item["half_full_total"] else None
+        item["half_full_rate"] = round(item["half_full_hits"] / item["total"] * 100, 1) if item["total"] else None
     report_rows = [r for r in rows if r.get("source_type") != "dashboard_history"]
     dashboard_history_rows = [r for r in rows if r.get("source_type") == "dashboard_history"]
     report_files_with_predictions = {
@@ -654,10 +658,12 @@ def calc_stats_from_records(rows: list[dict]) -> dict:
         "outcome_hits": outcome_hits,
         "exact_score_rate": round(exact / total * 100, 1) if total else None,
         "outcome_rate": round(outcome_hits / total * 100, 1) if total else None,
-        "half_full_rate": round(half_full_hits / len(half_full_known) * 100, 1) if half_full_known else None,
+        "half_full_rate": round(half_full_hits / total * 100, 1) if total else None,
         "half_full_hits": half_full_hits,
-        "half_full_total": len(half_full_known),
-        "half_full_note": "半全场统计已按 ESPN summary 半场比分计算。" if half_full_known else "半全场命中统计需稳定半场比分源；当前未取到可用半场比分。",
+        "half_full_total": total,
+        "half_full_checked": len(half_full_known),
+        "half_full_missing": half_full_missing,
+        "half_full_note": f"半全场统计以已结算总场次为分母；已核对半场比分 {len(half_full_known)} 场，缺少半场比分 {half_full_missing} 场。" if total else "半全场命中统计需稳定半场比分源；当前暂无已结算比赛。",
         "by_date": sorted(by_date.values(), key=lambda x: x.get("date", "")),
         "recent": sorted(completed, key=lambda r: r.get("date_bj", ""), reverse=True)[:30],
         "pending": sorted(pending, key=lambda r: r.get("date_bj", ""))[:30],

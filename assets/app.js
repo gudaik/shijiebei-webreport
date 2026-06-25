@@ -292,7 +292,7 @@ function renderStats(data){
     <div class="bar-date"><strong>${d.date}</strong><span>${d.total} 场</span></div>
     <div class="bar-metric"><span>胜平负 ${d.outcome_hits}/${d.total}</span><div class="track"><div class="fill outcome" style="width:${d.outcome_rate}%"></div></div><b>${d.outcome_rate}%</b></div>
     <div class="bar-metric"><span>比分 ${d.score_hits}/${d.total}</span><div class="track"><div class="fill score-fill" style="width:${d.score_rate}%"></div></div><b>${d.score_rate}%</b></div>
-    <div class="bar-metric"><span>半全场 ${d.half_full_hits ?? 0}/${d.half_full_total ?? 0}</span><div class="track"><div class="fill hf-fill" style="width:${d.half_full_rate ?? 0}%"></div></div><b>${d.half_full_rate == null ? '待' : `${d.half_full_rate}%`}</b></div>
+    <div class="bar-metric"><span>半全场 ${d.half_full_hits ?? 0}/${d.total ?? d.half_full_total ?? 0}${d.half_full_missing ? `（缺半场${d.half_full_missing}）` : ''}</span><div class="track"><div class="fill hf-fill" style="width:${d.half_full_rate ?? 0}%"></div></div><b>${d.half_full_rate == null ? '待' : `${d.half_full_rate}%`}</b></div>
   </div>`).join('') : empty('暂无已结算历史预测；reports 中的预测比赛完赛后会自动累计。');
   $('recentStats').innerHTML = renderSettledGroups(st.recent, st.half_full_note || '暂无统计。');
   renderAccuracyChart(data);
