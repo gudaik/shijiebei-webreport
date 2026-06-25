@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>2026世界杯北京时间每日报告</title>
-  <link rel="stylesheet" href="assets/styles.css?v=20260625-odds-clarify" />
+  <link rel="stylesheet" href="assets/styles.css?v=20260625-bet-modes" />
 </head>
 <body>
   <div class="bg"></div>
@@ -112,13 +112,14 @@
         <div>
           <div class="eyebrow">China Sports Lottery Style Calculator</div>
           <h2>购买推荐计算器</h2>
-          <p>输入总预算后，按 2 元/注拆分，结合明天完整预测生成稳健、平衡、激进三种投注分配。支持区分混合过关与同种过关；页面展示的是按体彩玩法格式推算的模型参考赔付系数，并据此估算理论返奖，非体彩官方实际赔率。</p>
+          <p>输入总预算后，按 2 元/注拆分，结合明天完整预测生成投注分配。新增常规均衡、博冷防平、比分高赔、半全场高赔、串关阶梯、极限以小博大等选择模式；页面展示的是按体彩玩法格式推算的模型参考赔付系数，并据此估算理论返奖，非体彩官方实际赔率。</p>
         </div>
         <div class="risk-note">仅作预测分析参考，不保证中奖，请理性投注。</div>
       </article>
       <article class="panel bet-controls" data-html2canvas-ignore="true">
         <label>总投注金额（元）<input id="betBudget" type="number" min="2" step="2" value="52" /></label>
         <label>风险模式<select id="betRisk"><option value="balanced">平衡型</option><option value="safe">稳健型</option><option value="aggressive">激进型</option></select></label>
+        <label>选择模式<select id="betMode"><option value="standard">常规均衡</option><option value="upset">博冷防平</option><option value="scoreBomb">比分高赔</option><option value="halfFullBomb">半全场高赔</option><option value="ladder">串关阶梯</option><option value="moonshot">极限以小博大</option></select></label>
         <label>串关策略<select id="betParlay"><option value="auto">自动推荐</option><option value="single">仅单关</option><option value="parlay">允许串关</option></select></label>
         <label>玩法选择<select id="betPlayType"><option value="all">全部玩法</option><option value="outcome">胜平负</option><option value="score">比分</option><option value="halfFull">半全场</option></select></label>
         <label>过关类型<select id="betPassType"><option value="mixed">混合过关</option><option value="same">同种过关</option></select></label>
@@ -143,6 +144,6 @@
     <span>预测仅供娱乐和信息参考，不构成投注建议。</span>
   </footer>
 
-  <script src="assets/app.js?v=20260625-odds-clarify"></script>
+  <script src="assets/app.js?v=20260625-bet-modes"></script>
 </body>
 </html>

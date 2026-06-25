@@ -314,9 +314,26 @@ function betPlanConfig(risk){
 function playTypeLabel(playType){
   return {all:'全部玩法', outcome:'胜平负', score:'比分', halfFull:'半全场'}[playType] || '全部玩法';
 }
+function betModeConfig(mode){
+  return {
+    standard: { label:'常规均衡', desc:'主方向打底，少量比分/半全场增强。', scoreDepth:2, hfDepth:1, upsetCount:0, parlayDepth:3, parlayBoost:1, longshotBias:1 },
+    upset: { label:'博冷防平', desc:'增加平局/反向胜平负小注，适合防冷门。', scoreDepth:2, hfDepth:1, upsetCount:1, parlayDepth:3, parlayBoost:1.08, longshotBias:1.15 },
+    scoreBomb: { label:'比分高赔', desc:'优先覆盖首选+次选比分，小额博精确比分。', scoreDepth:3, hfDepth:1, upsetCount:0, parlayDepth:3, parlayBoost:1.15, longshotBias:1.35 },
+    halfFullBomb: { label:'半全场高赔', desc:'增加半全场次选，适合看走势反转/慢热。', scoreDepth:1, hfDepth:3, upsetCount:0, parlayDepth:3, parlayBoost:1.18, longshotBias:1.35 },
+    ladder: { label:'串关阶梯', desc:'保留单关，同时给2串1/3串1/4串1阶梯小注。', scoreDepth:2, hfDepth:2, upsetCount:0, parlayDepth:4, parlayBoost:1.45, longshotBias:1.25 },
+    moonshot: { label:'极限以小博大', desc:'压低底仓，集中比分、半全场、4-6场串关。', scoreDepth:3, hfDepth:3, upsetCount:1, parlayDepth:6, parlayBoost:2.2, longshotBias:1.75 }
+  }[mode] || betModeConfig('standard');
+}
 function fmtOdds(v){
   const n = Number(v);
   return Number.isFinite(n) ? n.toFixed(2) : '—';
+}
+function normalizeOutcomePick(pick){
+  const raw = String(pick || '');
+  if(raw.includes('负') || raw.includes('客胜')) return '负';
+  if(raw.includes('平')) return '平';
+  if(raw.includes('胜') || raw.includes('主胜')) return '胜';
+  return '';
 }
 function outcomeCode(pred){
   const raw = String(pred?.primary_outcome || pred?.tendency || '');
@@ -326,7 +343,7 @@ function outcomeCode(pred){
 }
 function candidateOdds(match, type, pick){
   const odds = match?.prediction?.odds || {};
-  if(type === '胜平负') return odds.outcome?.[outcomeCode(match?.prediction)];
+  if(type === '胜平负') return odds.outcome?.[normalizeOutcomePick(pick) || outcomeCode(match?.prediction)];
   if(type === '比分') return odds.scores?.[pick];
   if(type === '半全场') return odds.half_full?.[pick];
   return null;
@@ -345,67 +362,95 @@ function parlayOddsFromLegs(legs){
   const vals = (legs || []).map(x=>Number(x)).filter(Number.isFinite);
   return vals.length ? Number(vals.reduce((a,b)=>a*b,1).toFixed(2)) : null;
 }
-function buildBetCandidates(matches, risk, parlayMode, passType, playType='all'){
+function sortedByOdds(items, getOdds, desc=true){
+  return [...items].sort((a,b)=> desc ? Number(getOdds(b)||0)-Number(getOdds(a)||0) : Number(getOdds(a)||0)-Number(getOdds(b)||0));
+}
+function buildBetCandidates(matches, risk, parlayMode, passType, playType='all', betMode='standard'){
   const cfg = betPlanConfig(risk);
+  const mode = betModeConfig(betMode);
   const candidates = [];
   const rows = (matches || []);
   const useOutcome = playType === 'all' || playType === 'outcome';
   const useScore = playType === 'all' || playType === 'score';
   const useHalfFull = playType === 'all' || playType === 'halfFull';
+  const scoreDepth = Math.max(cfg.maxScores || 1, mode.scoreDepth || 1);
+  const hfDepth = Math.max(cfg.maxHalfFull || 1, mode.hfDepth || 1);
+  const isLongshot = ['upset','scoreBomb','halfFullBomb','ladder','moonshot'].includes(betMode);
   rows.forEach((m, idx)=>{
     const p = m.prediction || {}; const title = `${m.home_zh} vs ${m.away_zh}`;
     const confidence = p.primary_outcome === '主胜' ? 1.08 : p.primary_outcome === '客胜' ? 0.96 : 0.86;
     const matchNo = `周${'日一二三四五六'[new Date(m.date_bj).getDay()]}${String(idx+1).padStart(3,'0')}`;
+    const primaryPick = p.primary_outcome || p.tendency || outcomeShort(p);
+    const primaryCode = outcomeCode(p);
     if(useOutcome){
-      const pick = p.primary_outcome || p.tendency || outcomeShort(p);
-      candidates.push({type:'胜平负', play:'单关', title, matchNo, matchIndex:idx, pick, odds:candidateOdds(m, '胜平负', pick), weight:cfg.weights.outcome * confidence, reason:'作为主预测方向，适合承担基础仓位。'});
+      const baseWeight = cfg.weights.outcome * confidence * (betMode === 'moonshot' ? 0.42 : 1);
+      candidates.push({type:'胜平负', play:'单关', title, matchNo, matchIndex:idx, pick:primaryPick, odds:candidateOdds(m, '胜平负', primaryPick), weight:baseWeight, reason:'作为主预测方向，适合承担基础仓位。'});
+      const outcomeOdds = m.prediction?.odds?.outcome || {};
+      sortedByOdds(['胜','平','负'].filter(x=>x!==primaryCode), x=>outcomeOdds[x]).slice(0, mode.upsetCount || 0).forEach((code,j)=>{
+        const label = code === '胜' ? '主胜' : code === '负' ? '客胜' : '平局';
+        candidates.push({type:'胜平负', play:'单关', title, matchNo, matchIndex:idx, pick:`防冷${label}`, odds:outcomeOdds[code], weight:cfg.weights.outcome * 0.32 * mode.longshotBias / (j+1), reason:'小注防冷门方向，命中率低但回报弹性更高。'});
+      });
     }
-    if(useScore) (p.scores || []).slice(0,cfg.maxScores).forEach((s, j)=>candidates.push({type:'比分', play:'单关', title, matchNo, matchIndex:idx, pick:s, odds:candidateOdds(m, '比分', s), weight:cfg.weights.score * (j ? 0.72 : 1), reason:j ? '次选比分，小额覆盖波动。' : '首选比分，用于提高潜在回报。'}));
-    if(useHalfFull) (p.half_full || []).slice(0,cfg.maxHalfFull).forEach((h, j)=>candidates.push({type:'半全场', play:'单关', title, matchNo, matchIndex:idx, pick:h, odds:candidateOdds(m, '半全场', h), weight:cfg.weights.halfFull * (j ? 0.7 : 1), reason:j ? '半全场次选，小额博高赔。' : '半全场主选，配合比分方向。'}));
+    if(useScore) (p.scores || []).slice(0,scoreDepth).forEach((s, j)=>{
+      const boost = betMode === 'scoreBomb' || betMode === 'moonshot' ? mode.longshotBias : 1;
+      candidates.push({type:'比分', play:'单关', title, matchNo, matchIndex:idx, pick:s, odds:candidateOdds(m, '比分', s), weight:cfg.weights.score * boost * (j ? 0.62/(j+0.15) : 1), reason:j ? '高赔比分小额覆盖，适合以小博大。' : '首选比分，用于提高潜在回报。'});
+    });
+    if(useHalfFull) (p.half_full || []).slice(0,hfDepth).forEach((h, j)=>{
+      const boost = betMode === 'halfFullBomb' || betMode === 'moonshot' ? mode.longshotBias : 1;
+      candidates.push({type:'半全场', play:'单关', title, matchNo, matchIndex:idx, pick:h, odds:candidateOdds(m, '半全场', h), weight:cfg.weights.halfFull * boost * (j ? 0.58/(j+0.15) : 1), reason:j ? '半全场高赔小注，搏走势变化。' : '半全场主选，配合比分方向。'});
+    });
   });
-  const allowParlay = parlayMode === 'parlay' || (parlayMode === 'auto' && risk !== 'safe');
-  const selectedSamePick = (m) => {
+  const allowParlay = parlayMode === 'parlay' || (parlayMode === 'auto' && (risk !== 'safe' || isLongshot));
+  const selectedSamePick = (m, depthIdx=0) => {
     const p = m.prediction || {};
-    if(playType === 'score') return `${m.home_zh} ${p.scores?.[0] || '首选比分'}`;
-    if(playType === 'halfFull') return `${m.home_zh} ${p.half_full?.[0] || '半全场主选'}`;
+    if(playType === 'score') return `${m.home_zh} ${p.scores?.[depthIdx] || p.scores?.[0] || '首选比分'}`;
+    if(playType === 'halfFull') return `${m.home_zh} ${p.half_full?.[depthIdx] || p.half_full?.[0] || '半全场主选'}`;
     return `${m.home_zh}${outcomeShort(p)}`;
   };
-  const selectedSameOdds = (m) => {
+  const selectedSameOdds = (m, depthIdx=0) => {
     const p = m.prediction || {};
-    if(playType === 'score') return candidateOdds(m, '比分', p.scores?.[0]);
-    if(playType === 'halfFull') return candidateOdds(m, '半全场', p.half_full?.[0]);
+    if(playType === 'score') return candidateOdds(m, '比分', p.scores?.[depthIdx] || p.scores?.[0]);
+    if(playType === 'halfFull') return candidateOdds(m, '半全场', p.half_full?.[depthIdx] || p.half_full?.[0]);
     return candidateOdds(m, '胜平负', p.primary_outcome || outcomeShort(p));
   };
   const selectedSameType = playType === 'score' ? '比分' : playType === 'halfFull' ? '半全场' : '胜平负';
+  const pushParlay = (play, title, pick, legs, weight, reason) => {
+    const odds = parlayOddsFromLegs(legs);
+    if(odds) candidates.push({type:title.includes('混合')?'混合过关':'同种过关', play, title, pick, odds, weight, reason});
+  };
   if(allowParlay && rows.length >= 2){
     if(passType === 'mixed' && playType === 'all'){
       const m1 = rows[0], m2 = rows[1];
       const p2 = m2.prediction || {};
       const leg1 = `胜平负 ${m1.home_zh}${outcomeShort(m1.prediction)}`;
       const leg2 = `比分 ${m2.home_zh} ${p2.scores?.[0] || outcomeShort(p2)}`;
-      const parlayOdds = parlayOddsFromLegs([candidateOdds(m1, '胜平负', m1.prediction?.primary_outcome), candidateOdds(m2, '比分', p2.scores?.[0])]);
-      candidates.push({type:'混合过关', play:'2串1', title:'混合过关组合', pick:`${leg1} × ${leg2}`, odds:parlayOdds, weight:cfg.weights.parlay * 1.15, reason:'不同玩法混合串关，回报弹性更高，风险也高于同种过关。'});
+      pushParlay('2串1','混合过关组合',`${leg1} × ${leg2}`,[candidateOdds(m1, '胜平负', m1.prediction?.primary_outcome), candidateOdds(m2, '比分', p2.scores?.[0])], cfg.weights.parlay * 1.15 * mode.parlayBoost, '不同玩法混合串关，回报弹性更高，风险也高于同种过关。');
     }else{
-      const legs2 = rows.slice(0,2).map(selectedSamePick).join(' × ');
-      candidates.push({type:'同种过关', play:'2串1', title:'同种过关组合', pick:`${selectedSameType}：${legs2}`, odds:parlayOddsFromLegs(rows.slice(0,2).map(selectedSameOdds)), weight:cfg.weights.parlay * 1.15, reason:`只使用${selectedSameType}玩法串关，结构更清晰。`});
+      const legs2 = rows.slice(0,2).map(m=>selectedSamePick(m)).join(' × ');
+      pushParlay('2串1','同种过关组合',`${selectedSameType}：${legs2}`, rows.slice(0,2).map(m=>selectedSameOdds(m)), cfg.weights.parlay * 1.15 * mode.parlayBoost, `只使用${selectedSameType}玩法串关，结构更清晰。`);
     }
   }
-  if(allowParlay && risk === 'aggressive' && rows.length >= 3){
+  if(allowParlay && rows.length >= 3){
     if(passType === 'mixed' && playType === 'all'){
-      const m1 = rows[0], m2 = rows[1], m3 = rows[2];
-      const leg1 = `胜平负 ${m1.home_zh}${outcomeShort(m1.prediction)}`;
-      const leg2 = `比分 ${m2.home_zh} ${m2.prediction?.scores?.[0] || outcomeShort(m2.prediction)}`;
-      const leg3 = `半全场 ${m3.home_zh} ${m3.prediction?.half_full?.[0] || outcomeShort(m3.prediction)}`;
-      const parlayOdds = parlayOddsFromLegs([
-        candidateOdds(m1, '胜平负', m1.prediction?.primary_outcome),
-        candidateOdds(m2, '比分', m2.prediction?.scores?.[0]),
-        candidateOdds(m3, '半全场', m3.prediction?.half_full?.[0]),
-      ]);
-      candidates.push({type:'混合过关', play:'3串1', title:'进取混合过关', pick:`${leg1} × ${leg2} × ${leg3}`, odds:parlayOdds, weight:cfg.weights.parlay * 0.9, reason:'胜平负、比分、半全场混合，适合小仓位博高回报。'});
+      const [m1,m2,m3] = rows;
+      const pick = `胜平负 ${m1.home_zh}${outcomeShort(m1.prediction)} × 比分 ${m2.home_zh} ${m2.prediction?.scores?.[0] || outcomeShort(m2.prediction)} × 半全场 ${m3.home_zh} ${m3.prediction?.half_full?.[0] || outcomeShort(m3.prediction)}`;
+      pushParlay('3串1','进取混合过关',pick,[candidateOdds(m1, '胜平负', m1.prediction?.primary_outcome), candidateOdds(m2, '比分', m2.prediction?.scores?.[0]), candidateOdds(m3, '半全场', m3.prediction?.half_full?.[0])], cfg.weights.parlay * 0.9 * mode.parlayBoost, '胜平负、比分、半全场混合，适合小仓位博高回报。');
     }else{
-      const legs3 = rows.slice(0,3).map(selectedSamePick).join(' × ');
-      candidates.push({type:'同种过关', play:'3串1', title:'进取同种过关', pick:`${selectedSameType}：${legs3}`, odds:parlayOddsFromLegs(rows.slice(0,3).map(selectedSameOdds)), weight:cfg.weights.parlay * 0.9, reason:`${selectedSameType}同种3串1，风险较高，建议只用小仓位。`});
+      const legs3 = rows.slice(0,3).map(m=>selectedSamePick(m)).join(' × ');
+      pushParlay('3串1','进取同种过关',`${selectedSameType}：${legs3}`, rows.slice(0,3).map(m=>selectedSameOdds(m)), cfg.weights.parlay * 0.9 * mode.parlayBoost, `${selectedSameType}同种3串1，风险较高，建议只用小仓位。`);
     }
+  }
+  if(allowParlay && mode.parlayDepth >= 4 && rows.length >= 4){
+    const depthRows = rows.slice(0, Math.min(mode.parlayDepth, rows.length));
+    const scoreLegs = depthRows.map((m,i)=>`比分 ${m.home_zh} ${m.prediction?.scores?.[i%2] || m.prediction?.scores?.[0] || outcomeShort(m.prediction)}`);
+    const scoreOdds = depthRows.map((m,i)=>candidateOdds(m, '比分', m.prediction?.scores?.[i%2] || m.prediction?.scores?.[0]));
+    pushParlay(`${depthRows.length}串1`, '比分阶梯长串', scoreLegs.join(' × '), scoreOdds, cfg.weights.parlay * 0.42 * mode.parlayBoost, '多场比分长串，命中难度极高，只适合极小仓位以小博大。');
+  }
+  if(allowParlay && betMode === 'moonshot' && rows.length >= 4){
+    const hfRows = rows.slice(-Math.min(4, rows.length));
+    const hfLegs = hfRows.map((m,i)=>`半全场 ${m.home_zh} ${m.prediction?.half_full?.[i%2] || m.prediction?.half_full?.[0] || outcomeShort(m.prediction)}`);
+    const hfOdds = hfRows.map((m,i)=>candidateOdds(m, '半全场', m.prediction?.half_full?.[i%2] || m.prediction?.half_full?.[0]));
+    pushParlay(`${hfRows.length}串1`, '半全场极限长串', hfLegs.join(' × '), hfOdds, cfg.weights.parlay * 0.34 * mode.parlayBoost, '半全场长串属于极高风险票，仅建议少量娱乐。');
   }
   if(parlayMode === 'single') return candidates.filter(c=>c.play === '单关');
   return candidates;
@@ -530,8 +575,25 @@ function betQuickTable(plan, matches){
   </table></div>`;
 }
 
+function longshotHighlights(plan){
+  const rows = plan
+    .filter(c=>Number.isFinite(Number(c.odds)) && (c.type !== '胜平负' || String(c.pick).includes('防冷')))
+    .sort((a,b)=>Number(b.odds)-Number(a.odds))
+    .slice(0,6);
+  if(!rows.length) return '';
+  return `<article class="panel longshot-panel">
+    <div class="bet-quick-head"><div><h2 style="margin:0">以小博大精选</h2><p class="section-note" style="margin:4px 0 0">按参考系数从当前方案里挑出高回报项，建议小注娱乐，不建议重仓。</p></div></div>
+    <div class="longshot-grid">${rows.map(c=>`<div class="longshot-card">
+      <div class="longshot-top"><span>${esc(c.play)}</span>${oddsBadge(c.odds)}</div>
+      <strong>${esc(c.title)}</strong>
+      <div class="longshot-pick">${esc(c.type)} · ${esc(c.pick)}</div>
+      <div class="longshot-money">${c.units}注 / ${c.units*2}元 · 预估返奖 ${estimatedReturn(c)}元</div>
+    </div>`).join('')}</div>
+  </article>`;
+}
+
 // ── 拷贝文本生成 ────────────────────────────────────────────
-function buildBetCopyText(plan, budget, spent, cfg, data){
+function buildBetCopyText(plan, budget, spent, cfg, data, modeCfg){
   const date = data?.dates?.prediction_target || '';
   const singles = plan.filter(c=>c.play==='单关');
   const parlays  = plan.filter(c=>c.play!=='单关');
@@ -544,7 +606,7 @@ function buildBetCopyText(plan, budget, spent, cfg, data){
   groups.sort((a,b)=>a.matchIndex-b.matchIndex);
   const lines=[
     `🏆 世界杯购买推荐 ${date}`,
-    `💰 预算 ${budget}元  策略：${cfg.label}  实际分配 ${spent}元`,
+    `💰 预算 ${budget}元  策略：${cfg.label} · ${modeCfg?.label || '常规均衡'}  实际分配 ${spent}元`,
     '',
   ];
   groups.forEach((g,i)=>{
@@ -567,8 +629,8 @@ function buildBetCopyText(plan, budget, spent, cfg, data){
   return lines.join('\n');
 }
 
-async function copyBetText(plan, budget, spent, cfg, data){
-  const text = buildBetCopyText(plan, budget, spent, cfg, data);
+async function copyBetText(plan, budget, spent, cfg, data, modeCfg){
+  const text = buildBetCopyText(plan, budget, spent, cfg, data, modeCfg);
   const btn = $('copyBetBtn');
   const ok = ()=>{ if(btn){btn.textContent='✅ 已复制！';btn.classList.add('copied');setTimeout(()=>{btn.textContent='📋 拷贝文本';btn.classList.remove('copied');},2200);} };
   try{ await navigator.clipboard.writeText(text); ok(); }
@@ -588,14 +650,16 @@ function renderBetAdvisor(data){
   const budget = Math.max(2, Math.floor(budgetInput / 2) * 2);
   const units  = Math.floor(budget / 2);
   const risk      = $('betRisk')?.value    || 'balanced';
+  const betMode   = $('betMode')?.value    || 'standard';
   const parlayMode= $('betParlay')?.value  || 'auto';
   const passType  = $('betPassType')?.value|| 'mixed';
   const playType  = $('betPlayType')?.value|| 'all';
   const passTypeLabel = passType==='same'?'同种过关':'混合过关';
   const cfg = betPlanConfig(risk);
+  const modeCfg = betModeConfig(betMode);
   const matches = data.sections?.day_after_predictions || [];
   if(!matches.length){ box.innerHTML = empty('暂无明天预测，无法生成购买推荐。'); return; }
-  const plan  = allocateBetUnits(units, buildBetCandidates(matches, risk, parlayMode, passType, playType));
+  const plan  = allocateBetUnits(units, buildBetCandidates(matches, risk, parlayMode, passType, playType, betMode));
   const spent = plan.reduce((a,c)=>a+c.units*2,0);
   const totalN= plan.reduce((a,c)=>a+c.units,0);
   const byType= plan.reduce((acc,c)=>{ if(c.play==='单关'){acc[c.type]=(acc[c.type]||{n:0,y:0});acc[c.type].n+=c.units;acc[c.type].y+=c.units*2;} return acc;},{});
@@ -612,11 +676,15 @@ function renderBetAdvisor(data){
     <div class="bet-kpi-row">
       <div class="bet-kpi"><div class="label">总预算</div><div class="bet-kpi-num">${budget}<em>元</em></div><div class="hint">${units}注上限</div></div>
       <div class="bet-kpi"><div class="label">实际分配</div><div class="bet-kpi-num">${spent}<em>元</em></div><div class="hint">${totalN}注合计</div></div>
-      <div class="bet-kpi"><div class="label">策略</div><div class="bet-kpi-tag ${risk}">${cfg.label}</div><div class="hint">${playTypeLabel(playType)} · ${passTypeLabel}</div></div>
+      <div class="bet-kpi"><div class="label">策略</div><div class="bet-kpi-tag ${risk}">${cfg.label}</div><div class="hint">${modeCfg.label} · ${playTypeLabel(playType)} · ${passTypeLabel}</div></div>
       <div class="bet-alloc"><div class="label">资金结构</div>
         ${allocBar('胜平负','outcome')}${allocBar('比分','score-fill')}${allocBar('半全场','hf-fill')}
       </div>
     </div>
+  </article>
+
+  <article class="panel bet-mode-note">
+    <strong>${esc(modeCfg.label)}：</strong>${esc(modeCfg.desc)} <span>以小博大票命中难度高，建议只占小仓位。</span>
   </article>
 
   <article class="panel">
@@ -627,6 +695,8 @@ function renderBetAdvisor(data){
     ${betQuickTable(plan, matches)}
   </article>
 
+  ${longshotHighlights(plan)}
+
   <article class="panel bet-ticket grouped">
     <h2>逐场明细</h2>
     <div class="bet-match-list">${groupedBetPanels(plan)}</div>
@@ -636,10 +706,10 @@ function renderBetAdvisor(data){
     <strong>说明：</strong>模拟推荐，不是官方投注指令；页面数字是按体彩玩法格式推算的模型参考赔付系数，不是体彩官方实际赔率，可能与终端即时赔率不一致。实际购买前请只以体彩终端/官方渠道即时赔率为准，请勿超预算。
   </article>`;
 
-  $('copyBetBtn')?.addEventListener('click', ()=>copyBetText(plan, budget, spent, cfg, data));
+  $('copyBetBtn')?.addEventListener('click', ()=>copyBetText(plan, budget, spent, cfg, data, modeCfg));
 }
 function bindBetAdvisor(){
-  ['betBudget','betRisk','betParlay','betPlayType','betPassType'].forEach(id=>{ const el=$(id); if(el) el.addEventListener('input',()=>state.data && renderBetAdvisor(state.data)); });
+  ['betBudget','betRisk','betMode','betParlay','betPlayType','betPassType'].forEach(id=>{ const el=$(id); if(el) el.addEventListener('input',()=>state.data && renderBetAdvisor(state.data)); });
   const btn = $('calcBetBtn'); if(btn) btn.addEventListener('click',()=>state.data && renderBetAdvisor(state.data));
 }
 

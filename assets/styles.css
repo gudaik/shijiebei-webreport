@@ -332,6 +332,8 @@
 .bet-stake-row{font-size:13px;color:var(--muted);text-align:right;white-space:nowrap}
 .bet-stake-row b{color:var(--text);font-size:16px;margin-right:3px}
 .bet-yuan{color:var(--yellow);font-weight:800}
+.bet-mode-note{border-color:rgba(255,209,102,.24);background:linear-gradient(135deg,rgba(255,209,102,.10),rgba(180,148,255,.06));color:var(--muted);line-height:1.7}.bet-mode-note strong{color:var(--yellow);font-size:16px}.bet-mode-note span{display:inline-flex;margin-left:8px;color:var(--purple);font-weight:900}
+.longshot-panel{border-color:rgba(255,209,102,.28);background:linear-gradient(135deg,rgba(255,209,102,.08),rgba(180,148,255,.07))}.longshot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:12px}.longshot-card{border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:13px;background:rgba(0,0,0,.16)}.longshot-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}.longshot-top span{color:var(--purple);font-size:12px;font-weight:900}.longshot-card strong{display:block;margin-bottom:7px}.longshot-pick{font-size:14px;color:var(--yellow);font-weight:900}.longshot-money{font-size:12px;color:var(--green);font-weight:800;margin-top:6px}
 
 /* Sporttery-style odds display */
 .sporttery-odds-block{border:1px solid rgba(255,209,102,.22);background:linear-gradient(135deg,rgba(255,209,102,.09),rgba(255,255,255,.025));border-radius:16px;padding:12px 14px;margin:12px 0 14px}
