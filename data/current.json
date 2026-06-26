@@ -1,10 +1,10 @@
 {
-  "generated_at_bj": "2026-06-25T20:24:01.179603+08:00",
-  "generated_at_label": "2026-06-25 20:24:01 北京时间",
+  "generated_at_bj": "2026-06-26T09:09:00.636048+08:00",
+  "generated_at_label": "2026-06-26 09:09:00 北京时间",
   "timezone": "Asia/Shanghai",
   "source": {
     "name": "ESPN FIFA World Cup scoreboard API",
-    "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260614-20260630&limit=300"
+    "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260614-20260701&limit=300"
   },
   "report_source": {
     "directory": "/mnt/c/nginx-1.24.0/html/worldcup2/reports",
@@ -14,105 +14,19 @@
     "description": "命中率统计以本地 Markdown 预测报告为主数据源；若报告漏掉同日已预测比赛，会补入页面自动预测历史，再与 ESPN 完赛比分核对。"
   },
   "dates": {
-    "today": "2026-06-25",
-    "yesterday": "2026-06-24",
-    "tomorrow": "2026-06-26",
-    "prediction_target": "2026-06-26"
+    "today": "2026-06-26",
+    "yesterday": "2026-06-25",
+    "tomorrow": "2026-06-27",
+    "prediction_target": "2026-06-27"
   },
   "summary": {
     "today_count": 6,
     "tomorrow_count": 6,
     "prediction_count": 6,
-    "completed_known": 47
+    "completed_known": 51
   },
   "sections": {
     "yesterday_results": [
-      {
-        "id": "760461",
-        "date_bj": "2026-06-24T01:00:00+08:00",
-        "date": "2026-06-24",
-        "time": "01:00",
-        "home": "Portugal",
-        "away": "Uzbekistan",
-        "home_zh": "葡萄牙",
-        "away_zh": "乌兹别克斯坦",
-        "title": "葡萄牙 vs 乌兹别克斯坦",
-        "status": "Full Time",
-        "status_detail": "FT",
-        "completed": true,
-        "home_score": 5,
-        "away_score": 0,
-        "venue": "NRG Stadium，Houston, Texas，USA",
-        "note": "FIFA World Cup, Group K",
-        "link": "https://www.espn.com/soccer/match/_/gameId/760461",
-        "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/por.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/uzb.png"
-      },
-      {
-        "id": "760458",
-        "date_bj": "2026-06-24T04:00:00+08:00",
-        "date": "2026-06-24",
-        "time": "04:00",
-        "home": "England",
-        "away": "Ghana",
-        "home_zh": "英格兰",
-        "away_zh": "加纳",
-        "title": "英格兰 vs 加纳",
-        "status": "Full Time",
-        "status_detail": "FT",
-        "completed": true,
-        "home_score": 0,
-        "away_score": 0,
-        "venue": "Gillette Stadium，Foxborough, Massachusetts，USA",
-        "note": "FIFA World Cup, Group L",
-        "link": "https://www.espn.com/soccer/match/_/gameId/760458",
-        "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/eng.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/gha.png"
-      },
-      {
-        "id": "760460",
-        "date_bj": "2026-06-24T07:00:00+08:00",
-        "date": "2026-06-24",
-        "time": "07:00",
-        "home": "Panama",
-        "away": "Croatia",
-        "home_zh": "巴拿马",
-        "away_zh": "克罗地亚",
-        "title": "巴拿马 vs 克罗地亚",
-        "status": "Full Time",
-        "status_detail": "FT",
-        "completed": true,
-        "home_score": 0,
-        "away_score": 1,
-        "venue": "BMO Field，Toronto，Canada",
-        "note": "FIFA World Cup, Group L",
-        "link": "https://www.espn.com/soccer/match/_/gameId/760460",
-        "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/pan.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/cro.png"
-      },
-      {
-        "id": "760459",
-        "date_bj": "2026-06-24T10:00:00+08:00",
-        "date": "2026-06-24",
-        "time": "10:00",
-        "home": "Colombia",
-        "away": "Congo DR",
-        "home_zh": "哥伦比亚",
-        "away_zh": "刚果（金）",
-        "title": "哥伦比亚 vs 刚果（金）",
-        "status": "Full Time",
-        "status_detail": "FT",
-        "completed": true,
-        "home_score": 1,
-        "away_score": 0,
-        "venue": "Estadio Akron，Guadalajara，Mexico",
-        "note": "FIFA World Cup, Group K",
-        "link": "https://www.espn.com/soccer/match/_/gameId/760459",
-        "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/col.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/rdc.png"
-      }
-    ],
-    "today_matches": [
       {
         "id": "760462",
         "date_bj": "2026-06-25T03:00:00+08:00",
@@ -132,7 +46,10 @@
         "note": "FIFA World Cup, Group B",
         "link": "https://www.espn.com/soccer/match/_/gameId/760462",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/bih.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/qat.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/qat.png",
+        "half_time_score": "2-1",
+        "half_full": "胜胜",
+        "second_half_score": "1-0"
       },
       {
         "id": "760463",
@@ -153,7 +70,10 @@
         "note": "FIFA World Cup, Group B",
         "link": "https://www.espn.com/soccer/match/_/gameId/760463",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/sui.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/can.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/can.png",
+        "half_time_score": "0-0",
+        "half_full": "平胜",
+        "second_half_score": "2-1"
       },
       {
         "id": "760464",
@@ -174,7 +94,10 @@
         "note": "FIFA World Cup, Group C",
         "link": "https://www.espn.com/soccer/match/_/gameId/760464",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/mar.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/hai.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/hai.png",
+        "half_time_score": "2-2",
+        "half_full": "平胜",
+        "second_half_score": "2-0"
       },
       {
         "id": "760465",
@@ -195,7 +118,10 @@
         "note": "FIFA World Cup, Group C",
         "link": "https://www.espn.com/soccer/match/_/gameId/760465",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/sco.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/bra.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/bra.png",
+        "half_time_score": "0-2",
+        "half_full": "负负",
+        "second_half_score": "0-1"
       },
       {
         "id": "760467",
@@ -216,7 +142,10 @@
         "note": "FIFA World Cup, Group A",
         "link": "https://www.espn.com/soccer/match/_/gameId/760467",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/cze.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/mex.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/mex.png",
+        "half_time_score": "0-0",
+        "half_full": "平负",
+        "second_half_score": "0-3"
       },
       {
         "id": "760466",
@@ -237,10 +166,13 @@
         "note": "FIFA World Cup, Group A",
         "link": "https://www.espn.com/soccer/match/_/gameId/760466",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/rsa.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/kors.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/kors.png",
+        "half_time_score": "0-0",
+        "half_full": "平胜",
+        "second_half_score": "1-0"
       }
     ],
-    "tomorrow_matches": [
+    "today_matches": [
       {
         "id": "760473",
         "date_bj": "2026-06-26T04:00:00+08:00",
@@ -251,16 +183,19 @@
         "home_zh": "库拉索",
         "away_zh": "科特迪瓦",
         "title": "库拉索 vs 科特迪瓦",
-        "status": "Scheduled",
-        "status_detail": "Thu, June 25th at 4:00 PM EDT",
-        "completed": false,
+        "status": "Full Time",
+        "status_detail": "FT",
+        "completed": true,
         "home_score": 0,
-        "away_score": 0,
+        "away_score": 2,
         "venue": "Lincoln Financial Field，Philadelphia, Pennsylvania，USA",
         "note": "FIFA World Cup, Group E",
         "link": "https://www.espn.com/soccer/match/_/gameId/760473",
         "home_logo": "https://a.espncdn.com/i/teamlogos/soccer/500/11678.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/civ.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/civ.png",
+        "half_time_score": "0-1",
+        "half_full": "负负",
+        "second_half_score": "0-1"
       },
       {
         "id": "760468",
@@ -272,16 +207,19 @@
         "home_zh": "厄瓜多尔",
         "away_zh": "德国",
         "title": "厄瓜多尔 vs 德国",
-        "status": "Scheduled",
-        "status_detail": "Thu, June 25th at 4:00 PM EDT",
-        "completed": false,
-        "home_score": 0,
-        "away_score": 0,
+        "status": "Full Time",
+        "status_detail": "FT",
+        "completed": true,
+        "home_score": 2,
+        "away_score": 1,
         "venue": "MetLife Stadium，East Rutherford, New Jersey，USA",
         "note": "FIFA World Cup, Group E",
         "link": "https://www.espn.com/soccer/match/_/gameId/760468",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ecu.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ger.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ger.png",
+        "half_time_score": "1-1",
+        "half_full": "平胜",
+        "second_half_score": "1-0"
       },
       {
         "id": "760471",
@@ -293,16 +231,19 @@
         "home_zh": "日本",
         "away_zh": "瑞典",
         "title": "日本 vs 瑞典",
-        "status": "Scheduled",
-        "status_detail": "Thu, June 25th at 7:00 PM EDT",
-        "completed": false,
-        "home_score": 0,
-        "away_score": 0,
+        "status": "Full Time",
+        "status_detail": "FT",
+        "completed": true,
+        "home_score": 1,
+        "away_score": 1,
         "venue": "AT&T Stadium，Arlington, Texas，USA",
         "note": "FIFA World Cup, Group F",
         "link": "https://www.espn.com/soccer/match/_/gameId/760471",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/jpn.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/swe.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/swe.png",
+        "half_time_score": "0-0",
+        "half_full": "平平",
+        "second_half_score": "1-1"
       },
       {
         "id": "760472",
@@ -314,16 +255,19 @@
         "home_zh": "突尼斯",
         "away_zh": "荷兰",
         "title": "突尼斯 vs 荷兰",
-        "status": "Scheduled",
-        "status_detail": "Thu, June 25th at 7:00 PM EDT",
-        "completed": false,
-        "home_score": 0,
-        "away_score": 0,
+        "status": "Full Time",
+        "status_detail": "FT",
+        "completed": true,
+        "home_score": 1,
+        "away_score": 3,
         "venue": "GEHA Field at Arrowhead Stadium，Kansas City, Missouri，USA",
         "note": "FIFA World Cup, Group F",
         "link": "https://www.espn.com/soccer/match/_/gameId/760472",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/tun.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ned.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ned.png",
+        "half_time_score": "0-2",
+        "half_full": "负负",
+        "second_half_score": "1-1"
       },
       {
         "id": "760469",
@@ -344,7 +288,10 @@
         "note": "FIFA World Cup, Group D",
         "link": "https://www.espn.com/soccer/match/_/gameId/760469",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/par.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/aus.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/aus.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
       },
       {
         "id": "760470",
@@ -365,33 +312,536 @@
         "note": "FIFA World Cup, Group D",
         "link": "https://www.espn.com/soccer/match/_/gameId/760470",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/tur.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/usa.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/usa.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
+      }
+    ],
+    "tomorrow_matches": [
+      {
+        "id": "760475",
+        "date_bj": "2026-06-27T03:00:00+08:00",
+        "date": "2026-06-27",
+        "time": "03:00",
+        "home": "Norway",
+        "away": "France",
+        "home_zh": "挪威",
+        "away_zh": "法国",
+        "title": "挪威 vs 法国",
+        "status": "Scheduled",
+        "status_detail": "Fri, June 26th at 3:00 PM EDT",
+        "completed": false,
+        "home_score": 0,
+        "away_score": 0,
+        "venue": "Gillette Stadium，Foxborough, Massachusetts，USA",
+        "note": "FIFA World Cup, Group I",
+        "link": "https://www.espn.com/soccer/match/_/gameId/760475",
+        "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/nor.png",
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/fra.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
+      },
+      {
+        "id": "760474",
+        "date_bj": "2026-06-27T03:00:00+08:00",
+        "date": "2026-06-27",
+        "time": "03:00",
+        "home": "Senegal",
+        "away": "Iraq",
+        "home_zh": "塞内加尔",
+        "away_zh": "伊拉克",
+        "title": "塞内加尔 vs 伊拉克",
+        "status": "Scheduled",
+        "status_detail": "Fri, June 26th at 3:00 PM EDT",
+        "completed": false,
+        "home_score": 0,
+        "away_score": 0,
+        "venue": "BMO Field，Toronto，Canada",
+        "note": "FIFA World Cup, Group I",
+        "link": "https://www.espn.com/soccer/match/_/gameId/760474",
+        "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/sen.png",
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/irq.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
+      },
+      {
+        "id": "760478",
+        "date_bj": "2026-06-27T08:00:00+08:00",
+        "date": "2026-06-27",
+        "time": "08:00",
+        "home": "Cape Verde",
+        "away": "Saudi Arabia",
+        "home_zh": "佛得角",
+        "away_zh": "沙特阿拉伯",
+        "title": "佛得角 vs 沙特阿拉伯",
+        "status": "Scheduled",
+        "status_detail": "Fri, June 26th at 8:00 PM EDT",
+        "completed": false,
+        "home_score": 0,
+        "away_score": 0,
+        "venue": "NRG Stadium，Houston, Texas，USA",
+        "note": "FIFA World Cup, Group H",
+        "link": "https://www.espn.com/soccer/match/_/gameId/760478",
+        "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/cpv.png",
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ksa.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
+      },
+      {
+        "id": "760479",
+        "date_bj": "2026-06-27T08:00:00+08:00",
+        "date": "2026-06-27",
+        "time": "08:00",
+        "home": "Uruguay",
+        "away": "Spain",
+        "home_zh": "乌拉圭",
+        "away_zh": "西班牙",
+        "title": "乌拉圭 vs 西班牙",
+        "status": "Scheduled",
+        "status_detail": "Fri, June 26th at 8:00 PM EDT",
+        "completed": false,
+        "home_score": 0,
+        "away_score": 0,
+        "venue": "Estadio Akron，Guadalajara，Mexico",
+        "note": "FIFA World Cup, Group H",
+        "link": "https://www.espn.com/soccer/match/_/gameId/760479",
+        "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/uru.png",
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/esp.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
+      },
+      {
+        "id": "760476",
+        "date_bj": "2026-06-27T11:00:00+08:00",
+        "date": "2026-06-27",
+        "time": "11:00",
+        "home": "Egypt",
+        "away": "Iran",
+        "home_zh": "埃及",
+        "away_zh": "伊朗",
+        "title": "埃及 vs 伊朗",
+        "status": "Scheduled",
+        "status_detail": "Fri, June 26th at 11:00 PM EDT",
+        "completed": false,
+        "home_score": 0,
+        "away_score": 0,
+        "venue": "Lumen Field，Seattle, Washington，USA",
+        "note": "FIFA World Cup, Group G",
+        "link": "https://www.espn.com/soccer/match/_/gameId/760476",
+        "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/egy.png",
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/irn.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
+      },
+      {
+        "id": "760477",
+        "date_bj": "2026-06-27T11:00:00+08:00",
+        "date": "2026-06-27",
+        "time": "11:00",
+        "home": "New Zealand",
+        "away": "Belgium",
+        "home_zh": "新西兰",
+        "away_zh": "比利时",
+        "title": "新西兰 vs 比利时",
+        "status": "Scheduled",
+        "status_detail": "Fri, June 26th at 11:00 PM EDT",
+        "completed": false,
+        "home_score": 0,
+        "away_score": 0,
+        "venue": "BC Place，Vancouver，Canada",
+        "note": "FIFA World Cup, Group G",
+        "link": "https://www.espn.com/soccer/match/_/gameId/760477",
+        "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/nzl.png",
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/bel.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
       }
     ],
     "day_after_predictions": [
       {
-        "id": "760473",
-        "date_bj": "2026-06-26T04:00:00+08:00",
-        "date": "2026-06-26",
-        "time": "04:00",
-        "home": "Curaçao",
-        "away": "Ivory Coast",
-        "home_zh": "库拉索",
-        "away_zh": "科特迪瓦",
-        "title": "库拉索 vs 科特迪瓦",
+        "id": "760475",
+        "date_bj": "2026-06-27T03:00:00+08:00",
+        "date": "2026-06-27",
+        "time": "03:00",
+        "home": "Norway",
+        "away": "France",
+        "home_zh": "挪威",
+        "away_zh": "法国",
+        "title": "挪威 vs 法国",
         "status": "Scheduled",
-        "status_detail": "Thu, June 25th at 4:00 PM EDT",
+        "status_detail": "Fri, June 26th at 3:00 PM EDT",
         "completed": false,
         "home_score": 0,
         "away_score": 0,
-        "venue": "Lincoln Financial Field，Philadelphia, Pennsylvania，USA",
-        "note": "FIFA World Cup, Group E",
-        "link": "https://www.espn.com/soccer/match/_/gameId/760473",
-        "home_logo": "https://a.espncdn.com/i/teamlogos/soccer/500/11678.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/civ.png",
+        "venue": "Gillette Stadium，Foxborough, Massachusetts，USA",
+        "note": "FIFA World Cup, Group I",
+        "link": "https://www.espn.com/soccer/match/_/gameId/760475",
+        "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/nor.png",
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/fra.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null,
         "prediction": {
-          "match_id": "760473",
-          "generated_for_date": "2026-06-26",
+          "match_id": "760475",
+          "generated_for_date": "2026-06-27",
+          "tendency": "客胜",
+          "primary_outcome": "客胜",
+          "scores": [
+            "0-2",
+            "1-3",
+            "0-1"
+          ],
+          "score_pairs": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "upset_scores": [
+            "1-1",
+            "1-0"
+          ],
+          "upset_score_pairs": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "half_full": [
+            "负负",
+            "平负",
+            "胜负"
+          ],
+          "upset_half_full": [
+            "平平",
+            "平胜"
+          ],
+          "half_full_pairs": [
+            [
+              "客胜",
+              "客胜"
+            ],
+            [
+              "平",
+              "客胜"
+            ],
+            [
+              "主胜",
+              "客胜"
+            ]
+          ],
+          "odds": {
+            "source": "模型参考赔付系数（按体彩玩法格式推算，非体彩官方实际赔率）",
+            "outcome": {
+              "胜": 9.66,
+              "平": 3.92,
+              "负": 1.31
+            },
+            "outcome_pick": {
+              "label": "负",
+              "odds": 1.31
+            },
+            "scores": {
+              "0-2": 7.09,
+              "1-3": 18.29,
+              "0-1": 5.22
+            },
+            "upset_scores": {
+              "1-1": 6.61,
+              "1-0": 9.72
+            },
+            "half_full": {
+              "负负": 3.2,
+              "平负": 3.54,
+              "胜负": 16.13
+            },
+            "upset_half_full": {
+              "平平": 5.83,
+              "平胜": 26.14
+            }
+          },
+          "analysis": "法国整体实力、阵地推进和替补深度明显占优，挪威需要高效反击才能制造变数。客队整体更强，但在中立/主场氛围下主队会拼死防守，需防低比分意外。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+        }
+      },
+      {
+        "id": "760474",
+        "date_bj": "2026-06-27T03:00:00+08:00",
+        "date": "2026-06-27",
+        "time": "03:00",
+        "home": "Senegal",
+        "away": "Iraq",
+        "home_zh": "塞内加尔",
+        "away_zh": "伊拉克",
+        "title": "塞内加尔 vs 伊拉克",
+        "status": "Scheduled",
+        "status_detail": "Fri, June 26th at 3:00 PM EDT",
+        "completed": false,
+        "home_score": 0,
+        "away_score": 0,
+        "venue": "BMO Field，Toronto，Canada",
+        "note": "FIFA World Cup, Group I",
+        "link": "https://www.espn.com/soccer/match/_/gameId/760474",
+        "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/sen.png",
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/irq.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null,
+        "prediction": {
+          "match_id": "760474",
+          "generated_for_date": "2026-06-27",
+          "tendency": "主胜",
+          "primary_outcome": "主胜",
+          "scores": [
+            "2-0",
+            "3-1",
+            "2-1"
+          ],
+          "score_pairs": [
+            [
+              2,
+              0
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              2,
+              1
+            ]
+          ],
+          "upset_scores": [
+            "1-1",
+            "0-1"
+          ],
+          "upset_score_pairs": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "half_full": [
+            "胜胜",
+            "平胜",
+            "胜平"
+          ],
+          "upset_half_full": [
+            "平平",
+            "平负"
+          ],
+          "half_full_pairs": [
+            [
+              "主胜",
+              "主胜"
+            ],
+            [
+              "平",
+              "主胜"
+            ],
+            [
+              "主胜",
+              "平"
+            ]
+          ],
+          "odds": {
+            "source": "模型参考赔付系数（按体彩玩法格式推算，非体彩官方实际赔率）",
+            "outcome": {
+              "胜": 1.34,
+              "平": 3.84,
+              "负": 8.58
+            },
+            "outcome_pick": {
+              "label": "胜",
+              "odds": 1.34
+            },
+            "scores": {
+              "2-0": 6.17,
+              "3-1": 14.89,
+              "2-1": 8.61
+            },
+            "upset_scores": {
+              "1-1": 7.47,
+              "0-1": 12.96
+            },
+            "half_full": {
+              "胜胜": 3.2,
+              "平胜": 3.59,
+              "胜平": 13.9
+            },
+            "upset_half_full": {
+              "平平": 5.66,
+              "平负": 23.0
+            }
+          },
+          "analysis": "塞内加尔整体实力、阵地推进和替补深度明显占优，伊拉克需要高效反击才能制造变数。主队整体实力占优明显，但世界杯氛围下弱队防守投入度高，首球关键。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+        }
+      },
+      {
+        "id": "760478",
+        "date_bj": "2026-06-27T08:00:00+08:00",
+        "date": "2026-06-27",
+        "time": "08:00",
+        "home": "Cape Verde",
+        "away": "Saudi Arabia",
+        "home_zh": "佛得角",
+        "away_zh": "沙特阿拉伯",
+        "title": "佛得角 vs 沙特阿拉伯",
+        "status": "Scheduled",
+        "status_detail": "Fri, June 26th at 8:00 PM EDT",
+        "completed": false,
+        "home_score": 0,
+        "away_score": 0,
+        "venue": "NRG Stadium，Houston, Texas，USA",
+        "note": "FIFA World Cup, Group H",
+        "link": "https://www.espn.com/soccer/match/_/gameId/760478",
+        "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/cpv.png",
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ksa.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null,
+        "prediction": {
+          "match_id": "760478",
+          "generated_for_date": "2026-06-27",
+          "tendency": "平局倾向，双方不败均可防",
+          "primary_outcome": "平",
+          "scores": [
+            "1-1",
+            "0-0",
+            "1-0"
+          ],
+          "score_pairs": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "upset_scores": [
+            "0-1",
+            "1-2"
+          ],
+          "upset_score_pairs": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "half_full": [
+            "平平",
+            "平胜",
+            "胜平"
+          ],
+          "upset_half_full": [
+            "平负",
+            "负胜"
+          ],
+          "half_full_pairs": [
+            [
+              "平",
+              "平"
+            ],
+            [
+              "平",
+              "主胜"
+            ],
+            [
+              "主胜",
+              "平"
+            ]
+          ],
+          "odds": {
+            "source": "模型参考赔付系数（按体彩玩法格式推算，非体彩官方实际赔率）",
+            "outcome": {
+              "胜": 2.51,
+              "平": 3.07,
+              "负": 2.51
+            },
+            "outcome_pick": {
+              "label": "平",
+              "odds": 3.07
+            },
+            "scores": {
+              "1-1": 6.13,
+              "0-0": 8.47,
+              "1-0": 6.62
+            },
+            "upset_scores": {
+              "0-1": 7.85,
+              "1-2": 11.35
+            },
+            "half_full": {
+              "平平": 4.08,
+              "平胜": 6.07,
+              "胜平": 16.19
+            },
+            "upset_half_full": {
+              "平负": 6.07,
+              "负胜": 13.22
+            }
+          },
+          "analysis": "两队实力几乎相当，比赛更可能由临场效率、定位球和换人质量决定。两队实力几乎相当，首球与定位球将主导走势，低比分平局概率最高。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+        }
+      },
+      {
+        "id": "760479",
+        "date_bj": "2026-06-27T08:00:00+08:00",
+        "date": "2026-06-27",
+        "time": "08:00",
+        "home": "Uruguay",
+        "away": "Spain",
+        "home_zh": "乌拉圭",
+        "away_zh": "西班牙",
+        "title": "乌拉圭 vs 西班牙",
+        "status": "Scheduled",
+        "status_detail": "Fri, June 26th at 8:00 PM EDT",
+        "completed": false,
+        "home_score": 0,
+        "away_score": 0,
+        "venue": "Estadio Akron，Guadalajara，Mexico",
+        "note": "FIFA World Cup, Group H",
+        "link": "https://www.espn.com/soccer/match/_/gameId/760479",
+        "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/uru.png",
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/esp.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null,
+        "prediction": {
+          "match_id": "760479",
+          "generated_for_date": "2026-06-27",
           "tendency": "客胜，防平",
           "primary_outcome": "客胜",
           "scores": [
@@ -413,10 +863,23 @@
               1
             ]
           ],
+          "upset_scores": [
+            "2-1"
+          ],
+          "upset_score_pairs": [
+            [
+              2,
+              1
+            ]
+          ],
           "half_full": [
             "平负",
             "负负",
             "平平"
+          ],
+          "upset_half_full": [
+            "胜胜",
+            "负胜"
           ],
           "half_full_pairs": [
             [
@@ -448,302 +911,48 @@
               "0-1": 6.14,
               "1-1": 6.14
             },
+            "upset_scores": {
+              "2-1": 12.29
+            },
             "half_full": {
               "平负": 4.02,
               "负负": 3.2,
               "平平": 4.91
+            },
+            "upset_half_full": {
+              "胜胜": 17.16,
+              "负胜": 19.34
             }
           },
-          "analysis": "科特迪瓦略占上风，但库拉索具备通过防守密度和转换制造麻烦的空间。客队整体更稳，但杯赛小组赛节奏可能偏谨慎。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+          "analysis": "西班牙略占上风，但乌拉圭具备通过防守密度和转换制造麻烦的空间。客队整体更稳，但杯赛小组赛节奏可能偏谨慎。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
         }
       },
       {
-        "id": "760468",
-        "date_bj": "2026-06-26T04:00:00+08:00",
-        "date": "2026-06-26",
-        "time": "04:00",
-        "home": "Ecuador",
-        "away": "Germany",
-        "home_zh": "厄瓜多尔",
-        "away_zh": "德国",
-        "title": "厄瓜多尔 vs 德国",
+        "id": "760476",
+        "date_bj": "2026-06-27T11:00:00+08:00",
+        "date": "2026-06-27",
+        "time": "11:00",
+        "home": "Egypt",
+        "away": "Iran",
+        "home_zh": "埃及",
+        "away_zh": "伊朗",
+        "title": "埃及 vs 伊朗",
         "status": "Scheduled",
-        "status_detail": "Thu, June 25th at 4:00 PM EDT",
+        "status_detail": "Fri, June 26th at 11:00 PM EDT",
         "completed": false,
         "home_score": 0,
         "away_score": 0,
-        "venue": "MetLife Stadium，East Rutherford, New Jersey，USA",
-        "note": "FIFA World Cup, Group E",
-        "link": "https://www.espn.com/soccer/match/_/gameId/760468",
-        "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ecu.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ger.png",
+        "venue": "Lumen Field，Seattle, Washington，USA",
+        "note": "FIFA World Cup, Group G",
+        "link": "https://www.espn.com/soccer/match/_/gameId/760476",
+        "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/egy.png",
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/irn.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null,
         "prediction": {
-          "match_id": "760468",
-          "generated_for_date": "2026-06-26",
-          "tendency": "客胜",
-          "primary_outcome": "客胜",
-          "scores": [
-            "0-2",
-            "1-2",
-            "0-1"
-          ],
-          "score_pairs": [
-            [
-              0,
-              2
-            ],
-            [
-              1,
-              2
-            ],
-            [
-              0,
-              1
-            ]
-          ],
-          "half_full": [
-            "平负",
-            "负负",
-            "胜负"
-          ],
-          "half_full_pairs": [
-            [
-              "平",
-              "客胜"
-            ],
-            [
-              "客胜",
-              "客胜"
-            ],
-            [
-              "主胜",
-              "客胜"
-            ]
-          ],
-          "odds": {
-            "source": "模型参考赔付系数（按体彩玩法格式推算，非体彩官方实际赔率）",
-            "outcome": {
-              "胜": 6.1,
-              "平": 3.63,
-              "负": 1.46
-            },
-            "outcome_pick": {
-              "label": "负",
-              "odds": 1.46
-            },
-            "scores": {
-              "0-2": 8.54,
-              "1-2": 9.19,
-              "0-1": 5.81
-            },
-            "half_full": {
-              "平负": 3.81,
-              "负负": 3.2,
-              "胜负": 14.18
-            }
-          },
-          "analysis": "德国整体实力占优，但世界杯大赛节奏下厄瓜多尔防守投入度更高。客队优势更清晰，若早段进球会扩大控场。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
-        }
-      },
-      {
-        "id": "760471",
-        "date_bj": "2026-06-26T07:00:00+08:00",
-        "date": "2026-06-26",
-        "time": "07:00",
-        "home": "Japan",
-        "away": "Sweden",
-        "home_zh": "日本",
-        "away_zh": "瑞典",
-        "title": "日本 vs 瑞典",
-        "status": "Scheduled",
-        "status_detail": "Thu, June 25th at 7:00 PM EDT",
-        "completed": false,
-        "home_score": 0,
-        "away_score": 0,
-        "venue": "AT&T Stadium，Arlington, Texas，USA",
-        "note": "FIFA World Cup, Group F",
-        "link": "https://www.espn.com/soccer/match/_/gameId/760471",
-        "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/jpn.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/swe.png",
-        "prediction": {
-          "match_id": "760471",
-          "generated_for_date": "2026-06-26",
-          "tendency": "主胜，防平",
-          "primary_outcome": "主胜",
-          "scores": [
-            "1-0",
-            "2-1",
-            "1-1"
-          ],
-          "score_pairs": [
-            [
-              1,
-              0
-            ],
-            [
-              2,
-              1
-            ],
-            [
-              1,
-              1
-            ]
-          ],
-          "half_full": [
-            "平胜",
-            "平平",
-            "胜胜"
-          ],
-          "half_full_pairs": [
-            [
-              "平",
-              "主胜"
-            ],
-            [
-              "平",
-              "平"
-            ],
-            [
-              "主胜",
-              "主胜"
-            ]
-          ],
-          "odds": {
-            "source": "模型参考赔付系数（按体彩玩法格式推算，非体彩官方实际赔率）",
-            "outcome": {
-              "胜": 1.91,
-              "平": 3.27,
-              "负": 3.39
-            },
-            "outcome_pick": {
-              "label": "胜",
-              "odds": 1.91
-            },
-            "scores": {
-              "1-0": 6.14,
-              "2-1": 8.93,
-              "1-1": 6.34
-            },
-            "half_full": {
-              "平胜": 4.72,
-              "平平": 4.43,
-              "胜胜": 3.44
-            }
-          },
-          "analysis": "两队差距有限，日本略有上风，但首球和定位球将显著改变比赛走势。主队略有上风，但差距有限，平局仍是合理结局。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
-        }
-      },
-      {
-        "id": "760472",
-        "date_bj": "2026-06-26T07:00:00+08:00",
-        "date": "2026-06-26",
-        "time": "07:00",
-        "home": "Tunisia",
-        "away": "Netherlands",
-        "home_zh": "突尼斯",
-        "away_zh": "荷兰",
-        "title": "突尼斯 vs 荷兰",
-        "status": "Scheduled",
-        "status_detail": "Thu, June 25th at 7:00 PM EDT",
-        "completed": false,
-        "home_score": 0,
-        "away_score": 0,
-        "venue": "GEHA Field at Arrowhead Stadium，Kansas City, Missouri，USA",
-        "note": "FIFA World Cup, Group F",
-        "link": "https://www.espn.com/soccer/match/_/gameId/760472",
-        "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/tun.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ned.png",
-        "prediction": {
-          "match_id": "760472",
-          "generated_for_date": "2026-06-26",
-          "tendency": "客胜",
-          "primary_outcome": "客胜",
-          "scores": [
-            "0-2",
-            "1-3",
-            "0-1"
-          ],
-          "score_pairs": [
-            [
-              0,
-              2
-            ],
-            [
-              1,
-              3
-            ],
-            [
-              0,
-              1
-            ]
-          ],
-          "half_full": [
-            "负负",
-            "平负",
-            "胜负"
-          ],
-          "half_full_pairs": [
-            [
-              "客胜",
-              "客胜"
-            ],
-            [
-              "平",
-              "客胜"
-            ],
-            [
-              "主胜",
-              "客胜"
-            ]
-          ],
-          "odds": {
-            "source": "模型参考赔付系数（按体彩玩法格式推算，非体彩官方实际赔率）",
-            "outcome": {
-              "胜": 8.58,
-              "平": 3.84,
-              "负": 1.34
-            },
-            "outcome_pick": {
-              "label": "负",
-              "odds": 1.34
-            },
-            "scores": {
-              "0-2": 7.42,
-              "1-3": 18.69,
-              "0-1": 5.36
-            },
-            "half_full": {
-              "负负": 3.2,
-              "平负": 3.59,
-              "胜负": 15.62
-            }
-          },
-          "analysis": "荷兰整体实力、阵地推进和替补深度明显占优，突尼斯需要高效反击才能制造变数。客队整体更强，但在中立/主场氛围下主队会拼死防守，需防低比分意外。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
-        }
-      },
-      {
-        "id": "760469",
-        "date_bj": "2026-06-26T10:00:00+08:00",
-        "date": "2026-06-26",
-        "time": "10:00",
-        "home": "Paraguay",
-        "away": "Australia",
-        "home_zh": "巴拉圭",
-        "away_zh": "澳大利亚",
-        "title": "巴拉圭 vs 澳大利亚",
-        "status": "Scheduled",
-        "status_detail": "Thu, June 25th at 10:00 PM EDT",
-        "completed": false,
-        "home_score": 0,
-        "away_score": 0,
-        "venue": "Levi's Stadium，Santa Clara, California，USA",
-        "note": "FIFA World Cup, Group D",
-        "link": "https://www.espn.com/soccer/match/_/gameId/760469",
-        "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/par.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/aus.png",
-        "prediction": {
-          "match_id": "760469",
-          "generated_for_date": "2026-06-26",
+          "match_id": "760476",
+          "generated_for_date": "2026-06-27",
           "tendency": "平局倾向，双方不败均可防",
           "primary_outcome": "平",
           "scores": [
@@ -765,10 +974,28 @@
               0
             ]
           ],
+          "upset_scores": [
+            "0-1",
+            "1-2"
+          ],
+          "upset_score_pairs": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
           "half_full": [
             "平平",
             "平胜",
             "胜平"
+          ],
+          "upset_half_full": [
+            "平负",
+            "负胜"
           ],
           "half_full_pairs": [
             [
@@ -800,101 +1027,138 @@
               "0-0": 8.53,
               "1-0": 6.49
             },
+            "upset_scores": {
+              "0-1": 8.11,
+              "1-2": 11.73
+            },
             "half_full": {
               "平平": 4.16,
               "平胜": 5.65,
               "胜平": 15.63
+            },
+            "upset_half_full": {
+              "平负": 6.51,
+              "负胜": 12.89
             }
           },
           "analysis": "两队实力几乎相当，比赛更可能由临场效率、定位球和换人质量决定。两队实力几乎相当，首球与定位球将主导走势，低比分平局概率最高。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
         }
       },
       {
-        "id": "760470",
-        "date_bj": "2026-06-26T10:00:00+08:00",
-        "date": "2026-06-26",
-        "time": "10:00",
-        "home": "Türkiye",
-        "away": "United States",
-        "home_zh": "土耳其",
-        "away_zh": "美国",
-        "title": "土耳其 vs 美国",
+        "id": "760477",
+        "date_bj": "2026-06-27T11:00:00+08:00",
+        "date": "2026-06-27",
+        "time": "11:00",
+        "home": "New Zealand",
+        "away": "Belgium",
+        "home_zh": "新西兰",
+        "away_zh": "比利时",
+        "title": "新西兰 vs 比利时",
         "status": "Scheduled",
-        "status_detail": "Thu, June 25th at 10:00 PM EDT",
+        "status_detail": "Fri, June 26th at 11:00 PM EDT",
         "completed": false,
         "home_score": 0,
         "away_score": 0,
-        "venue": "SoFi Stadium，Inglewood, California，USA",
-        "note": "FIFA World Cup, Group D",
-        "link": "https://www.espn.com/soccer/match/_/gameId/760470",
-        "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/tur.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/usa.png",
+        "venue": "BC Place，Vancouver，Canada",
+        "note": "FIFA World Cup, Group G",
+        "link": "https://www.espn.com/soccer/match/_/gameId/760477",
+        "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/nzl.png",
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/bel.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null,
         "prediction": {
-          "match_id": "760470",
-          "generated_for_date": "2026-06-26",
-          "tendency": "客胜，防平",
+          "match_id": "760477",
+          "generated_for_date": "2026-06-27",
+          "tendency": "客胜",
           "primary_outcome": "客胜",
           "scores": [
-            "0-1",
-            "1-2",
-            "1-1"
+            "0-2",
+            "1-3",
+            "0-1"
           ],
           "score_pairs": [
             [
               0,
-              1
-            ],
-            [
-              1,
               2
             ],
             [
               1,
+              3
+            ],
+            [
+              0,
               1
             ]
           ],
+          "upset_scores": [
+            "1-1",
+            "1-0"
+          ],
+          "upset_score_pairs": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
           "half_full": [
+            "负负",
             "平负",
+            "胜负"
+          ],
+          "upset_half_full": [
             "平平",
-            "负负"
+            "平胜"
           ],
           "half_full_pairs": [
+            [
+              "客胜",
+              "客胜"
+            ],
             [
               "平",
               "客胜"
             ],
             [
-              "平",
-              "平"
-            ],
-            [
-              "客胜",
+              "主胜",
               "客胜"
             ]
           ],
           "odds": {
             "source": "模型参考赔付系数（按体彩玩法格式推算，非体彩官方实际赔率）",
             "outcome": {
-              "胜": 3.12,
-              "平": 3.22,
-              "负": 2.03
+              "胜": 12,
+              "平": 4.08,
+              "负": 1.25
             },
             "outcome_pick": {
               "label": "负",
-              "odds": 2.03
+              "odds": 1.25
             },
             "scores": {
-              "0-1": 7.13,
-              "1-2": 10.42,
-              "1-1": 6.07
+              "0-2": 6.49,
+              "1-3": 17.69,
+              "0-1": 4.96
+            },
+            "upset_scores": {
+              "1-1": 6.89,
+              "1-0": 10.52
             },
             "half_full": {
-              "平负": 4.98,
-              "平平": 4.33,
-              "负负": 3.8
+              "负负": 3.2,
+              "平负": 3.45,
+              "胜负": 17.17
+            },
+            "upset_half_full": {
+              "平平": 6.18,
+              "平胜": 33.95
             }
           },
-          "analysis": "两队差距有限，美国略有上风，但首球和定位球将显著改变比赛走势。客队略有上风，主队主场动力可能制造变数，平局可防。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+          "analysis": "比利时整体实力、阵地推进和替补深度明显占优，新西兰需要高效反击才能制造变数。客队整体更强，但在中立/主场氛围下主队会拼死防守，需防低比分意外。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
         }
       }
     ],
@@ -2472,7 +2736,10 @@
         "note": "FIFA World Cup, Group D",
         "link": "https://www.espn.com/soccer/match/_/gameId/760421",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/aus.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/tur.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/tur.png",
+        "half_time_score": "1-0",
+        "half_full": "胜胜",
+        "second_half_score": "1-0"
       },
       {
         "id": "760422",
@@ -2493,7 +2760,10 @@
         "note": "FIFA World Cup, Group E",
         "link": "https://www.espn.com/soccer/match/_/gameId/760422",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ger.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/soccer/500/11678.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/soccer/500/11678.png",
+        "half_time_score": "3-1",
+        "half_full": "胜胜",
+        "second_half_score": "4-0"
       },
       {
         "id": "760425",
@@ -2514,7 +2784,10 @@
         "note": "FIFA World Cup, Group F",
         "link": "https://www.espn.com/soccer/match/_/gameId/760425",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ned.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/jpn.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/jpn.png",
+        "half_time_score": "0-0",
+        "half_full": "平平",
+        "second_half_score": "2-2"
       },
       {
         "id": "760423",
@@ -2535,7 +2808,10 @@
         "note": "FIFA World Cup, Group E",
         "link": "https://www.espn.com/soccer/match/_/gameId/760423",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/civ.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ecu.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ecu.png",
+        "half_time_score": "0-0",
+        "half_full": "平胜",
+        "second_half_score": "1-0"
       },
       {
         "id": "760424",
@@ -2556,7 +2832,10 @@
         "note": "FIFA World Cup, Group F",
         "link": "https://www.espn.com/soccer/match/_/gameId/760424",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/swe.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/tun.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/tun.png",
+        "half_time_score": "2-1",
+        "half_full": "胜胜",
+        "second_half_score": "3-0"
       },
       {
         "id": "760428",
@@ -2577,7 +2856,10 @@
         "note": "FIFA World Cup, Group H",
         "link": "https://www.espn.com/soccer/match/_/gameId/760428",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/esp.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/cpv.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/cpv.png",
+        "half_time_score": "0-0",
+        "half_full": "平平",
+        "second_half_score": "0-0"
       },
       {
         "id": "760426",
@@ -2598,7 +2880,10 @@
         "note": "FIFA World Cup, Group G",
         "link": "https://www.espn.com/soccer/match/_/gameId/760426",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/bel.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/egy.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/egy.png",
+        "half_time_score": "0-1",
+        "half_full": "负平",
+        "second_half_score": "1-0"
       },
       {
         "id": "760429",
@@ -2619,7 +2904,10 @@
         "note": "FIFA World Cup, Group H",
         "link": "https://www.espn.com/soccer/match/_/gameId/760429",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ksa.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/uru.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/uru.png",
+        "half_time_score": "1-0",
+        "half_full": "胜平",
+        "second_half_score": "0-1"
       },
       {
         "id": "760427",
@@ -2640,7 +2928,10 @@
         "note": "FIFA World Cup, Group G",
         "link": "https://www.espn.com/soccer/match/_/gameId/760427",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/irn.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/nzl.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/nzl.png",
+        "half_time_score": "1-1",
+        "half_full": "平平",
+        "second_half_score": "1-1"
       },
       {
         "id": "760432",
@@ -2661,7 +2952,10 @@
         "note": "FIFA World Cup, Group I",
         "link": "https://www.espn.com/soccer/match/_/gameId/760432",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/fra.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/sen.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/sen.png",
+        "half_time_score": "0-0",
+        "half_full": "平胜",
+        "second_half_score": "3-1"
       },
       {
         "id": "760430",
@@ -2682,7 +2976,10 @@
         "note": "FIFA World Cup, Group I",
         "link": "https://www.espn.com/soccer/match/_/gameId/760430",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/irq.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/nor.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/nor.png",
+        "half_time_score": "1-2",
+        "half_full": "负负",
+        "second_half_score": "0-2"
       },
       {
         "id": "760433",
@@ -2703,7 +3000,10 @@
         "note": "FIFA World Cup, Group J",
         "link": "https://www.espn.com/soccer/match/_/gameId/760433",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/arg.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/alg.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/alg.png",
+        "half_time_score": "1-0",
+        "half_full": "胜胜",
+        "second_half_score": "2-0"
       },
       {
         "id": "760431",
@@ -2724,7 +3024,10 @@
         "note": "FIFA World Cup, Group J",
         "link": "https://www.espn.com/soccer/match/_/gameId/760431",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/aut.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/jor.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/jor.png",
+        "half_time_score": "1-0",
+        "half_full": "胜胜",
+        "second_half_score": "2-1"
       },
       {
         "id": "760435",
@@ -2745,7 +3048,10 @@
         "note": "FIFA World Cup, Group K",
         "link": "https://www.espn.com/soccer/match/_/gameId/760435",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/por.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/rdc.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/rdc.png",
+        "half_time_score": "1-1",
+        "half_full": "平平",
+        "second_half_score": "0-0"
       },
       {
         "id": "760437",
@@ -2766,7 +3072,10 @@
         "note": "FIFA World Cup, Group L",
         "link": "https://www.espn.com/soccer/match/_/gameId/760437",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/eng.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/cro.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/cro.png",
+        "half_time_score": "2-2",
+        "half_full": "平胜",
+        "second_half_score": "2-0"
       },
       {
         "id": "760434",
@@ -2787,7 +3096,10 @@
         "note": "FIFA World Cup, Group L",
         "link": "https://www.espn.com/soccer/match/_/gameId/760434",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/gha.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/pan.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/pan.png",
+        "half_time_score": "0-0",
+        "half_full": "平胜",
+        "second_half_score": "1-0"
       },
       {
         "id": "760436",
@@ -2808,7 +3120,10 @@
         "note": "FIFA World Cup, Group K",
         "link": "https://www.espn.com/soccer/match/_/gameId/760436",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/uzb.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/col.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/col.png",
+        "half_time_score": "0-1",
+        "half_full": "负负",
+        "second_half_score": "1-2"
       },
       {
         "id": "760438",
@@ -2829,7 +3144,10 @@
         "note": "FIFA World Cup, Group A",
         "link": "https://www.espn.com/soccer/match/_/gameId/760438",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/cze.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/rsa.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/rsa.png",
+        "half_time_score": "1-0",
+        "half_full": "胜平",
+        "second_half_score": "0-1"
       },
       {
         "id": "760439",
@@ -2850,7 +3168,10 @@
         "note": "FIFA World Cup, Group B",
         "link": "https://www.espn.com/soccer/match/_/gameId/760439",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/sui.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/bih.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/bih.png",
+        "half_time_score": "0-0",
+        "half_full": "平胜",
+        "second_half_score": "4-1"
       },
       {
         "id": "760440",
@@ -2871,7 +3192,10 @@
         "note": "FIFA World Cup, Group B",
         "link": "https://www.espn.com/soccer/match/_/gameId/760440",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/can.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/qat.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/qat.png",
+        "half_time_score": "3-0",
+        "half_full": "胜胜",
+        "second_half_score": "3-0"
       },
       {
         "id": "760441",
@@ -2892,7 +3216,10 @@
         "note": "FIFA World Cup, Group A",
         "link": "https://www.espn.com/soccer/match/_/gameId/760441",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/mex.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/kors.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/kors.png",
+        "half_time_score": "0-0",
+        "half_full": "平胜",
+        "second_half_score": "1-0"
       },
       {
         "id": "760442",
@@ -2913,7 +3240,10 @@
         "note": "FIFA World Cup, Group D",
         "link": "https://www.espn.com/soccer/match/_/gameId/760442",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/usa.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/aus.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/aus.png",
+        "half_time_score": "2-0",
+        "half_full": "胜胜",
+        "second_half_score": "0-0"
       },
       {
         "id": "760445",
@@ -2934,7 +3264,10 @@
         "note": "FIFA World Cup, Group C",
         "link": "https://www.espn.com/soccer/match/_/gameId/760445",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/sco.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/mar.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/mar.png",
+        "half_time_score": "0-1",
+        "half_full": "负负",
+        "second_half_score": "0-0"
       },
       {
         "id": "760444",
@@ -2955,7 +3288,10 @@
         "note": "FIFA World Cup, Group C",
         "link": "https://www.espn.com/soccer/match/_/gameId/760444",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/bra.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/hai.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/hai.png",
+        "half_time_score": "3-0",
+        "half_full": "胜胜",
+        "second_half_score": "0-0"
       },
       {
         "id": "760443",
@@ -2976,7 +3312,10 @@
         "note": "FIFA World Cup, Group D",
         "link": "https://www.espn.com/soccer/match/_/gameId/760443",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/tur.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/par.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/par.png",
+        "half_time_score": "0-1",
+        "half_full": "负负",
+        "second_half_score": "0-0"
       },
       {
         "id": "760447",
@@ -2997,7 +3336,10 @@
         "note": "FIFA World Cup, Group F",
         "link": "https://www.espn.com/soccer/match/_/gameId/760447",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ned.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/swe.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/swe.png",
+        "half_time_score": "2-0",
+        "half_full": "胜胜",
+        "second_half_score": "3-1"
       },
       {
         "id": "760448",
@@ -3018,7 +3360,10 @@
         "note": "FIFA World Cup, Group E",
         "link": "https://www.espn.com/soccer/match/_/gameId/760448",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ger.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/civ.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/civ.png",
+        "half_time_score": "0-1",
+        "half_full": "负胜",
+        "second_half_score": "2-0"
       },
       {
         "id": "760446",
@@ -3039,7 +3384,10 @@
         "note": "FIFA World Cup, Group E",
         "link": "https://www.espn.com/soccer/match/_/gameId/760446",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ecu.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/soccer/500/11678.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/soccer/500/11678.png",
+        "half_time_score": "0-0",
+        "half_full": "平平",
+        "second_half_score": "0-0"
       },
       {
         "id": "760449",
@@ -3060,7 +3408,10 @@
         "note": "FIFA World Cup, Group F",
         "link": "https://www.espn.com/soccer/match/_/gameId/760449",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/tun.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/jpn.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/jpn.png",
+        "half_time_score": "0-2",
+        "half_full": "负负",
+        "second_half_score": "0-2"
       },
       {
         "id": "760453",
@@ -3081,7 +3432,10 @@
         "note": "FIFA World Cup, Group H",
         "link": "https://www.espn.com/soccer/match/_/gameId/760453",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/esp.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ksa.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ksa.png",
+        "half_time_score": "3-0",
+        "half_full": "胜胜",
+        "second_half_score": "1-0"
       },
       {
         "id": "760451",
@@ -3102,7 +3456,10 @@
         "note": "FIFA World Cup, Group G",
         "link": "https://www.espn.com/soccer/match/_/gameId/760451",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/bel.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/irn.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/irn.png",
+        "half_time_score": "0-0",
+        "half_full": "平平",
+        "second_half_score": "0-0"
       },
       {
         "id": "760450",
@@ -3123,7 +3480,10 @@
         "note": "FIFA World Cup, Group H",
         "link": "https://www.espn.com/soccer/match/_/gameId/760450",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/uru.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/cpv.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/cpv.png",
+        "half_time_score": "2-1",
+        "half_full": "胜平",
+        "second_half_score": "0-1"
       },
       {
         "id": "760452",
@@ -3144,7 +3504,10 @@
         "note": "FIFA World Cup, Group G",
         "link": "https://www.espn.com/soccer/match/_/gameId/760452",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/nzl.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/egy.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/egy.png",
+        "half_time_score": "1-0",
+        "half_full": "胜负",
+        "second_half_score": "0-3"
       },
       {
         "id": "760456",
@@ -3165,7 +3528,10 @@
         "note": "FIFA World Cup, Group J",
         "link": "https://www.espn.com/soccer/match/_/gameId/760456",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/arg.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/aut.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/aut.png",
+        "half_time_score": "1-0",
+        "half_full": "胜胜",
+        "second_half_score": "1-0"
       },
       {
         "id": "760457",
@@ -3186,7 +3552,10 @@
         "note": "FIFA World Cup, Group I",
         "link": "https://www.espn.com/soccer/match/_/gameId/760457",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/fra.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/irq.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/irq.png",
+        "half_time_score": "1-0",
+        "half_full": "胜胜",
+        "second_half_score": "2-0"
       },
       {
         "id": "760454",
@@ -3207,7 +3576,10 @@
         "note": "FIFA World Cup, Group I",
         "link": "https://www.espn.com/soccer/match/_/gameId/760454",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/nor.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/sen.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/sen.png",
+        "half_time_score": "1-0",
+        "half_full": "胜胜",
+        "second_half_score": "2-2"
       },
       {
         "id": "760455",
@@ -3228,7 +3600,10 @@
         "note": "FIFA World Cup, Group J",
         "link": "https://www.espn.com/soccer/match/_/gameId/760455",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/jor.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/alg.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/alg.png",
+        "half_time_score": "1-0",
+        "half_full": "胜负",
+        "second_half_score": "0-2"
       },
       {
         "id": "760461",
@@ -3249,7 +3624,10 @@
         "note": "FIFA World Cup, Group K",
         "link": "https://www.espn.com/soccer/match/_/gameId/760461",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/por.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/uzb.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/uzb.png",
+        "half_time_score": "3-0",
+        "half_full": "胜胜",
+        "second_half_score": "2-0"
       },
       {
         "id": "760458",
@@ -3270,7 +3648,10 @@
         "note": "FIFA World Cup, Group L",
         "link": "https://www.espn.com/soccer/match/_/gameId/760458",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/eng.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/gha.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/gha.png",
+        "half_time_score": "0-0",
+        "half_full": "平平",
+        "second_half_score": "0-0"
       },
       {
         "id": "760460",
@@ -3291,7 +3672,10 @@
         "note": "FIFA World Cup, Group L",
         "link": "https://www.espn.com/soccer/match/_/gameId/760460",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/pan.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/cro.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/cro.png",
+        "half_time_score": "0-0",
+        "half_full": "平负",
+        "second_half_score": "0-1"
       },
       {
         "id": "760459",
@@ -3312,7 +3696,10 @@
         "note": "FIFA World Cup, Group K",
         "link": "https://www.espn.com/soccer/match/_/gameId/760459",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/col.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/rdc.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/rdc.png",
+        "half_time_score": "0-0",
+        "half_full": "平胜",
+        "second_half_score": "1-0"
       },
       {
         "id": "760462",
@@ -3333,7 +3720,10 @@
         "note": "FIFA World Cup, Group B",
         "link": "https://www.espn.com/soccer/match/_/gameId/760462",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/bih.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/qat.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/qat.png",
+        "half_time_score": "2-1",
+        "half_full": "胜胜",
+        "second_half_score": "1-0"
       },
       {
         "id": "760463",
@@ -3354,7 +3744,10 @@
         "note": "FIFA World Cup, Group B",
         "link": "https://www.espn.com/soccer/match/_/gameId/760463",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/sui.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/can.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/can.png",
+        "half_time_score": "0-0",
+        "half_full": "平胜",
+        "second_half_score": "2-1"
       },
       {
         "id": "760464",
@@ -3375,7 +3768,10 @@
         "note": "FIFA World Cup, Group C",
         "link": "https://www.espn.com/soccer/match/_/gameId/760464",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/mar.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/hai.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/hai.png",
+        "half_time_score": "2-2",
+        "half_full": "平胜",
+        "second_half_score": "2-0"
       },
       {
         "id": "760465",
@@ -3396,7 +3792,10 @@
         "note": "FIFA World Cup, Group C",
         "link": "https://www.espn.com/soccer/match/_/gameId/760465",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/sco.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/bra.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/bra.png",
+        "half_time_score": "0-2",
+        "half_full": "负负",
+        "second_half_score": "0-1"
       },
       {
         "id": "760467",
@@ -3417,7 +3816,10 @@
         "note": "FIFA World Cup, Group A",
         "link": "https://www.espn.com/soccer/match/_/gameId/760467",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/cze.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/mex.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/mex.png",
+        "half_time_score": "0-0",
+        "half_full": "平负",
+        "second_half_score": "0-3"
       },
       {
         "id": "760466",
@@ -3438,7 +3840,10 @@
         "note": "FIFA World Cup, Group A",
         "link": "https://www.espn.com/soccer/match/_/gameId/760466",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/rsa.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/kors.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/kors.png",
+        "half_time_score": "0-0",
+        "half_full": "平胜",
+        "second_half_score": "1-0"
       },
       {
         "id": "760473",
@@ -3450,16 +3855,19 @@
         "home_zh": "库拉索",
         "away_zh": "科特迪瓦",
         "title": "库拉索 vs 科特迪瓦",
-        "status": "Scheduled",
-        "status_detail": "Thu, June 25th at 4:00 PM EDT",
-        "completed": false,
+        "status": "Full Time",
+        "status_detail": "FT",
+        "completed": true,
         "home_score": 0,
-        "away_score": 0,
+        "away_score": 2,
         "venue": "Lincoln Financial Field，Philadelphia, Pennsylvania，USA",
         "note": "FIFA World Cup, Group E",
         "link": "https://www.espn.com/soccer/match/_/gameId/760473",
         "home_logo": "https://a.espncdn.com/i/teamlogos/soccer/500/11678.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/civ.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/civ.png",
+        "half_time_score": "0-1",
+        "half_full": "负负",
+        "second_half_score": "0-1"
       },
       {
         "id": "760468",
@@ -3471,16 +3879,19 @@
         "home_zh": "厄瓜多尔",
         "away_zh": "德国",
         "title": "厄瓜多尔 vs 德国",
-        "status": "Scheduled",
-        "status_detail": "Thu, June 25th at 4:00 PM EDT",
-        "completed": false,
-        "home_score": 0,
-        "away_score": 0,
+        "status": "Full Time",
+        "status_detail": "FT",
+        "completed": true,
+        "home_score": 2,
+        "away_score": 1,
         "venue": "MetLife Stadium，East Rutherford, New Jersey，USA",
         "note": "FIFA World Cup, Group E",
         "link": "https://www.espn.com/soccer/match/_/gameId/760468",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ecu.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ger.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ger.png",
+        "half_time_score": "1-1",
+        "half_full": "平胜",
+        "second_half_score": "1-0"
       },
       {
         "id": "760471",
@@ -3492,16 +3903,19 @@
         "home_zh": "日本",
         "away_zh": "瑞典",
         "title": "日本 vs 瑞典",
-        "status": "Scheduled",
-        "status_detail": "Thu, June 25th at 7:00 PM EDT",
-        "completed": false,
-        "home_score": 0,
-        "away_score": 0,
+        "status": "Full Time",
+        "status_detail": "FT",
+        "completed": true,
+        "home_score": 1,
+        "away_score": 1,
         "venue": "AT&T Stadium，Arlington, Texas，USA",
         "note": "FIFA World Cup, Group F",
         "link": "https://www.espn.com/soccer/match/_/gameId/760471",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/jpn.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/swe.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/swe.png",
+        "half_time_score": "0-0",
+        "half_full": "平平",
+        "second_half_score": "1-1"
       },
       {
         "id": "760472",
@@ -3513,16 +3927,19 @@
         "home_zh": "突尼斯",
         "away_zh": "荷兰",
         "title": "突尼斯 vs 荷兰",
-        "status": "Scheduled",
-        "status_detail": "Thu, June 25th at 7:00 PM EDT",
-        "completed": false,
-        "home_score": 0,
-        "away_score": 0,
+        "status": "Full Time",
+        "status_detail": "FT",
+        "completed": true,
+        "home_score": 1,
+        "away_score": 3,
         "venue": "GEHA Field at Arrowhead Stadium，Kansas City, Missouri，USA",
         "note": "FIFA World Cup, Group F",
         "link": "https://www.espn.com/soccer/match/_/gameId/760472",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/tun.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ned.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ned.png",
+        "half_time_score": "0-2",
+        "half_full": "负负",
+        "second_half_score": "1-1"
       },
       {
         "id": "760469",
@@ -3543,7 +3960,10 @@
         "note": "FIFA World Cup, Group D",
         "link": "https://www.espn.com/soccer/match/_/gameId/760469",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/par.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/aus.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/aus.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
       },
       {
         "id": "760470",
@@ -3564,7 +3984,10 @@
         "note": "FIFA World Cup, Group D",
         "link": "https://www.espn.com/soccer/match/_/gameId/760470",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/tur.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/usa.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/usa.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
       },
       {
         "id": "760475",
@@ -3585,7 +4008,10 @@
         "note": "FIFA World Cup, Group I",
         "link": "https://www.espn.com/soccer/match/_/gameId/760475",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/nor.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/fra.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/fra.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
       },
       {
         "id": "760474",
@@ -3606,7 +4032,10 @@
         "note": "FIFA World Cup, Group I",
         "link": "https://www.espn.com/soccer/match/_/gameId/760474",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/sen.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/irq.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/irq.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
       },
       {
         "id": "760478",
@@ -3627,7 +4056,10 @@
         "note": "FIFA World Cup, Group H",
         "link": "https://www.espn.com/soccer/match/_/gameId/760478",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/cpv.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ksa.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ksa.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
       },
       {
         "id": "760479",
@@ -3648,7 +4080,10 @@
         "note": "FIFA World Cup, Group H",
         "link": "https://www.espn.com/soccer/match/_/gameId/760479",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/uru.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/esp.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/esp.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
       },
       {
         "id": "760476",
@@ -3669,7 +4104,10 @@
         "note": "FIFA World Cup, Group G",
         "link": "https://www.espn.com/soccer/match/_/gameId/760476",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/egy.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/irn.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/irn.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
       },
       {
         "id": "760477",
@@ -3690,7 +4128,10 @@
         "note": "FIFA World Cup, Group G",
         "link": "https://www.espn.com/soccer/match/_/gameId/760477",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/nzl.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/bel.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/bel.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
       },
       {
         "id": "760480",
@@ -3711,7 +4152,10 @@
         "note": "FIFA World Cup, Group L",
         "link": "https://www.espn.com/soccer/match/_/gameId/760480",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/cro.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/gha.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/gha.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
       },
       {
         "id": "760485",
@@ -3732,7 +4176,10 @@
         "note": "FIFA World Cup, Group L",
         "link": "https://www.espn.com/soccer/match/_/gameId/760485",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/pan.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/eng.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/eng.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
       },
       {
         "id": "760481",
@@ -3753,7 +4200,10 @@
         "note": "FIFA World Cup, Group K",
         "link": "https://www.espn.com/soccer/match/_/gameId/760481",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/col.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/por.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/por.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
       },
       {
         "id": "760482",
@@ -3774,7 +4224,10 @@
         "note": "FIFA World Cup, Group K",
         "link": "https://www.espn.com/soccer/match/_/gameId/760482",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/rdc.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/uzb.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/uzb.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
       },
       {
         "id": "760484",
@@ -3795,7 +4248,10 @@
         "note": "FIFA World Cup, Group J",
         "link": "https://www.espn.com/soccer/match/_/gameId/760484",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/alg.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/aut.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/aut.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
       },
       {
         "id": "760483",
@@ -3816,7 +4272,10 @@
         "note": "FIFA World Cup, Group J",
         "link": "https://www.espn.com/soccer/match/_/gameId/760483",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/jor.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/arg.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/arg.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
       },
       {
         "id": "760486",
@@ -3834,10 +4293,13 @@
         "home_score": 0,
         "away_score": 0,
         "venue": "SoFi Stadium，Inglewood, California，USA",
-        "note": "FIFA World Cup",
+        "note": "FIFA World Cup, Round of 32",
         "link": "https://www.espn.com/soccer/match/_/gameId/760486",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/rsa.png",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/can.png"
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/can.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
       },
       {
         "id": "760487",
@@ -3845,20 +4307,23 @@
         "date": "2026-06-30",
         "time": "01:00",
         "home": "Brazil",
-        "away": "Group F 2nd Place",
+        "away": "Japan",
         "home_zh": "巴西",
-        "away_zh": "Group F 2nd Place",
-        "title": "巴西 vs Group F 2nd Place",
+        "away_zh": "日本",
+        "title": "巴西 vs 日本",
         "status": "Scheduled",
         "status_detail": "Mon, June 29th at 1:00 PM EDT",
         "completed": false,
         "home_score": 0,
         "away_score": 0,
         "venue": "NRG Stadium，Houston, Texas，USA",
-        "note": "FIFA World Cup",
+        "note": "FIFA World Cup, Round of 32",
         "link": "https://www.espn.com/soccer/match/_/gameId/760487",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/bra.png",
-        "away_logo": ""
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/jpn.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
       },
       {
         "id": "760489",
@@ -3876,52 +4341,61 @@
         "home_score": 0,
         "away_score": 0,
         "venue": "Gillette Stadium，Foxborough, Massachusetts，USA",
-        "note": "FIFA World Cup",
+        "note": "FIFA World Cup, Round of 32",
         "link": "https://www.espn.com/soccer/match/_/gameId/760489",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ger.png",
-        "away_logo": ""
+        "away_logo": "",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
       },
       {
         "id": "760488",
         "date_bj": "2026-06-30T09:00:00+08:00",
         "date": "2026-06-30",
         "time": "09:00",
-        "home": "Group F Winner",
+        "home": "Netherlands",
         "away": "Morocco",
-        "home_zh": "Group F Winner",
+        "home_zh": "荷兰",
         "away_zh": "摩洛哥",
-        "title": "Group F Winner vs 摩洛哥",
+        "title": "荷兰 vs 摩洛哥",
         "status": "Scheduled",
         "status_detail": "Mon, June 29th at 9:00 PM EDT",
         "completed": false,
         "home_score": 0,
         "away_score": 0,
         "venue": "Estadio BBVA，Guadalupe，Mexico",
-        "note": "FIFA World Cup",
+        "note": "FIFA World Cup, Round of 32",
         "link": "https://www.espn.com/soccer/match/_/gameId/760488",
-        "home_logo": "",
-        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/mar.png"
+        "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/ned.png",
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/mar.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
       },
       {
         "id": "760490",
         "date_bj": "2026-07-01T01:00:00+08:00",
         "date": "2026-07-01",
         "time": "01:00",
-        "home": "Group E 2nd Place",
+        "home": "Ivory Coast",
         "away": "Group I 2nd Place",
-        "home_zh": "Group E 2nd Place",
+        "home_zh": "科特迪瓦",
         "away_zh": "Group I 2nd Place",
-        "title": "Group E 2nd Place vs Group I 2nd Place",
+        "title": "科特迪瓦 vs Group I 2nd Place",
         "status": "Scheduled",
         "status_detail": "Tue, June 30th at 1:00 PM EDT",
         "completed": false,
         "home_score": 0,
         "away_score": 0,
         "venue": "AT&T Stadium，Arlington, Texas，USA",
-        "note": "FIFA World Cup",
+        "note": "FIFA World Cup, Round of 32",
         "link": "https://www.espn.com/soccer/match/_/gameId/760490",
-        "home_logo": "",
-        "away_logo": ""
+        "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/civ.png",
+        "away_logo": "",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
       },
       {
         "id": "760492",
@@ -3939,10 +4413,13 @@
         "home_score": 0,
         "away_score": 0,
         "venue": "MetLife Stadium，East Rutherford, New Jersey，USA",
-        "note": "FIFA World Cup",
+        "note": "FIFA World Cup, Round of 32",
         "link": "https://www.espn.com/soccer/match/_/gameId/760492",
         "home_logo": "",
-        "away_logo": ""
+        "away_logo": "",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
       },
       {
         "id": "760491",
@@ -3960,10 +4437,85 @@
         "home_score": 0,
         "away_score": 0,
         "venue": "Estadio Banorte，Mexico City，Mexico",
-        "note": "FIFA World Cup",
+        "note": "FIFA World Cup, Round of 32",
         "link": "https://www.espn.com/soccer/match/_/gameId/760491",
         "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/mex.png",
-        "away_logo": ""
+        "away_logo": "",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
+      },
+      {
+        "id": "760495",
+        "date_bj": "2026-07-02T00:00:00+08:00",
+        "date": "2026-07-02",
+        "time": "00:00",
+        "home": "Group L Winner",
+        "away": "Third Place Group E/H/I/J/K",
+        "home_zh": "Group L Winner",
+        "away_zh": "Third Place Group E/H/I/J/K",
+        "title": "Group L Winner vs Third Place Group E/H/I/J/K",
+        "status": "Scheduled",
+        "status_detail": "Wed, July 1st at 12:00 PM EDT",
+        "completed": false,
+        "home_score": 0,
+        "away_score": 0,
+        "venue": "Mercedes-Benz Stadium，Atlanta, Georgia，USA",
+        "note": "FIFA World Cup, Round of 32",
+        "link": "https://www.espn.com/soccer/match/_/gameId/760495",
+        "home_logo": "",
+        "away_logo": "",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
+      },
+      {
+        "id": "760493",
+        "date_bj": "2026-07-02T04:00:00+08:00",
+        "date": "2026-07-02",
+        "time": "04:00",
+        "home": "Group G Winner",
+        "away": "Third Place Group A/E/H/I/J",
+        "home_zh": "Group G Winner",
+        "away_zh": "Third Place Group A/E/H/I/J",
+        "title": "Group G Winner vs Third Place Group A/E/H/I/J",
+        "status": "Scheduled",
+        "status_detail": "Wed, July 1st at 4:00 PM EDT",
+        "completed": false,
+        "home_score": 0,
+        "away_score": 0,
+        "venue": "Lumen Field，Seattle, Washington，USA",
+        "note": "FIFA World Cup, Round of 32",
+        "link": "https://www.espn.com/soccer/match/_/gameId/760493",
+        "home_logo": "",
+        "away_logo": "",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
+      },
+      {
+        "id": "760494",
+        "date_bj": "2026-07-02T08:00:00+08:00",
+        "date": "2026-07-02",
+        "time": "08:00",
+        "home": "United States",
+        "away": "Bosnia-Herzegovina",
+        "home_zh": "美国",
+        "away_zh": "波黑",
+        "title": "美国 vs 波黑",
+        "status": "Scheduled",
+        "status_detail": "Wed, July 1st at 8:00 PM EDT",
+        "completed": false,
+        "home_score": 0,
+        "away_score": 0,
+        "venue": "Levi's Stadium，Santa Clara, California，USA",
+        "note": "FIFA World Cup, Round of 32",
+        "link": "https://www.espn.com/soccer/match/_/gameId/760494",
+        "home_logo": "https://a.espncdn.com/i/teamlogos/countries/500/usa.png",
+        "away_logo": "https://a.espncdn.com/i/teamlogos/countries/500/bih.png",
+        "half_time_score": null,
+        "half_full": null,
+        "second_half_score": null
       }
     ]
   },
@@ -3973,20 +4525,20 @@
     "report_files_total": 10,
     "report_files_with_predictions": 8,
     "report_predictions_total": 32,
-    "dashboard_history_predictions_total": 2,
-    "audited_predictions_total": 34,
+    "dashboard_history_predictions_total": 6,
+    "audited_predictions_total": 38,
     "pending_total": 0,
-    "completed_total": 34,
-    "exact_score_hits": 11,
-    "outcome_hits": 24,
-    "exact_score_rate": 32.4,
-    "outcome_rate": 70.6,
-    "half_full_rate": 70.6,
-    "half_full_hits": 24,
-    "half_full_total": 34,
-    "half_full_checked": 32,
-    "half_full_missing": 2,
-    "half_full_note": "半全场统计以已结算总场次为分母；已核对半场比分 32 场，缺少半场比分 2 场。",
+    "completed_total": 38,
+    "exact_score_hits": 13,
+    "outcome_hits": 26,
+    "exact_score_rate": 34.2,
+    "outcome_rate": 68.4,
+    "half_full_rate": 71.1,
+    "half_full_hits": 27,
+    "half_full_total": 38,
+    "half_full_checked": 38,
+    "half_full_missing": 0,
+    "half_full_note": "半全场统计以已结算总场次为分母；已核对半场比分 38 场，缺少半场比分 0 场。",
     "by_date": [
       {
         "date": "2026-06-16",
@@ -4111,15 +4663,522 @@
         "score_hits": 1,
         "outcome_hits": 4,
         "half_full_hits": 4,
-        "half_full_checked": 4,
-        "half_full_missing": 2,
+        "half_full_checked": 6,
+        "half_full_missing": 0,
         "half_full_total": 6,
         "score_rate": 16.7,
         "outcome_rate": 66.7,
         "half_full_rate": 66.7
+      },
+      {
+        "date": "2026-06-26",
+        "total": 4,
+        "score_hits": 2,
+        "outcome_hits": 2,
+        "half_full_hits": 3,
+        "half_full_checked": 4,
+        "half_full_missing": 0,
+        "half_full_total": 4,
+        "score_rate": 50.0,
+        "outcome_rate": 50.0,
+        "half_full_rate": 75.0
       }
     ],
     "recent": [
+      {
+        "match_id": "760471",
+        "date_bj": "2026-06-26T07:00:00+08:00",
+        "date": "2026-06-26",
+        "home": "Japan",
+        "away": "Sweden",
+        "home_zh": "日本",
+        "away_zh": "瑞典",
+        "title": "日本 vs 瑞典",
+        "predicted_at": "2026-06-25T23:44:04.254823+08:00",
+        "prediction": {
+          "match_id": "760471",
+          "generated_for_date": "2026-06-26",
+          "tendency": "主胜，防平",
+          "primary_outcome": "主胜",
+          "scores": [
+            "1-0",
+            "2-1",
+            "1-1"
+          ],
+          "score_pairs": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "half_full": [
+            "平胜",
+            "平平",
+            "胜胜"
+          ],
+          "half_full_pairs": [
+            [
+              "平",
+              "主胜"
+            ],
+            [
+              "平",
+              "平"
+            ],
+            [
+              "主胜",
+              "主胜"
+            ]
+          ],
+          "odds": {
+            "source": "模型参考赔付系数（按体彩玩法格式推算，非体彩官方实际赔率）",
+            "outcome": {
+              "胜": 1.91,
+              "平": 3.27,
+              "负": 3.39
+            },
+            "outcome_pick": {
+              "label": "胜",
+              "odds": 1.91
+            },
+            "scores": {
+              "1-0": 6.14,
+              "2-1": 8.93,
+              "1-1": 6.34
+            },
+            "half_full": {
+              "平胜": 4.72,
+              "平平": 4.43,
+              "胜胜": 3.44
+            },
+            "upset_scores": {
+              "0-1": 9.0,
+              "2-2": 18.45
+            },
+            "upset_half_full": {
+              "负负": 9.1,
+              "胜负": 14.93
+            }
+          },
+          "analysis": "两队差距有限，日本略有上风，但首球和定位球将显著改变比赛走势。主队略有上风，但差距有限，平局仍是合理结局。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。",
+          "upset_scores": [
+            "0-1",
+            "2-2"
+          ],
+          "upset_score_pairs": [
+            [
+              0,
+              1
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "upset_half_full": [
+            "负负",
+            "胜负"
+          ]
+        },
+        "completed": true,
+        "actual": {
+          "home_score": 1,
+          "away_score": 1,
+          "score": "1-1",
+          "outcome": "平",
+          "status": "Full Time",
+          "half_time_score": "0-0",
+          "half_full": "平平"
+        },
+        "hit": {
+          "exact_score": true,
+          "outcome": false,
+          "half_full": true,
+          "upset_score": false,
+          "upset_half_full": false,
+          "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
+        },
+        "source_type": "dashboard_history",
+        "source_file_name": "页面自动预测历史",
+        "matched": true
+      },
+      {
+        "match_id": "760472",
+        "date_bj": "2026-06-26T07:00:00+08:00",
+        "date": "2026-06-26",
+        "home": "Tunisia",
+        "away": "Netherlands",
+        "home_zh": "突尼斯",
+        "away_zh": "荷兰",
+        "title": "突尼斯 vs 荷兰",
+        "predicted_at": "2026-06-25T23:44:04.254823+08:00",
+        "prediction": {
+          "match_id": "760472",
+          "generated_for_date": "2026-06-26",
+          "tendency": "客胜",
+          "primary_outcome": "客胜",
+          "scores": [
+            "0-2",
+            "1-3",
+            "0-1"
+          ],
+          "score_pairs": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "half_full": [
+            "负负",
+            "平负",
+            "胜负"
+          ],
+          "half_full_pairs": [
+            [
+              "客胜",
+              "客胜"
+            ],
+            [
+              "平",
+              "客胜"
+            ],
+            [
+              "主胜",
+              "客胜"
+            ]
+          ],
+          "odds": {
+            "source": "模型参考赔付系数（按体彩玩法格式推算，非体彩官方实际赔率）",
+            "outcome": {
+              "胜": 8.58,
+              "平": 3.84,
+              "负": 1.34
+            },
+            "outcome_pick": {
+              "label": "负",
+              "odds": 1.34
+            },
+            "scores": {
+              "0-2": 7.42,
+              "1-3": 18.69,
+              "0-1": 5.36
+            },
+            "half_full": {
+              "负负": 3.2,
+              "平负": 3.59,
+              "胜负": 15.62
+            },
+            "upset_scores": {
+              "1-1": 6.49,
+              "1-0": 9.38
+            },
+            "upset_half_full": {
+              "平平": 5.66,
+              "平胜": 23.0
+            }
+          },
+          "analysis": "荷兰整体实力、阵地推进和替补深度明显占优，突尼斯需要高效反击才能制造变数。客队整体更强，但在中立/主场氛围下主队会拼死防守，需防低比分意外。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。",
+          "upset_scores": [
+            "1-1",
+            "1-0"
+          ],
+          "upset_score_pairs": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "upset_half_full": [
+            "平平",
+            "平胜"
+          ]
+        },
+        "completed": true,
+        "actual": {
+          "home_score": 1,
+          "away_score": 3,
+          "score": "1-3",
+          "outcome": "客胜",
+          "status": "Full Time",
+          "half_time_score": "0-2",
+          "half_full": "负负"
+        },
+        "hit": {
+          "exact_score": true,
+          "outcome": true,
+          "half_full": true,
+          "upset_score": false,
+          "upset_half_full": false,
+          "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
+        },
+        "source_type": "dashboard_history",
+        "source_file_name": "页面自动预测历史",
+        "matched": true
+      },
+      {
+        "match_id": "760473",
+        "date_bj": "2026-06-26T04:00:00+08:00",
+        "date": "2026-06-26",
+        "home": "Curaçao",
+        "away": "Ivory Coast",
+        "home_zh": "库拉索",
+        "away_zh": "科特迪瓦",
+        "title": "库拉索 vs 科特迪瓦",
+        "predicted_at": "2026-06-25T23:44:04.254823+08:00",
+        "prediction": {
+          "match_id": "760473",
+          "generated_for_date": "2026-06-26",
+          "tendency": "客胜，防平",
+          "primary_outcome": "客胜",
+          "scores": [
+            "1-2",
+            "0-1",
+            "1-1"
+          ],
+          "score_pairs": [
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "half_full": [
+            "平负",
+            "负负",
+            "平平"
+          ],
+          "half_full_pairs": [
+            [
+              "平",
+              "客胜"
+            ],
+            [
+              "客胜",
+              "客胜"
+            ],
+            [
+              "平",
+              "平"
+            ]
+          ],
+          "odds": {
+            "source": "模型参考赔付系数（按体彩玩法格式推算，非体彩官方实际赔率）",
+            "outcome": {
+              "胜": 4.93,
+              "平": 3.5,
+              "负": 1.57
+            },
+            "outcome_pick": {
+              "label": "负",
+              "odds": 1.57
+            },
+            "scores": {
+              "1-2": 9.42,
+              "0-1": 6.14,
+              "1-1": 6.14
+            },
+            "half_full": {
+              "平负": 4.02,
+              "负负": 3.2,
+              "平平": 4.91
+            },
+            "upset_scores": {
+              "2-1": 12.29
+            },
+            "upset_half_full": {
+              "胜胜": 17.16,
+              "负胜": 19.34
+            }
+          },
+          "analysis": "科特迪瓦略占上风，但库拉索具备通过防守密度和转换制造麻烦的空间。客队整体更稳，但杯赛小组赛节奏可能偏谨慎。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。",
+          "upset_scores": [
+            "2-1"
+          ],
+          "upset_score_pairs": [
+            [
+              2,
+              1
+            ]
+          ],
+          "upset_half_full": [
+            "胜胜",
+            "负胜"
+          ]
+        },
+        "completed": true,
+        "actual": {
+          "home_score": 0,
+          "away_score": 2,
+          "score": "0-2",
+          "outcome": "客胜",
+          "status": "Full Time",
+          "half_time_score": "0-1",
+          "half_full": "负负"
+        },
+        "hit": {
+          "exact_score": false,
+          "outcome": true,
+          "half_full": true,
+          "upset_score": false,
+          "upset_half_full": false,
+          "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
+        },
+        "source_type": "dashboard_history",
+        "source_file_name": "页面自动预测历史",
+        "matched": true
+      },
+      {
+        "match_id": "760468",
+        "date_bj": "2026-06-26T04:00:00+08:00",
+        "date": "2026-06-26",
+        "home": "Ecuador",
+        "away": "Germany",
+        "home_zh": "厄瓜多尔",
+        "away_zh": "德国",
+        "title": "厄瓜多尔 vs 德国",
+        "predicted_at": "2026-06-25T23:44:04.254823+08:00",
+        "prediction": {
+          "match_id": "760468",
+          "generated_for_date": "2026-06-26",
+          "tendency": "客胜",
+          "primary_outcome": "客胜",
+          "scores": [
+            "0-2",
+            "1-2",
+            "0-1"
+          ],
+          "score_pairs": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "half_full": [
+            "平负",
+            "负负",
+            "胜负"
+          ],
+          "half_full_pairs": [
+            [
+              "平",
+              "客胜"
+            ],
+            [
+              "客胜",
+              "客胜"
+            ],
+            [
+              "主胜",
+              "客胜"
+            ]
+          ],
+          "odds": {
+            "source": "模型参考赔付系数（按体彩玩法格式推算，非体彩官方实际赔率）",
+            "outcome": {
+              "胜": 6.1,
+              "平": 3.63,
+              "负": 1.46
+            },
+            "outcome_pick": {
+              "label": "负",
+              "odds": 1.46
+            },
+            "scores": {
+              "0-2": 8.54,
+              "1-2": 9.19,
+              "0-1": 5.81
+            },
+            "half_full": {
+              "平负": 3.81,
+              "负负": 3.2,
+              "胜负": 14.18
+            },
+            "upset_scores": {
+              "1-1": 6.25,
+              "2-1": 13.43
+            },
+            "upset_half_full": {
+              "平平": 5.2,
+              "胜胜": 24.17
+            }
+          },
+          "analysis": "德国整体实力占优，但世界杯大赛节奏下厄瓜多尔防守投入度更高。客队优势更清晰，若早段进球会扩大控场。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。",
+          "upset_scores": [
+            "1-1",
+            "2-1"
+          ],
+          "upset_score_pairs": [
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ]
+          ],
+          "upset_half_full": [
+            "平平",
+            "胜胜"
+          ]
+        },
+        "completed": true,
+        "actual": {
+          "home_score": 2,
+          "away_score": 1,
+          "score": "2-1",
+          "outcome": "主胜",
+          "status": "Full Time",
+          "half_time_score": "1-1",
+          "half_full": "平胜"
+        },
+        "hit": {
+          "exact_score": false,
+          "outcome": false,
+          "half_full": false,
+          "upset_score": true,
+          "upset_half_full": false,
+          "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
+        },
+        "source_type": "dashboard_history",
+        "source_file_name": "页面自动预测历史",
+        "matched": true
+      },
       {
         "match_id": "760467",
         "date_bj": "2026-06-25T09:00:00+08:00",
@@ -4173,7 +5232,35 @@
               "平"
             ]
           ],
-          "analysis": "两队实力几乎相当，比赛更可能由临场效率、定位球和换人质量决定。两队实力几乎相当，首球与定位球将主导走势，低比分平局概率最高。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+          "analysis": "两队实力几乎相当，比赛更可能由临场效率、定位球和换人质量决定。两队实力几乎相当，首球与定位球将主导走势，低比分平局概率最高。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。",
+          "upset_scores": [
+            "0-1",
+            "1-2"
+          ],
+          "upset_score_pairs": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "upset_half_full": [
+            "平负",
+            "负胜"
+          ],
+          "odds": {
+            "upset_scores": {
+              "0-1": 8.11,
+              "1-2": 11.73
+            },
+            "upset_half_full": {
+              "平负": 6.51,
+              "负胜": 12.89
+            }
+          }
         },
         "completed": true,
         "actual": {
@@ -4181,13 +5268,17 @@
           "away_score": 3,
           "score": "0-3",
           "outcome": "客胜",
-          "status": "Full Time"
+          "status": "Full Time",
+          "half_time_score": "0-0",
+          "half_full": "平负"
         },
         "hit": {
           "exact_score": false,
           "outcome": false,
-          "half_full": null,
-          "half_full_note": "ESPN scoreboard 当前未稳定提供半场比分，半全场命中率暂不纳入总命中率。"
+          "half_full": false,
+          "upset_score": false,
+          "upset_half_full": true,
+          "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
         },
         "source_type": "dashboard_history",
         "source_file_name": "页面自动预测历史",
@@ -4246,7 +5337,29 @@
               "平"
             ]
           ],
-          "analysis": "韩国略占上风，但南非具备通过防守密度和转换制造麻烦的空间。客队整体更稳，但杯赛小组赛节奏可能偏谨慎。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+          "analysis": "韩国略占上风，但南非具备通过防守密度和转换制造麻烦的空间。客队整体更稳，但杯赛小组赛节奏可能偏谨慎。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。",
+          "upset_scores": [
+            "2-1"
+          ],
+          "upset_score_pairs": [
+            [
+              2,
+              1
+            ]
+          ],
+          "upset_half_full": [
+            "胜胜",
+            "负胜"
+          ],
+          "odds": {
+            "upset_scores": {
+              "2-1": 10.98
+            },
+            "upset_half_full": {
+              "胜胜": 10.58,
+              "负胜": 15.74
+            }
+          }
         },
         "completed": true,
         "actual": {
@@ -4254,13 +5367,17 @@
           "away_score": 0,
           "score": "1-0",
           "outcome": "主胜",
-          "status": "Full Time"
+          "status": "Full Time",
+          "half_time_score": "0-0",
+          "half_full": "平胜"
         },
         "hit": {
           "exact_score": false,
           "outcome": false,
-          "half_full": null,
-          "half_full_note": "ESPN scoreboard 当前未稳定提供半场比分，半全场命中率暂不纳入总命中率。"
+          "half_full": false,
+          "upset_score": false,
+          "upset_half_full": false,
+          "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
         },
         "source_type": "dashboard_history",
         "source_file_name": "页面自动预测历史",
@@ -5425,205 +6542,777 @@
           "half_full": true,
           "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
         }
-      },
-      {
-        "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-19.md",
-        "source_file_name": "2026-06-19.md",
-        "source_report_date": "2026-06-19",
-        "source_index": 4,
-        "report_match_key": "2026-06-19.md#4",
-        "date": "2026-06-19",
-        "time": "09:00",
-        "date_bj": "2026-06-19T09:00:00+08:00",
-        "home_zh": "墨西哥",
-        "away_zh": "韩国",
-        "home": "Mexico",
-        "away": "South Korea",
-        "title": "墨西哥 vs 韩国",
-        "prediction": {
-          "tendency": "主胜略优，防平",
-          "primary_outcome": "主胜",
-          "scores": [
-            "1-0",
-            "2-1",
-            "1-1"
-          ],
-          "half_full": [
-            "平胜",
-            "胜胜",
-            "平平"
-          ]
-        },
-        "match_id": "760441",
-        "status": "Full Time",
-        "status_detail": "FT",
-        "link": "https://www.espn.com/soccer/match/_/gameId/760441",
-        "completed": true,
-        "actual": {
-          "score": "1-0",
-          "outcome": "主胜",
-          "home_score": 1,
-          "away_score": 0,
-          "half_time_score": "0-0",
-          "half_full": "平胜"
-        },
-        "hit": {
-          "exact_score": true,
-          "outcome": true,
-          "half_full": true,
-          "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
-        }
-      },
-      {
-        "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-18.md",
-        "source_file_name": "2026-06-18.md",
-        "source_report_date": "2026-06-18",
-        "source_index": 4,
-        "report_match_key": "2026-06-18.md#4",
-        "date": "2026-06-19",
-        "time": "06:00",
-        "date_bj": "2026-06-19T06:00:00+08:00",
-        "home_zh": "加拿大",
-        "away_zh": "卡塔尔",
-        "home": "Canada",
-        "away": "Qatar",
-        "title": "加拿大 vs 卡塔尔",
-        "prediction": {
-          "tendency": "主胜倾向",
-          "primary_outcome": "主胜",
-          "scores": [
-            "2-0",
-            "2-1",
-            "1-0"
-          ],
-          "half_full": [
-            "胜胜",
-            "平胜",
-            "胜平"
-          ]
-        },
-        "match_id": "760440",
-        "status": "Full Time",
-        "status_detail": "FT",
-        "link": "https://www.espn.com/soccer/match/_/gameId/760440",
-        "completed": true,
-        "actual": {
-          "score": "6-0",
-          "outcome": "主胜",
-          "home_score": 6,
-          "away_score": 0,
-          "half_time_score": "3-0",
-          "half_full": "胜胜"
-        },
-        "hit": {
-          "exact_score": false,
-          "outcome": true,
-          "half_full": true,
-          "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
-        }
-      },
-      {
-        "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-18.md",
-        "source_file_name": "2026-06-18.md",
-        "source_report_date": "2026-06-18",
-        "source_index": 3,
-        "report_match_key": "2026-06-18.md#3",
-        "date": "2026-06-19",
-        "time": "03:00",
-        "date_bj": "2026-06-19T03:00:00+08:00",
-        "home_zh": "瑞士",
-        "away_zh": "波黑",
-        "home": "Switzerland",
-        "away": "Bosnia-Herzegovina",
-        "title": "瑞士 vs 波黑",
-        "prediction": {
-          "tendency": "主胜倾向",
-          "primary_outcome": "主胜",
-          "scores": [
-            "2-0",
-            "2-1",
-            "1-0"
-          ],
-          "half_full": [
-            "胜胜",
-            "平胜",
-            "胜平"
-          ]
-        },
-        "match_id": "760439",
-        "status": "Full Time",
-        "status_detail": "FT",
-        "link": "https://www.espn.com/soccer/match/_/gameId/760439",
-        "completed": true,
-        "actual": {
-          "score": "4-1",
-          "outcome": "主胜",
-          "home_score": 4,
-          "away_score": 1,
-          "half_time_score": "0-0",
-          "half_full": "平胜"
-        },
-        "hit": {
-          "exact_score": false,
-          "outcome": true,
-          "half_full": true,
-          "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
-        }
-      },
-      {
-        "source": "reports",
-        "source_file": "/mnt/c/nginx-1.24.0/html/worldcup2/reports/2026-06-18.md",
-        "source_file_name": "2026-06-18.md",
-        "source_report_date": "2026-06-18",
-        "source_index": 2,
-        "report_match_key": "2026-06-18.md#2",
-        "date": "2026-06-19",
-        "time": "00:00",
-        "date_bj": "2026-06-19T00:00:00+08:00",
-        "home_zh": "捷克",
-        "away_zh": "南非",
-        "home": "Czechia",
-        "away": "South Africa",
-        "title": "捷克 vs 南非",
-        "prediction": {
-          "tendency": "主胜倾向，次选平局",
-          "primary_outcome": "主胜",
-          "scores": [
-            "1-0",
-            "2-1",
-            "1-1"
-          ],
-          "half_full": [
-            "平胜",
-            "胜胜",
-            "平平"
-          ]
-        },
-        "match_id": "760438",
-        "status": "Full Time",
-        "status_detail": "FT",
-        "link": "https://www.espn.com/soccer/match/_/gameId/760438",
-        "completed": true,
-        "actual": {
-          "score": "1-1",
-          "outcome": "平",
-          "home_score": 1,
-          "away_score": 1,
-          "half_time_score": "1-0",
-          "half_full": "胜平"
-        },
-        "hit": {
-          "exact_score": true,
-          "outcome": false,
-          "half_full": false,
-          "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
-        }
       }
     ],
-    "pending": []
+    "pending": [],
+    "upset": {
+      "total": 6,
+      "hits": 2,
+      "rate": 33.3,
+      "score_total": 6,
+      "score_hits": 1,
+      "score_rate": 16.7,
+      "half_full_total": 6,
+      "half_full_hits": 1,
+      "half_full_rate": 16.7,
+      "by_date": [
+        {
+          "date": "2026-06-25",
+          "total": 2,
+          "combo_hits": 1,
+          "score_total": 2,
+          "score_hits": 0,
+          "half_full_total": 2,
+          "half_full_hits": 1,
+          "combo_rate": 50.0,
+          "score_rate": 0.0,
+          "half_full_rate": 50.0
+        },
+        {
+          "date": "2026-06-26",
+          "total": 4,
+          "combo_hits": 1,
+          "score_total": 4,
+          "score_hits": 1,
+          "half_full_total": 4,
+          "half_full_hits": 0,
+          "combo_rate": 25.0,
+          "score_rate": 25.0,
+          "half_full_rate": 0.0
+        }
+      ],
+      "recent": [
+        {
+          "match_id": "760471",
+          "date_bj": "2026-06-26T07:00:00+08:00",
+          "date": "2026-06-26",
+          "home": "Japan",
+          "away": "Sweden",
+          "home_zh": "日本",
+          "away_zh": "瑞典",
+          "title": "日本 vs 瑞典",
+          "predicted_at": "2026-06-25T23:44:04.254823+08:00",
+          "prediction": {
+            "match_id": "760471",
+            "generated_for_date": "2026-06-26",
+            "tendency": "主胜，防平",
+            "primary_outcome": "主胜",
+            "scores": [
+              "1-0",
+              "2-1",
+              "1-1"
+            ],
+            "score_pairs": [
+              [
+                1,
+                0
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "half_full": [
+              "平胜",
+              "平平",
+              "胜胜"
+            ],
+            "half_full_pairs": [
+              [
+                "平",
+                "主胜"
+              ],
+              [
+                "平",
+                "平"
+              ],
+              [
+                "主胜",
+                "主胜"
+              ]
+            ],
+            "odds": {
+              "source": "模型参考赔付系数（按体彩玩法格式推算，非体彩官方实际赔率）",
+              "outcome": {
+                "胜": 1.91,
+                "平": 3.27,
+                "负": 3.39
+              },
+              "outcome_pick": {
+                "label": "胜",
+                "odds": 1.91
+              },
+              "scores": {
+                "1-0": 6.14,
+                "2-1": 8.93,
+                "1-1": 6.34
+              },
+              "half_full": {
+                "平胜": 4.72,
+                "平平": 4.43,
+                "胜胜": 3.44
+              },
+              "upset_scores": {
+                "0-1": 9.0,
+                "2-2": 18.45
+              },
+              "upset_half_full": {
+                "负负": 9.1,
+                "胜负": 14.93
+              }
+            },
+            "analysis": "两队差距有限，日本略有上风，但首球和定位球将显著改变比赛走势。主队略有上风，但差距有限，平局仍是合理结局。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。",
+            "upset_scores": [
+              "0-1",
+              "2-2"
+            ],
+            "upset_score_pairs": [
+              [
+                0,
+                1
+              ],
+              [
+                2,
+                2
+              ]
+            ],
+            "upset_half_full": [
+              "负负",
+              "胜负"
+            ]
+          },
+          "completed": true,
+          "actual": {
+            "home_score": 1,
+            "away_score": 1,
+            "score": "1-1",
+            "outcome": "平",
+            "status": "Full Time",
+            "half_time_score": "0-0",
+            "half_full": "平平"
+          },
+          "hit": {
+            "exact_score": true,
+            "outcome": false,
+            "half_full": true,
+            "upset_score": false,
+            "upset_half_full": false,
+            "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
+          },
+          "source_type": "dashboard_history",
+          "source_file_name": "页面自动预测历史",
+          "matched": true,
+          "upset_hit": {
+            "score": false,
+            "half_full": false,
+            "any": false
+          }
+        },
+        {
+          "match_id": "760472",
+          "date_bj": "2026-06-26T07:00:00+08:00",
+          "date": "2026-06-26",
+          "home": "Tunisia",
+          "away": "Netherlands",
+          "home_zh": "突尼斯",
+          "away_zh": "荷兰",
+          "title": "突尼斯 vs 荷兰",
+          "predicted_at": "2026-06-25T23:44:04.254823+08:00",
+          "prediction": {
+            "match_id": "760472",
+            "generated_for_date": "2026-06-26",
+            "tendency": "客胜",
+            "primary_outcome": "客胜",
+            "scores": [
+              "0-2",
+              "1-3",
+              "0-1"
+            ],
+            "score_pairs": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "half_full": [
+              "负负",
+              "平负",
+              "胜负"
+            ],
+            "half_full_pairs": [
+              [
+                "客胜",
+                "客胜"
+              ],
+              [
+                "平",
+                "客胜"
+              ],
+              [
+                "主胜",
+                "客胜"
+              ]
+            ],
+            "odds": {
+              "source": "模型参考赔付系数（按体彩玩法格式推算，非体彩官方实际赔率）",
+              "outcome": {
+                "胜": 8.58,
+                "平": 3.84,
+                "负": 1.34
+              },
+              "outcome_pick": {
+                "label": "负",
+                "odds": 1.34
+              },
+              "scores": {
+                "0-2": 7.42,
+                "1-3": 18.69,
+                "0-1": 5.36
+              },
+              "half_full": {
+                "负负": 3.2,
+                "平负": 3.59,
+                "胜负": 15.62
+              },
+              "upset_scores": {
+                "1-1": 6.49,
+                "1-0": 9.38
+              },
+              "upset_half_full": {
+                "平平": 5.66,
+                "平胜": 23.0
+              }
+            },
+            "analysis": "荷兰整体实力、阵地推进和替补深度明显占优，突尼斯需要高效反击才能制造变数。客队整体更强，但在中立/主场氛围下主队会拼死防守，需防低比分意外。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。",
+            "upset_scores": [
+              "1-1",
+              "1-0"
+            ],
+            "upset_score_pairs": [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "upset_half_full": [
+              "平平",
+              "平胜"
+            ]
+          },
+          "completed": true,
+          "actual": {
+            "home_score": 1,
+            "away_score": 3,
+            "score": "1-3",
+            "outcome": "客胜",
+            "status": "Full Time",
+            "half_time_score": "0-2",
+            "half_full": "负负"
+          },
+          "hit": {
+            "exact_score": true,
+            "outcome": true,
+            "half_full": true,
+            "upset_score": false,
+            "upset_half_full": false,
+            "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
+          },
+          "source_type": "dashboard_history",
+          "source_file_name": "页面自动预测历史",
+          "matched": true,
+          "upset_hit": {
+            "score": false,
+            "half_full": false,
+            "any": false
+          }
+        },
+        {
+          "match_id": "760473",
+          "date_bj": "2026-06-26T04:00:00+08:00",
+          "date": "2026-06-26",
+          "home": "Curaçao",
+          "away": "Ivory Coast",
+          "home_zh": "库拉索",
+          "away_zh": "科特迪瓦",
+          "title": "库拉索 vs 科特迪瓦",
+          "predicted_at": "2026-06-25T23:44:04.254823+08:00",
+          "prediction": {
+            "match_id": "760473",
+            "generated_for_date": "2026-06-26",
+            "tendency": "客胜，防平",
+            "primary_outcome": "客胜",
+            "scores": [
+              "1-2",
+              "0-1",
+              "1-1"
+            ],
+            "score_pairs": [
+              [
+                1,
+                2
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "half_full": [
+              "平负",
+              "负负",
+              "平平"
+            ],
+            "half_full_pairs": [
+              [
+                "平",
+                "客胜"
+              ],
+              [
+                "客胜",
+                "客胜"
+              ],
+              [
+                "平",
+                "平"
+              ]
+            ],
+            "odds": {
+              "source": "模型参考赔付系数（按体彩玩法格式推算，非体彩官方实际赔率）",
+              "outcome": {
+                "胜": 4.93,
+                "平": 3.5,
+                "负": 1.57
+              },
+              "outcome_pick": {
+                "label": "负",
+                "odds": 1.57
+              },
+              "scores": {
+                "1-2": 9.42,
+                "0-1": 6.14,
+                "1-1": 6.14
+              },
+              "half_full": {
+                "平负": 4.02,
+                "负负": 3.2,
+                "平平": 4.91
+              },
+              "upset_scores": {
+                "2-1": 12.29
+              },
+              "upset_half_full": {
+                "胜胜": 17.16,
+                "负胜": 19.34
+              }
+            },
+            "analysis": "科特迪瓦略占上风，但库拉索具备通过防守密度和转换制造麻烦的空间。客队整体更稳，但杯赛小组赛节奏可能偏谨慎。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。",
+            "upset_scores": [
+              "2-1"
+            ],
+            "upset_score_pairs": [
+              [
+                2,
+                1
+              ]
+            ],
+            "upset_half_full": [
+              "胜胜",
+              "负胜"
+            ]
+          },
+          "completed": true,
+          "actual": {
+            "home_score": 0,
+            "away_score": 2,
+            "score": "0-2",
+            "outcome": "客胜",
+            "status": "Full Time",
+            "half_time_score": "0-1",
+            "half_full": "负负"
+          },
+          "hit": {
+            "exact_score": false,
+            "outcome": true,
+            "half_full": true,
+            "upset_score": false,
+            "upset_half_full": false,
+            "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
+          },
+          "source_type": "dashboard_history",
+          "source_file_name": "页面自动预测历史",
+          "matched": true,
+          "upset_hit": {
+            "score": false,
+            "half_full": false,
+            "any": false
+          }
+        },
+        {
+          "match_id": "760468",
+          "date_bj": "2026-06-26T04:00:00+08:00",
+          "date": "2026-06-26",
+          "home": "Ecuador",
+          "away": "Germany",
+          "home_zh": "厄瓜多尔",
+          "away_zh": "德国",
+          "title": "厄瓜多尔 vs 德国",
+          "predicted_at": "2026-06-25T23:44:04.254823+08:00",
+          "prediction": {
+            "match_id": "760468",
+            "generated_for_date": "2026-06-26",
+            "tendency": "客胜",
+            "primary_outcome": "客胜",
+            "scores": [
+              "0-2",
+              "1-2",
+              "0-1"
+            ],
+            "score_pairs": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "half_full": [
+              "平负",
+              "负负",
+              "胜负"
+            ],
+            "half_full_pairs": [
+              [
+                "平",
+                "客胜"
+              ],
+              [
+                "客胜",
+                "客胜"
+              ],
+              [
+                "主胜",
+                "客胜"
+              ]
+            ],
+            "odds": {
+              "source": "模型参考赔付系数（按体彩玩法格式推算，非体彩官方实际赔率）",
+              "outcome": {
+                "胜": 6.1,
+                "平": 3.63,
+                "负": 1.46
+              },
+              "outcome_pick": {
+                "label": "负",
+                "odds": 1.46
+              },
+              "scores": {
+                "0-2": 8.54,
+                "1-2": 9.19,
+                "0-1": 5.81
+              },
+              "half_full": {
+                "平负": 3.81,
+                "负负": 3.2,
+                "胜负": 14.18
+              },
+              "upset_scores": {
+                "1-1": 6.25,
+                "2-1": 13.43
+              },
+              "upset_half_full": {
+                "平平": 5.2,
+                "胜胜": 24.17
+              }
+            },
+            "analysis": "德国整体实力占优，但世界杯大赛节奏下厄瓜多尔防守投入度更高。客队优势更清晰，若早段进球会扩大控场。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。",
+            "upset_scores": [
+              "1-1",
+              "2-1"
+            ],
+            "upset_score_pairs": [
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                1
+              ]
+            ],
+            "upset_half_full": [
+              "平平",
+              "胜胜"
+            ]
+          },
+          "completed": true,
+          "actual": {
+            "home_score": 2,
+            "away_score": 1,
+            "score": "2-1",
+            "outcome": "主胜",
+            "status": "Full Time",
+            "half_time_score": "1-1",
+            "half_full": "平胜"
+          },
+          "hit": {
+            "exact_score": false,
+            "outcome": false,
+            "half_full": false,
+            "upset_score": true,
+            "upset_half_full": false,
+            "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
+          },
+          "source_type": "dashboard_history",
+          "source_file_name": "页面自动预测历史",
+          "matched": true,
+          "upset_hit": {
+            "score": true,
+            "half_full": false,
+            "any": true
+          }
+        },
+        {
+          "match_id": "760467",
+          "date_bj": "2026-06-25T09:00:00+08:00",
+          "date": "2026-06-25",
+          "home": "Czechia",
+          "away": "Mexico",
+          "home_zh": "捷克",
+          "away_zh": "墨西哥",
+          "title": "捷克 vs 墨西哥",
+          "predicted_at": "2026-06-24T22:57:35.102358+08:00",
+          "prediction": {
+            "match_id": "760467",
+            "generated_for_date": "2026-06-25",
+            "tendency": "平局倾向，双方不败均可防",
+            "primary_outcome": "平",
+            "scores": [
+              "1-1",
+              "0-0",
+              "1-0"
+            ],
+            "score_pairs": [
+              [
+                1,
+                1
+              ],
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "half_full": [
+              "平平",
+              "平胜",
+              "胜平"
+            ],
+            "half_full_pairs": [
+              [
+                "平",
+                "平"
+              ],
+              [
+                "平",
+                "主胜"
+              ],
+              [
+                "主胜",
+                "平"
+              ]
+            ],
+            "analysis": "两队实力几乎相当，比赛更可能由临场效率、定位球和换人质量决定。两队实力几乎相当，首球与定位球将主导走势，低比分平局概率最高。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。",
+            "upset_scores": [
+              "0-1",
+              "1-2"
+            ],
+            "upset_score_pairs": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                2
+              ]
+            ],
+            "upset_half_full": [
+              "平负",
+              "负胜"
+            ],
+            "odds": {
+              "upset_scores": {
+                "0-1": 8.11,
+                "1-2": 11.73
+              },
+              "upset_half_full": {
+                "平负": 6.51,
+                "负胜": 12.89
+              }
+            }
+          },
+          "completed": true,
+          "actual": {
+            "home_score": 0,
+            "away_score": 3,
+            "score": "0-3",
+            "outcome": "客胜",
+            "status": "Full Time",
+            "half_time_score": "0-0",
+            "half_full": "平负"
+          },
+          "hit": {
+            "exact_score": false,
+            "outcome": false,
+            "half_full": false,
+            "upset_score": false,
+            "upset_half_full": true,
+            "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
+          },
+          "source_type": "dashboard_history",
+          "source_file_name": "页面自动预测历史",
+          "matched": true,
+          "upset_hit": {
+            "score": false,
+            "half_full": true,
+            "any": true
+          }
+        },
+        {
+          "match_id": "760466",
+          "date_bj": "2026-06-25T09:00:00+08:00",
+          "date": "2026-06-25",
+          "home": "South Africa",
+          "away": "South Korea",
+          "home_zh": "南非",
+          "away_zh": "韩国",
+          "title": "南非 vs 韩国",
+          "predicted_at": "2026-06-24T22:57:35.102358+08:00",
+          "prediction": {
+            "match_id": "760466",
+            "generated_for_date": "2026-06-25",
+            "tendency": "客胜，防平",
+            "primary_outcome": "客胜",
+            "scores": [
+              "1-2",
+              "0-1",
+              "1-1"
+            ],
+            "score_pairs": [
+              [
+                1,
+                2
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "half_full": [
+              "平负",
+              "负负",
+              "平平"
+            ],
+            "half_full_pairs": [
+              [
+                "平",
+                "客胜"
+              ],
+              [
+                "客胜",
+                "客胜"
+              ],
+              [
+                "平",
+                "平"
+              ]
+            ],
+            "analysis": "韩国略占上风，但南非具备通过防守密度和转换制造麻烦的空间。客队整体更稳，但杯赛小组赛节奏可能偏谨慎。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。",
+            "upset_scores": [
+              "2-1"
+            ],
+            "upset_score_pairs": [
+              [
+                2,
+                1
+              ]
+            ],
+            "upset_half_full": [
+              "胜胜",
+              "负胜"
+            ],
+            "odds": {
+              "upset_scores": {
+                "2-1": 10.98
+              },
+              "upset_half_full": {
+                "胜胜": 10.58,
+                "负胜": 15.74
+              }
+            }
+          },
+          "completed": true,
+          "actual": {
+            "home_score": 1,
+            "away_score": 0,
+            "score": "1-0",
+            "outcome": "主胜",
+            "status": "Full Time",
+            "half_time_score": "0-0",
+            "half_full": "平胜"
+          },
+          "hit": {
+            "exact_score": false,
+            "outcome": false,
+            "half_full": false,
+            "upset_score": false,
+            "upset_half_full": false,
+            "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
+          },
+          "source_type": "dashboard_history",
+          "source_file_name": "页面自动预测历史",
+          "matched": true,
+          "upset_hit": {
+            "score": false,
+            "half_full": false,
+            "any": false
+          }
+        }
+      ],
+      "note": "爆冷命中率只统计包含防爆冷比分/半全场选项的已结算比赛；比分与半全场任一命中即计入综合命中。"
+    }
   },
   "risk_notice": "预测仅供娱乐和信息参考，不构成投注建议；请遵守所在地法律法规，理性看球。"
 }

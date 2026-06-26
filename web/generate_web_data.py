@@ -96,6 +96,9 @@ class Match:
     link: str
     home_logo: str | None = None
     away_logo: str | None = None
+    half_time_score: str | None = None
+    half_full: str | None = None
+    second_half_score: str | None = None
 
     @property
     def bj_date(self) -> str:
@@ -193,6 +196,22 @@ def fetch_halftime_score(event_id: str) -> tuple[int, int] | None:
         return None
 
 
+def completed_half_full_fields(event_id: str, home_score: int | None, away_score: int | None) -> dict:
+    """Return halftime / half-full display fields for a completed match when ESPN summary has linescores."""
+    if home_score is None or away_score is None:
+        return {}
+    ht = fetch_halftime_score(event_id)
+    if ht is None:
+        return {}
+    half_outcome = outcome(ht[0], ht[1])
+    full_outcome = outcome(home_score, away_score)
+    return {
+        "half_time_score": f"{ht[0]}-{ht[1]}",
+        "half_full": format_half_full_home(half_outcome, full_outcome),
+        "second_half_score": f"{home_score - ht[0]}-{away_score - ht[1]}",
+    }
+
+
 def parse_events(data: dict) -> list[Match]:
     matches: list[Match] = []
     for e in data.get("events", []):
@@ -222,14 +241,19 @@ def parse_events(data: dict) -> list[Match]:
         if addr.get("city") or addr.get("country"):
             venue_name += f"，{addr.get('city','')}{('，' + addr.get('country')) if addr.get('country') else ''}"
         link = f"https://www.espn.com/soccer/match/_/gameId/{e.get('id')}"
+        home_score = score(home_c)
+        away_score = score(away_c)
+        hf_fields = completed_half_full_fields(str(e.get("id") or comp.get("id")), home_score, away_score) if completed else {}
         matches.append(Match(
             id=str(e.get("id") or comp.get("id")), date_utc=dt_utc, date_bj=dt_utc.astimezone(BJ),
             home=home, away=away, home_zh=zh(home), away_zh=zh(away),
-            home_score=score(home_c), away_score=score(away_c), completed=completed,
+            home_score=home_score, away_score=away_score, completed=completed,
             status=status_type.get("description") or status_type.get("name") or "Scheduled",
             status_detail=status_type.get("detail") or status_type.get("shortDetail") or "",
             venue=venue_name, note=comp.get("altGameNote") or "", link=link,
             home_logo=(home_c.get("team") or {}).get("logo"), away_logo=(away_c.get("team") or {}).get("logo"),
+            half_time_score=hf_fields.get("half_time_score"), half_full=hf_fields.get("half_full"),
+            second_half_score=hf_fields.get("second_half_score"),
         ))
     return sorted(matches, key=lambda m: m.date_utc)
 
@@ -295,7 +319,14 @@ def model_half_full_probs(outcome_probs: dict[str, float]) -> dict[str, float]:
     return {k: v / total for k, v in out.items()}
 
 
-def make_sporttery_reference_odds(diff: int, scores: list[tuple[int, int]], half_full: list[str], main_outcome: str) -> dict:
+def make_sporttery_reference_odds(
+    diff: int,
+    scores: list[tuple[int, int]],
+    half_full: list[str],
+    main_outcome: str,
+    upset_scores: list[tuple[int, int]] | None = None,
+    upset_half_full: list[str] | None = None,
+) -> dict:
     """China Sports Lottery-style decimal odds from the local model.
 
     This project has no authenticated official Sporttery odds feed.  Values are
@@ -305,17 +336,63 @@ def make_sporttery_reference_odds(diff: int, scores: list[tuple[int, int]], half
     score_probs = model_score_probs(diff)
     hf_probs = model_half_full_probs(outcome_probs)
     score_labels = [f"{a}-{b}" for a, b in scores]
+    upset_labels = [f"{a}-{b}" for a, b in (upset_scores or [])]
+    upset_hf_labels = list(upset_half_full or [])
     outcome_odds = {k: decimal_odds(v, payout=0.89, lo=1.18, hi=12) for k, v in outcome_probs.items()}
     score_odds = {s: decimal_odds(score_probs.get(s, 0.01), payout=0.80, lo=4.0, hi=90) for s in score_labels}
+    upset_score_odds = {s: decimal_odds(score_probs.get(s, 0.006), payout=0.80, lo=5.0, hi=120) for s in upset_labels}
     half_full_odds = {h: decimal_odds(hf_probs.get(h, 0.01), payout=0.82, lo=3.2, hi=80) for h in half_full}
+    upset_half_full_odds = {h: decimal_odds(hf_probs.get(h, 0.006), payout=0.82, lo=4.0, hi=120) for h in upset_hf_labels}
     pick = home_outcome_code(main_outcome)
     return {
         "source": "模型参考赔付系数（按体彩玩法格式推算，非体彩官方实际赔率）",
         "outcome": outcome_odds,
         "outcome_pick": {"label": pick, "odds": outcome_odds.get(pick)},
         "scores": score_odds,
+        "upset_scores": upset_score_odds,
         "half_full": half_full_odds,
+        "upset_half_full": upset_half_full_odds,
     }
+
+
+def make_upset_score_options(diff: int, base_scores: list[tuple[int, int]]) -> list[tuple[int, int]]:
+    """Small-stake defensive score options for an upset/cold result scenario."""
+    if diff >= 12:
+        candidates = [(1, 1), (0, 1)]
+    elif diff >= 5:
+        candidates = [(1, 1), (1, 2)]
+    elif diff >= 2:
+        candidates = [(0, 1), (2, 2)]
+    elif diff <= -12:
+        candidates = [(1, 1), (1, 0)]
+    elif diff <= -5:
+        candidates = [(1, 1), (2, 1)]
+    elif diff <= -2:
+        candidates = [(1, 0), (2, 2)]
+    else:
+        candidates = [(0, 1), (1, 2)]
+    seen = set(base_scores)
+    return [s for s in candidates if s not in seen][:2]
+
+
+def make_upset_half_full_options(diff: int, base_half_full: list[str]) -> list[str]:
+    """Small-stake defensive half/full-time options for cold match scripts."""
+    if diff >= 12:
+        candidates = ["平平", "平负", "负负"]
+    elif diff >= 5:
+        candidates = ["平平", "负负", "胜负"]
+    elif diff >= 2:
+        candidates = ["负负", "平平", "胜负"]
+    elif diff <= -12:
+        candidates = ["平平", "平胜", "胜胜"]
+    elif diff <= -5:
+        candidates = ["平平", "胜胜", "负胜"]
+    elif diff <= -2:
+        candidates = ["胜胜", "平平", "负胜"]
+    else:
+        candidates = ["平负", "平胜", "负胜"]
+    seen = {normalize_half_full(x) for x in base_half_full}
+    return [h for h in candidates if normalize_half_full(h) not in seen][:2]
 
 
 def make_prediction(m: Match) -> dict:
@@ -392,7 +469,9 @@ def make_prediction(m: Match) -> dict:
 
     main_outcome = outcome(*scores[0])
     half_full = adjust_half_full_predictions(tendency, [format_half_full_home(h, f) for h, f in htft])
-    odds = make_sporttery_reference_odds(diff, scores, half_full, main_outcome)
+    upset_scores = make_upset_score_options(diff, scores)
+    upset_half_full = make_upset_half_full_options(diff, half_full)
+    odds = make_sporttery_reference_odds(diff, scores, half_full, main_outcome, upset_scores, upset_half_full)
     return {
         "match_id": m.id,
         "generated_for_date": m.bj_date,
@@ -400,7 +479,10 @@ def make_prediction(m: Match) -> dict:
         "primary_outcome": main_outcome,
         "scores": [f"{a}-{b}" for a, b in scores],
         "score_pairs": scores,
+        "upset_scores": [f"{a}-{b}" for a, b in upset_scores],
+        "upset_score_pairs": upset_scores,
         "half_full": half_full,
+        "upset_half_full": upset_half_full,
         "half_full_pairs": htft,
         "odds": odds,
         "analysis": build_analysis(m, diff, risk),
@@ -639,6 +721,65 @@ def calc_stats_from_records(rows: list[dict]) -> dict:
         item["score_rate"] = round(item["score_hits"] / item["total"] * 100, 1) if item["total"] else 0
         item["outcome_rate"] = round(item["outcome_hits"] / item["total"] * 100, 1) if item["total"] else 0
         item["half_full_rate"] = round(item["half_full_hits"] / item["total"] * 100, 1) if item["total"] else None
+
+    upset_by_date = {}
+    upset_recent = []
+    upset_score_total = upset_score_hits = 0
+    upset_hf_total = upset_hf_hits = 0
+    upset_combo_total = upset_combo_hits = 0
+    for r in completed:
+        pred = r.get("prediction") or {}
+        actual = r.get("actual") or {}
+        actual_score = actual.get("score")
+        actual_hf = actual.get("half_full")
+        upset_scores = {str(x) for x in pred.get("upset_scores", [])}
+        upset_hfs = {normalize_half_full(x) for x in pred.get("upset_half_full", [])}
+        has_score_pool = bool(upset_scores)
+        has_hf_pool = bool(upset_hfs and actual_hf)
+        if not has_score_pool and not has_hf_pool:
+            continue
+        score_hit = bool(actual_score and actual_score in upset_scores) if has_score_pool else None
+        hf_hit = bool(actual_hf and normalize_half_full(actual_hf) in upset_hfs) if has_hf_pool else None
+        combo_hit = bool(score_hit or hf_hit)
+        if has_score_pool:
+            upset_score_total += 1
+            upset_score_hits += 1 if score_hit else 0
+        if has_hf_pool:
+            upset_hf_total += 1
+            upset_hf_hits += 1 if hf_hit else 0
+        upset_combo_total += 1
+        upset_combo_hits += 1 if combo_hit else 0
+        d = r.get("date") or (r.get("date_bj", "")[:10])
+        item = upset_by_date.setdefault(d, {"date": d, "total": 0, "combo_hits": 0, "score_total": 0, "score_hits": 0, "half_full_total": 0, "half_full_hits": 0})
+        item["total"] += 1
+        item["combo_hits"] += 1 if combo_hit else 0
+        if has_score_pool:
+            item["score_total"] += 1
+            item["score_hits"] += 1 if score_hit else 0
+        if has_hf_pool:
+            item["half_full_total"] += 1
+            item["half_full_hits"] += 1 if hf_hit else 0
+        row = dict(r)
+        row["upset_hit"] = {"score": score_hit, "half_full": hf_hit, "any": combo_hit}
+        upset_recent.append(row)
+    for item in upset_by_date.values():
+        item["combo_rate"] = round(item["combo_hits"] / item["total"] * 100, 1) if item["total"] else None
+        item["score_rate"] = round(item["score_hits"] / item["score_total"] * 100, 1) if item["score_total"] else None
+        item["half_full_rate"] = round(item["half_full_hits"] / item["half_full_total"] * 100, 1) if item["half_full_total"] else None
+    upset_stats = {
+        "total": upset_combo_total,
+        "hits": upset_combo_hits,
+        "rate": round(upset_combo_hits / upset_combo_total * 100, 1) if upset_combo_total else None,
+        "score_total": upset_score_total,
+        "score_hits": upset_score_hits,
+        "score_rate": round(upset_score_hits / upset_score_total * 100, 1) if upset_score_total else None,
+        "half_full_total": upset_hf_total,
+        "half_full_hits": upset_hf_hits,
+        "half_full_rate": round(upset_hf_hits / upset_hf_total * 100, 1) if upset_hf_total else None,
+        "by_date": sorted(upset_by_date.values(), key=lambda x: x.get("date", "")),
+        "recent": sorted(upset_recent, key=lambda r: r.get("date_bj", ""), reverse=True)[:30],
+        "note": "爆冷命中率只统计包含防爆冷比分/半全场选项的已结算比赛；比分与半全场任一命中即计入综合命中。",
+    }
     report_rows = [r for r in rows if r.get("source_type") != "dashboard_history"]
     dashboard_history_rows = [r for r in rows if r.get("source_type") == "dashboard_history"]
     report_files_with_predictions = {
@@ -667,6 +808,7 @@ def calc_stats_from_records(rows: list[dict]) -> dict:
         "by_date": sorted(by_date.values(), key=lambda x: x.get("date", "")),
         "recent": sorted(completed, key=lambda r: r.get("date_bj", ""), reverse=True)[:30],
         "pending": sorted(pending, key=lambda r: r.get("date_bj", ""))[:30],
+        "upset": upset_stats,
     }
 
 
@@ -748,6 +890,15 @@ def update_history(history: dict, matches: list[Match], target_matches: list[Mat
         if not m or not m.completed or m.home_score is None or m.away_score is None:
             continue
         pred = rec.get("prediction", {})
+        if not pred.get("upset_scores") or not pred.get("upset_half_full"):
+            enriched = make_prediction(m)
+            for key in ("upset_scores", "upset_score_pairs", "upset_half_full"):
+                pred.setdefault(key, enriched.get(key, []))
+            pred_odds = pred.setdefault("odds", {})
+            enriched_odds = enriched.get("odds", {})
+            for key in ("upset_scores", "upset_half_full"):
+                pred_odds.setdefault(key, enriched_odds.get(key, {}))
+            rec["prediction"] = pred
         actual_score = f"{m.home_score}-{m.away_score}"
         actual_outcome = outcome(m.home_score, m.away_score)
         rec["completed"] = True
@@ -758,11 +909,15 @@ def update_history(history: dict, matches: list[Match], target_matches: list[Mat
             "outcome": actual_outcome,
             "status": m.status,
         }
+        if m.half_time_score and m.half_full:
+            rec["actual"].update({"half_time_score": m.half_time_score, "half_full": m.half_full})
         rec["hit"] = {
             "exact_score": actual_score in pred.get("scores", []),
             "outcome": actual_outcome == pred.get("primary_outcome"),
-            "half_full": None,
-            "half_full_note": "ESPN scoreboard 当前未稳定提供半场比分，半全场命中率暂不纳入总命中率。",
+            "half_full": normalize_half_full(m.half_full) in {normalize_half_full(x) for x in pred.get("half_full", [])} if m.half_full else None,
+            "upset_score": actual_score in pred.get("upset_scores", []),
+            "upset_half_full": normalize_half_full(m.half_full) in {normalize_half_full(x) for x in pred.get("upset_half_full", [])} if m.half_full else None,
+            "half_full_note": "已从 ESPN summary linescores 读取半场比分。" if m.half_full else "ESPN scoreboard 当前未稳定提供半场比分，半全场命中率暂不纳入总命中率。",
         }
 
 
@@ -803,6 +958,8 @@ def as_match_dict(m: Match, include_pred: bool = False) -> dict:
         "title": m.title, "status": m.status, "status_detail": m.status_detail, "completed": m.completed,
         "home_score": m.home_score, "away_score": m.away_score, "venue": m.venue, "note": m.note,
         "link": m.link, "home_logo": m.home_logo, "away_logo": m.away_logo,
+        "half_time_score": m.half_time_score, "half_full": m.half_full,
+        "second_half_score": m.second_half_score,
     }
     if include_pred:
         d["prediction"] = make_prediction(m)

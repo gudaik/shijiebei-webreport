@@ -17,6 +17,18 @@ function matchRowCls(m){
   if(msTil < 2 * 3600 * 1000) return 'soon-row';
   return 'upcoming-row';
 }
+function matchHalfFullDetail(m){
+  if(!m.half_time_score || !m.half_full){
+    const pendingText = m.completed ? '半场比分源更新后显示' : (matchRowCls(m) === 'live-row' ? '比赛结束后统计' : '待赛');
+    return `<div class="match-hf pending"><span>半全场</span><b>待统计</b><em>${pendingText}</em></div>`;
+  }
+  const ht = esc(m.half_time_score);
+  const sh = esc(m.second_half_score || '—');
+  const ft = esc(scoreText(m));
+  return `<div class="match-hf">
+    <span>半全场</span><b>${esc(m.half_full)}</b><em>半 ${ht} · 下 ${sh} · 全 ${ft}</em>
+  </div>`;
+}
 function matchRow(m){
   const score = scoreText(m);
   const cls = matchRowCls(m);
@@ -27,6 +39,7 @@ function matchRow(m){
     <div class="row-info">
       <div class="teams">${rowLogo(m.home_logo,m.home_zh)}${esc(m.home_zh)} <span class="mini">vs</span> ${esc(m.away_zh)}${rowLogo(m.away_logo,m.away_zh)}</div>
       <div class="meta">${esc(m.status)}${m.status_detail ? ' · '+esc(m.status_detail) : ''} · ${esc(m.venue || '场地待核实')}</div>
+      ${matchHalfFullDetail(m)}
     </div>
     <div class="${scoreClass}">${score}</div>
   </div>`;
@@ -209,11 +222,53 @@ function renderPredictions(data){
     <div class="odds-source">${esc(odds.source || '模型参考赔付系数，非体彩官方实际赔率')}</div>
   </div>
   <div class="label">3个比分预测</div><div class="pill-row">${p.scores.map(x=>oddsPill(x, odds.scores?.[x])).join('')}</div>
+  ${Array.isArray(p.upset_scores) && p.upset_scores.length ? `<div class="upset-score-block"><div class="label">防爆冷比分小选项</div><div class="pill-row upset-row">${p.upset_scores.map(x=>oddsPill(x, odds.upset_scores?.[x])).join('')}</div><div class="upset-note">小注防冷：用于补平局/反向小胜等冷门比分，不改变主预测方向。</div></div>` : ''}
   <div class="label">3个半全场预测</div><div class="pill-row hf">${p.half_full.map(x=>oddsPill(x, odds.half_full?.[x])).join('')}</div>
+  ${Array.isArray(p.upset_half_full) && p.upset_half_full.length ? `<div class="upset-score-block upset-hf-block"><div class="label">防爆冷半全场小选项</div><div class="pill-row upset-row hf">${p.upset_half_full.map(x=>oddsPill(x, odds.upset_half_full?.[x])).join('')}</div><div class="upset-note">小注防冷：用于补慢热、反转或弱队爆冷走势，不改变主半全场预测方向。</div></div>` : ''}
   <p class="analysis">${esc(p.analysis)}</p>
   <a href="${esc(m.link)}" target="_blank" rel="noopener">ESPN 比赛页</a>
 </article>`;
   }).join('') : empty('明天暂未检索到可确认比赛，数据源更新后会自动显示。');
+}
+
+function renderUpsets(data){
+  const st = data.stats?.upset || {};
+  const rows = data.sections?.day_after_predictions || [];
+  const cards = [
+    ['爆冷综合命中率', pct(st.rate), `${st.hits ?? 0}/${st.total ?? 0} 场`],
+    ['防冷比分命中率', pct(st.score_rate), `${st.score_hits ?? 0}/${st.score_total ?? 0}`],
+    ['防冷半全场命中率', pct(st.half_full_rate), `${st.half_full_hits ?? 0}/${st.half_full_total ?? 0}`],
+  ];
+  $('upsetStatCards').innerHTML = cards.map(([label,num,hint])=>`<div class="stat-card upset-stat"><div class="label">${label}</div><div class="num">${num}</div><div class="hint">${hint}</div></div>`).join('');
+  $('upsetStatsNote').textContent = st.note || '爆冷命中率只统计包含防爆冷选项的已结算比赛。';
+  $('upsetCards').innerHTML = rows.length ? rows.map((m,i)=>{
+    const p=m.prediction||{}; const odds=p.odds||{};
+    const scoreMax = Math.max(...(p.upset_scores||[]).map(x=>Number(odds.upset_scores?.[x]||0)), 0);
+    const hfMax = Math.max(...(p.upset_half_full||[]).map(x=>Number(odds.upset_half_full?.[x]||0)), 0);
+    return `<article class="upset-card">
+      <div class="upset-card-head"><span>第 ${i+1} 场 · ${fmtDateTime(m.date_bj)}</span><b>${esc(m.home_zh)} vs ${esc(m.away_zh)}</b></div>
+      <div class="upset-mainline">主方向：${esc(p.tendency || p.primary_outcome || '待')}</div>
+      <div class="upset-pick-block"><div class="label">防爆冷比分</div><div class="pill-row upset-row">${(p.upset_scores||[]).map(x=>oddsPill(x, odds.upset_scores?.[x])).join('') || '<span class="score-chip muted">暂无</span>'}</div></div>
+      <div class="upset-pick-block"><div class="label">防爆冷半全场</div><div class="pill-row upset-row hf">${(p.upset_half_full||[]).map(x=>oddsPill(x, odds.upset_half_full?.[x])).join('') || '<span class="score-chip muted">暂无</span>'}</div></div>
+      <div class="upset-risk-line">最高参考系数：比分 ${fmtOdds(scoreMax)} · 半全场 ${fmtOdds(hfMax)}；建议只作小注防冷观察。</div>
+    </article>`;
+  }).join('') : empty('暂无可展示的爆冷预测。');
+  const byDate = (st.by_date || []).slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
+  $('upsetDateBars').innerHTML = byDate.length ? byDate.map(d=>`<div class="bar-row rich upset-bar">
+    <div class="bar-date"><strong>${esc(d.date)}</strong><span>${d.total} 场</span></div>
+    <div class="bar-metric"><span>综合 ${d.combo_hits}/${d.total}</span><div class="track"><div class="fill hf-fill" style="width:${d.combo_rate ?? 0}%"></div></div><b>${d.combo_rate == null ? '待' : `${d.combo_rate}%`}</b></div>
+    <div class="bar-metric"><span>比分 ${d.score_hits}/${d.score_total}</span><div class="track"><div class="fill score-fill" style="width:${d.score_rate ?? 0}%"></div></div><b>${d.score_rate == null ? '待' : `${d.score_rate}%`}</b></div>
+    <div class="bar-metric"><span>半全场 ${d.half_full_hits}/${d.half_full_total}</span><div class="track"><div class="fill outcome" style="width:${d.half_full_rate ?? 0}%"></div></div><b>${d.half_full_rate == null ? '待' : `${d.half_full_rate}%`}</b></div>
+  </div>`).join('') : empty('暂无已结算的爆冷预测统计；后续含防爆冷字段的比赛完赛后自动累计。');
+  $('upsetRecent').innerHTML = (st.recent || []).length ? (st.recent || []).map(r=>{
+    const p=r.prediction||{}; const a=r.actual||{}; const u=r.upset_hit||{};
+    return `<article class="settled-card upset-audit-card ${u.any ? 'settled-hit' : ''}">
+      <div class="settled-main"><div class="time">${esc((r.date_bj||'').slice(5,16).replace('T',' '))}</div><div><div class="teams">${esc(r.title)}</div><div class="meta">实际：${esc(a.score||'待')} · 半全场 ${esc(a.half_full||'待统计')}</div></div></div>
+      <div class="score-compare hf-compare"><div class="score-side"><div class="score-label red-dot">防冷比分</div><div class="score-chip-row">${scoreChips(p.upset_scores, a.score)}</div></div><div class="score-arrow">→</div><div class="score-side actual-side"><div class="score-label white-dot">实际比分</div><div class="score-chip-row">${actualScoreChip(a.score, u.score)}</div></div></div>
+      <div class="score-compare hf-compare"><div class="score-side"><div class="score-label red-dot">防冷半全场</div><div class="score-chip-row">${halfFullChips(p.upset_half_full, a.half_full)}</div></div><div class="score-arrow">→</div><div class="score-side actual-side"><div class="score-label white-dot">实际半全场</div><div class="score-chip-row">${actualHalfFullChip(a.half_full, u.half_full)}</div></div></div>
+      <div class="stat-outcomes">${outcomeBadge(`爆冷综合${u.any ? '命中' : '未中'}`, u.any)}${outcomeBadge(`防冷比分${u.score ? '命中' : '未中'}`, u.score)}${outcomeBadge(a.half_full ? `防冷半全场${u.half_full ? '命中' : '未中'}` : '半全场待统计', a.half_full ? u.half_full : null)}</div>
+    </article>`;
+  }).join('') : empty('暂无已结算爆冷预测。');
 }
 
 function settledCard(r){
@@ -344,8 +399,8 @@ function outcomeCode(pred){
 function candidateOdds(match, type, pick){
   const odds = match?.prediction?.odds || {};
   if(type === '胜平负') return odds.outcome?.[normalizeOutcomePick(pick) || outcomeCode(match?.prediction)];
-  if(type === '比分') return odds.scores?.[pick];
-  if(type === '半全场') return odds.half_full?.[pick];
+  if(type === '比分') return odds.scores?.[pick] ?? odds.upset_scores?.[pick];
+  if(type === '半全场') return odds.half_full?.[pick] ?? odds.upset_half_full?.[pick];
   return null;
 }
 function oddsBadge(v){
@@ -395,9 +450,17 @@ function buildBetCandidates(matches, risk, parlayMode, passType, playType='all',
       const boost = betMode === 'scoreBomb' || betMode === 'moonshot' ? mode.longshotBias : 1;
       candidates.push({type:'比分', play:'单关', title, matchNo, matchIndex:idx, pick:s, odds:candidateOdds(m, '比分', s), weight:cfg.weights.score * boost * (j ? 0.62/(j+0.15) : 1), reason:j ? '高赔比分小额覆盖，适合以小博大。' : '首选比分，用于提高潜在回报。'});
     });
+    if(useScore) (p.upset_scores || []).slice(0, Math.max(1, Math.min(2, mode.upsetCount || 1))).forEach((s, j)=>{
+      const odds = p.odds?.upset_scores?.[s] ?? candidateOdds(m, '比分', s);
+      candidates.push({type:'比分', play:'单关', title, matchNo, matchIndex:idx, pick:`防冷比分 ${s}`, odds, weight:cfg.weights.score * 1.05 * mode.longshotBias / (j+1), reason:'防爆冷比分小注，补平局或反向小胜，命中率低但回报弹性高。'});
+    });
     if(useHalfFull) (p.half_full || []).slice(0,hfDepth).forEach((h, j)=>{
       const boost = betMode === 'halfFullBomb' || betMode === 'moonshot' ? mode.longshotBias : 1;
       candidates.push({type:'半全场', play:'单关', title, matchNo, matchIndex:idx, pick:h, odds:candidateOdds(m, '半全场', h), weight:cfg.weights.halfFull * boost * (j ? 0.58/(j+0.15) : 1), reason:j ? '半全场高赔小注，搏走势变化。' : '半全场主选，配合比分方向。'});
+    });
+    if(useHalfFull) (p.upset_half_full || []).slice(0, Math.max(1, Math.min(2, mode.upsetCount || 1))).forEach((h, j)=>{
+      const odds = p.odds?.upset_half_full?.[h] ?? candidateOdds(m, '半全场', h);
+      candidates.push({type:'半全场', play:'单关', title, matchNo, matchIndex:idx, pick:`防冷半全场 ${h}`, odds, weight:cfg.weights.halfFull * 1.20 * mode.longshotBias / (j+1), reason:'防爆冷半全场小注，覆盖慢热、反转或弱队爆冷走势。'});
     });
   });
   const allowParlay = parlayMode === 'parlay' || (parlayMode === 'auto' && (risk !== 'safe' || isLongshot));
@@ -945,7 +1008,7 @@ async function load(){
   const res = await fetch(`data/current.json?ts=${Date.now()}`);
   if(!res.ok) throw new Error(`HTTP ${res.status}`);
   const data = await res.json(); state.data = data;
-  renderSummary(data); renderPredictions(data); renderStats(data); renderBetAdvisor(data); renderMatches(data);
+  renderSummary(data); renderPredictions(data); renderUpsets(data); renderStats(data); renderBetAdvisor(data); renderMatches(data);
 }
 $('refreshBtn').addEventListener('click',()=>load().catch(e=>alert('刷新失败：'+e.message)));
 $('exportPredictionsBtn').addEventListener('click', exportPredictionsImage);
