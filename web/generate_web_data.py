@@ -21,6 +21,7 @@ WEB_OUT = Path(os.environ.get("WORLDCUP_WEB_OUT", str(PROJECT_DIR)))
 DATA_DIR = WEB_OUT / "data"
 STATE_DIR = PROJECT_DIR / "state"
 HISTORY_FILE = STATE_DIR / "web_predictions_history.json"
+BET_HISTORY_FILE = STATE_DIR / "bet_recommendation_history.json"
 SOURCE_CACHE = STATE_DIR / "espn_scoreboard_web.json"
 SUMMARY_CACHE_DIR = STATE_DIR / "espn_summaries"
 ESPN_BASE = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard"
@@ -123,6 +124,17 @@ def outcome(home_score: int, away_score: int) -> str:
     if home_score < away_score:
         return "客胜"
     return "平"
+
+
+def normalize_outcome_pick(text: str) -> str:
+    raw = str(text or "")
+    if "客胜" in raw or "负" in raw:
+        return "客胜"
+    if "平" in raw:
+        return "平"
+    if "主胜" in raw or "胜" in raw:
+        return "主胜"
+    return raw
 
 
 def fetch_json(url: str) -> dict:
@@ -403,68 +415,68 @@ def make_prediction(m: Match) -> dict:
     if diff >= 18:
         # 碾压级优势：强队对弱旅，大比分碾压概率高
         tendency = "主胜"
-        scores = [(3, 0), (2, 0), (4, 1)]
-        htft = [("主胜", "主胜"), ("平", "主胜"), ("主胜", "平")]
+        scores = [(3, 0), (2, 0), (4, 1), (4, 0)]
+        htft = [("主胜", "主胜"), ("平", "主胜"), ("主胜", "平"), ("平", "平")]
         risk = "主队实力大幅领先，压迫性节奏下大比分概率较高，需防慢热开局。"
     elif diff >= 12:
         # 明显优势：主队更强但不至于碾压
         tendency = "主胜"
-        scores = [(2, 0), (3, 1), (2, 1)]
-        htft = [("主胜", "主胜"), ("平", "主胜"), ("主胜", "平")]
+        scores = [(2, 0), (3, 1), (2, 1), (1, 0)]
+        htft = [("主胜", "主胜"), ("平", "主胜"), ("主胜", "平"), ("平", "平")]
         risk = "主队整体实力占优明显，但世界杯氛围下弱队防守投入度高，首球关键。"
     elif diff >= 9:
         # 较大优势
         tendency = "主胜"
-        scores = [(2, 1), (2, 0), (1, 0)]
-        htft = [("平", "主胜"), ("主胜", "主胜"), ("主胜", "平")]
+        scores = [(2, 1), (2, 0), (1, 0), (3, 1)]
+        htft = [("平", "主胜"), ("主胜", "主胜"), ("主胜", "平"), ("平", "平")]
         risk = "主队占优，但世界杯大赛节奏谨慎，防守密度会压制进球数。"
     elif diff >= 5:
         # 小优势偏主队
         tendency = "主胜，防平"
-        scores = [(2, 1), (1, 0), (1, 1)]
-        htft = [("平", "主胜"), ("主胜", "主胜"), ("平", "平")]
+        scores = [(2, 1), (1, 0), (1, 1), (0, 0)]
+        htft = [("平", "主胜"), ("主胜", "主胜"), ("平", "平"), ("主胜", "平")]
         risk = "主队纸面与节奏略优，平局风险来自打不开局面。"
     elif diff >= 2:
         # 微弱主队优势
         tendency = "主胜，防平"
-        scores = [(1, 0), (2, 1), (1, 1)]
-        htft = [("平", "主胜"), ("平", "平"), ("主胜", "主胜")]
+        scores = [(1, 0), (2, 1), (1, 1), (0, 0)]
+        htft = [("平", "主胜"), ("平", "平"), ("主胜", "主胜"), ("主胜", "平")]
         risk = "主队略有上风，但差距有限，平局仍是合理结局。"
     elif diff <= -18:
         # 客队碾压
         tendency = "客胜"
-        scores = [(0, 3), (0, 2), (1, 3)]
-        htft = [("客胜", "客胜"), ("平", "客胜"), ("客胜", "平")]
+        scores = [(0, 3), (0, 2), (1, 3), (0, 4)]
+        htft = [("客胜", "客胜"), ("平", "客胜"), ("客胜", "平"), ("平", "平")]
         risk = "客队实力大幅领先，高比分客胜概率较高，主队难以组织有效进攻。"
     elif diff <= -12:
         # 客队明显优势
         tendency = "客胜"
-        scores = [(0, 2), (1, 3), (0, 1)]
-        htft = [("客胜", "客胜"), ("平", "客胜"), ("主胜", "客胜")]
+        scores = [(0, 2), (1, 3), (0, 1), (1, 4)]
+        htft = [("客胜", "客胜"), ("平", "客胜"), ("主胜", "客胜"), ("平", "平")]
         risk = "客队整体更强，但在中立/主场氛围下主队会拼死防守，需防低比分意外。"
     elif diff <= -9:
         # 较大客队优势
         tendency = "客胜"
-        scores = [(0, 2), (1, 2), (0, 1)]
-        htft = [("平", "客胜"), ("客胜", "客胜"), ("主胜", "客胜")]
+        scores = [(0, 2), (1, 2), (0, 1), (1, 3)]
+        htft = [("平", "客胜"), ("客胜", "客胜"), ("主胜", "客胜"), ("平", "平")]
         risk = "客队优势更清晰，若早段进球会扩大控场。"
     elif diff <= -5:
         # 小优势偏客队
         tendency = "客胜，防平"
-        scores = [(1, 2), (0, 1), (1, 1)]
-        htft = [("平", "客胜"), ("客胜", "客胜"), ("平", "平")]
+        scores = [(1, 2), (0, 1), (1, 1), (0, 0)]
+        htft = [("平", "客胜"), ("客胜", "客胜"), ("平", "平"), ("客胜", "平")]
         risk = "客队整体更稳，但杯赛小组赛节奏可能偏谨慎。"
     elif diff <= -2:
         # 微弱客队优势
         tendency = "客胜，防平"
-        scores = [(0, 1), (1, 2), (1, 1)]
-        htft = [("平", "客胜"), ("平", "平"), ("客胜", "客胜")]
+        scores = [(0, 1), (1, 2), (1, 1), (0, 0)]
+        htft = [("平", "客胜"), ("平", "平"), ("客胜", "客胜"), ("客胜", "平")]
         risk = "客队略有上风，主队主场动力可能制造变数，平局可防。"
     else:
         # diff 在 -1 到 1：真正均势
         tendency = "平局倾向，双方不败均可防"
-        scores = [(1, 1), (0, 0), (1, 0)]
-        htft = [("平", "平"), ("平", "主胜"), ("主胜", "平")]
+        scores = [(1, 1), (0, 0), (1, 0), (2, 2)]
+        htft = [("平", "平"), ("平", "主胜"), ("主胜", "平"), ("平", "客胜")]
         risk = "两队实力几乎相当，首球与定位球将主导走势，低比分平局概率最高。"
 
     main_outcome = outcome(*scores[0])
@@ -951,6 +963,285 @@ def calc_stats(history: dict) -> dict:
     }
 
 
+def load_bet_history() -> dict:
+    if BET_HISTORY_FILE.exists():
+        try:
+            data = json.loads(BET_HISTORY_FILE.read_text(encoding="utf-8"))
+            data.setdefault("version", 1)
+            data.setdefault("records", {})
+            return data
+        except Exception:
+            backup = BET_HISTORY_FILE.with_suffix(".broken.json")
+            backup.write_text(BET_HISTORY_FILE.read_text(encoding="utf-8", errors="ignore"), encoding="utf-8")
+    return {"version": 1, "records": {}}
+
+
+def save_bet_history(history: dict) -> None:
+    STATE_DIR.mkdir(parents=True, exist_ok=True)
+    BET_HISTORY_FILE.write_text(json.dumps(history, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def bet_hit_type(candidate: dict, actual: dict) -> bool | None:
+    if not actual:
+        return None
+    ctype = candidate.get("type")
+    pick = str(candidate.get("pick") or "")
+    if ctype == "胜平负":
+        return normalize_outcome_pick(pick) == actual.get("outcome")
+    if ctype == "比分":
+        m = re.search(r"(\d+)\s*-\s*(\d+)", pick)
+        return bool(m and f"{m.group(1)}-{m.group(2)}" == actual.get("score"))
+    if ctype == "半全场":
+        if not actual.get("half_full"):
+            return None
+        codes = re.findall(r"[胜平负]", pick)
+        pick_code = "".join(codes[-2:]) if len(codes) >= 2 else normalize_half_full(pick)
+        return normalize_half_full(pick_code) == normalize_half_full(actual.get("half_full"))
+    return None
+
+
+def bet_candidate(match: Match | dict, pred: dict, category: str, ctype: str, pick: str, units: int, reason: str, play: str = "单关", legs: list[dict] | None = None) -> dict:
+    is_dict = isinstance(match, dict)
+    title = match.get("title") if is_dict else match.title
+    match_id = match.get("match_id") or match.get("id") if is_dict else match.id
+    date_bj = match.get("date_bj") if is_dict else match.date_bj.isoformat()
+    return {
+        "id": "|".join([str(match_id or title), category, play, ctype, str(pick)]),
+        "match_id": str(match_id or ""),
+        "date_bj": date_bj,
+        "title": title,
+        "category": category,
+        "play": play,
+        "type": ctype,
+        "pick": pick,
+        "units": int(units),
+        "stake": int(units) * 2,
+        "reason": reason,
+        "legs": legs or [],
+    }
+
+
+def build_daily_bet_record_from_match_dicts(pred_rows: list[dict], target_date: str, now: datetime | None = None) -> dict:
+    """Create the durable daily purchase recommendation snapshot.
+
+    This mirrors the visible dashboard defaults, but keeps the record server-side so
+    future runs can settle hit-rate stats even if the user never copies/exports the ticket.
+    """
+    now = now or datetime.now(BJ)
+    candidates: list[dict] = []
+    rows = sorted(pred_rows, key=lambda r: r.get("date_bj", ""))
+    for idx, row in enumerate(rows):
+        pred = row.get("prediction") or {}
+        title = row.get("title") or f"{row.get('home_zh')} vs {row.get('away_zh')}"
+        match_ref = {"id": row.get("id") or pred.get("match_id"), "match_id": row.get("id") or pred.get("match_id"), "date_bj": row.get("date_bj"), "title": title}
+        primary = pred.get("primary_outcome") or pred.get("tendency") or "主胜"
+        scores = pred.get("scores") or []
+        half_full = pred.get("half_full") or []
+        upset_scores = pred.get("upset_scores") or []
+        upset_hf = pred.get("upset_half_full") or []
+        candidates.append(bet_candidate(match_ref, pred, "main", "胜平负", primary, 2, "主线胜平负方向，作为基础仓位。"))
+        if scores:
+            candidates.append(bet_candidate(match_ref, pred, "main", "比分", scores[0], 1, "主线首选比分，小注增强。"))
+        if half_full:
+            candidates.append(bet_candidate(match_ref, pred, "main", "半全场", half_full[0], 1, "主线半全场走势，小注增强。"))
+        if upset_scores:
+            candidates.append(bet_candidate(match_ref, pred, "upset", "比分", f"防冷比分 {upset_scores[0]}", 1, "防爆冷比分小注，补平局或反向小胜。"))
+        if upset_hf:
+            candidates.append(bet_candidate(match_ref, pred, "upset", "半全场", f"防冷半全场 {upset_hf[0]}", 1, "防爆冷半全场小注，覆盖慢热、反转或弱队爆冷走势。"))
+    # Conservative 2串1 mainline supplement: only primary outcomes from first two matches.
+    if len(rows) >= 2:
+        legs = []
+        for row in rows[:2]:
+            pred = row.get("prediction") or {}
+            legs.append({
+                "match_id": str(row.get("id") or pred.get("match_id") or ""),
+                "title": row.get("title"),
+                "type": "胜平负",
+                "pick": pred.get("primary_outcome") or pred.get("tendency") or "主胜",
+            })
+        candidates.append({
+            "id": f"{target_date}|parlay|main-outcome-2x1",
+            "match_id": "",
+            "date_bj": rows[0].get("date_bj"),
+            "title": "主线胜平负2串1",
+            "category": "parlay",
+            "play": "2串1",
+            "type": "串关",
+            "pick": " × ".join(f"{leg['title']} {leg['pick']}" for leg in legs),
+            "units": 1,
+            "stake": 2,
+            "reason": "只串主线胜平负，作为高风险补充。",
+            "legs": legs,
+        })
+    return {
+        "date": target_date,
+        "created_at_bj": now.isoformat(),
+        "strategy": {"budget": 52, "risk": "balanced", "mode": "daily-default", "note": "每日自动记录：主线为胜平负/首选比分/首选半全场；防爆冷为首个防冷比分/半全场；串关只作补充。"},
+        "matches_total": len(rows),
+        "candidates": candidates,
+    }
+
+
+def ensure_daily_bet_record(bet_history: dict, target_matches: list[Match], target_date: str, now: datetime) -> None:
+    records = bet_history.setdefault("records", {})
+    if not target_matches or target_date in records:
+        return
+    rows = [as_match_dict(m, include_pred=True) for m in target_matches]
+    records[target_date] = build_daily_bet_record_from_match_dicts(rows, target_date, now)
+
+
+def backfill_bet_history_from_prediction_history(bet_history: dict, prediction_history: dict) -> None:
+    """Backfill older daily recommendation snapshots from dashboard prediction history.
+
+    This gives the new hit-rate view immediate historical context; future dates are
+    recorded once by ensure_daily_bet_record().
+    """
+    records = bet_history.setdefault("records", {})
+    by_date: dict[str, list[dict]] = {}
+    for rec in prediction_history.get("predictions", {}).values():
+        pred = rec.get("prediction") or {}
+        if not pred:
+            continue
+        d = rec.get("date") or str(rec.get("date_bj") or "")[:10]
+        if not d or d in records:
+            continue
+        row = {
+            "id": rec.get("match_id"),
+            "date_bj": rec.get("date_bj"),
+            "title": rec.get("title"),
+            "home_zh": rec.get("home_zh"),
+            "away_zh": rec.get("away_zh"),
+            "prediction": pred,
+        }
+        by_date.setdefault(d, []).append(row)
+    for d, rows in by_date.items():
+        records[d] = build_daily_bet_record_from_match_dicts(rows, d)
+        records[d]["backfilled"] = True
+
+
+def settle_bet_history(bet_history: dict, prediction_history: dict, matches: list[Match]) -> None:
+    by_id = {m.id: m for m in matches}
+    pred_by_id = {str(r.get("match_id")): r for r in prediction_history.get("predictions", {}).values() if r.get("match_id")}
+
+    def actual_for(mid: str) -> dict | None:
+        m = by_id.get(str(mid))
+        if m and m.completed and m.home_score is not None and m.away_score is not None:
+            actual = {"score": f"{m.home_score}-{m.away_score}", "outcome": outcome(m.home_score, m.away_score), "home_score": m.home_score, "away_score": m.away_score}
+            if m.half_full:
+                actual["half_full"] = m.half_full
+                actual["half_time_score"] = m.half_time_score
+            return actual
+        rec = pred_by_id.get(str(mid))
+        if rec and rec.get("completed") and rec.get("actual"):
+            return rec.get("actual")
+        return None
+
+    for record in bet_history.get("records", {}).values():
+        settled = pending = hits = 0
+        for c in record.get("candidates", []):
+            if c.get("play") != "单关" and c.get("legs"):
+                leg_results = []
+                leg_details = []
+                for leg in c.get("legs", []):
+                    actual = actual_for(str(leg.get("match_id") or ""))
+                    h = bet_hit_type(leg, actual or {}) if actual else None
+                    leg_results.append(h)
+                    leg_details.append({**leg, "actual": actual, "hit": h})
+                if any(x is None for x in leg_results):
+                    c["settled"] = False
+                    c["hit"] = None
+                    pending += 1
+                else:
+                    c["settled"] = True
+                    c["hit"] = all(leg_results)
+                    settled += 1
+                    hits += 1 if c["hit"] else 0
+                c["leg_results"] = leg_details
+                continue
+            actual = actual_for(str(c.get("match_id") or ""))
+            if not actual:
+                c["settled"] = False
+                c["hit"] = None
+                pending += 1
+                continue
+            c["actual"] = actual
+            h = bet_hit_type(c, actual)
+            if h is None:
+                c["settled"] = False
+                c["hit"] = None
+                pending += 1
+            else:
+                c["settled"] = True
+                c["hit"] = bool(h)
+                settled += 1
+                hits += 1 if h else 0
+        record["settlement"] = {
+            "settled": settled,
+            "pending": pending,
+            "hits": hits,
+            "rate": round(hits / settled * 100, 1) if settled else None,
+            "settled_at_bj": datetime.now(BJ).isoformat(),
+        }
+
+
+def calc_bet_stats(bet_history: dict) -> dict:
+    records = sorted(bet_history.get("records", {}).values(), key=lambda r: r.get("date", ""))
+    candidates = []
+    for rec in records:
+        for c in rec.get("candidates", []):
+            row = dict(c)
+            row["record_date"] = rec.get("date")
+            row["record_strategy"] = rec.get("strategy", {})
+            candidates.append(row)
+    settled = [c for c in candidates if c.get("settled") and c.get("hit") is not None]
+    pending = [c for c in candidates if not c.get("settled")]
+
+    def agg(rows: list[dict]) -> dict:
+        total = len(rows)
+        hits = sum(1 for c in rows if c.get("hit"))
+        return {"total": total, "hits": hits, "rate": round(hits / total * 100, 1) if total else None}
+
+    by_category = {k: agg([c for c in settled if c.get("category") == k]) for k in ("main", "upset", "parlay")}
+    by_type = {k: agg([c for c in settled if c.get("type") == k]) for k in ("胜平负", "比分", "半全场", "串关")}
+    by_date = []
+    for rec in records:
+        rows = [c for c in rec.get("candidates", []) if c.get("settled") and c.get("hit") is not None]
+        main = [c for c in rows if c.get("category") == "main"]
+        upset = [c for c in rows if c.get("category") == "upset"]
+        parlay = [c for c in rows if c.get("category") == "parlay"]
+        item = {"date": rec.get("date"), **agg(rows), "main": agg(main), "upset": agg(upset), "parlay": agg(parlay), "pending": len([c for c in rec.get("candidates", []) if not c.get("settled")])}
+        if rows or item["pending"]:
+            by_date.append(item)
+
+    recent = sorted(settled, key=lambda c: (c.get("record_date", ""), c.get("date_bj", "")), reverse=True)[:40]
+    suggestions = []
+    score_rate = by_type.get("比分", {}).get("rate")
+    upset_rate = by_category.get("upset", {}).get("rate")
+    parlay_rate = by_category.get("parlay", {}).get("rate")
+    main_rate = by_category.get("main", {}).get("rate")
+    if score_rate is not None and score_rate < 35:
+        suggestions.append("比分单项命中偏低：主线保留首选比分，资金权重继续向胜平负/半全场倾斜；比分只做小注增强。")
+    if upset_rate is not None and main_rate is not None and upset_rate < main_rate:
+        suggestions.append("防爆冷命中低于主线：只保留每场1个最核心防冷比分/半全场，减少冷门覆盖过宽导致的无效注。")
+    if parlay_rate is not None and parlay_rate < 30:
+        suggestions.append("串关波动最大：默认限制为2串1，只有主线连续命中率稳定后再提高串关占比。")
+    suggestions.append("后续增强方向：按购买推荐实际结算结果动态调整权重，连续低命中玩法自动降权，连续命中玩法小幅升权。")
+    overall = agg(settled)
+    return {
+        "records_total": len(records),
+        "settled_total": overall["total"],
+        "hits": overall["hits"],
+        "rate": overall["rate"],
+        "pending_total": len(pending),
+        "by_category": by_category,
+        "by_type": by_type,
+        "by_date": by_date,
+        "recent": recent,
+        "suggestions": suggestions,
+        "note": "购买推荐命中率按每日自动记录的推荐项逐项结算：单关按对应玩法命中；串关需所有子项命中才算命中。",
+    }
+
+
 def as_match_dict(m: Match, include_pred: bool = False) -> dict:
     d = {
         "id": m.id, "date_bj": m.date_bj.isoformat(), "date": m.bj_date, "time": m.bj_time,
@@ -1001,10 +1292,16 @@ def main() -> int:
 
     history = load_history()
     update_history(history, matches, target_matches)
+    bet_history = load_bet_history()
+    backfill_bet_history_from_prediction_history(bet_history, history)
+    ensure_daily_bet_record(bet_history, target_matches, tomorrow.isoformat(), now)
+    settle_bet_history(bet_history, history, matches)
     save_history(history)
+    save_bet_history(bet_history)
     report_predictions = reconcile_report_predictions(report_rows, matches)
     audited_predictions = merge_history_records_for_stats(report_predictions, history)
     stats = calc_stats_from_records(audited_predictions)
+    bet_stats = calc_bet_stats(bet_history)
 
     current = {
         "generated_at_bj": now.isoformat(),
@@ -1035,17 +1332,20 @@ def main() -> int:
             "all_known_matches": [as_match_dict(m) for m in matches],
         },
         "stats": stats,
+        "bet_stats": bet_stats,
         "risk_notice": "预测仅供娱乐和信息参考，不构成投注建议；请遵守所在地法律法规，理性看球。",
     }
 
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     (DATA_DIR / "current.json").write_text(json.dumps(current, ensure_ascii=False, indent=2), encoding="utf-8")
     (DATA_DIR / "history.json").write_text(json.dumps(history, ensure_ascii=False, indent=2), encoding="utf-8")
+    (DATA_DIR / "bet_recommendation_history.json").write_text(json.dumps(bet_history, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Generated {DATA_DIR / 'current.json'}")
     print(f"Prediction target {tomorrow.isoformat()}, matches={len(target_matches)}")
     for m in target_matches:
         print(f"- {m.date_bj:%m-%d %H:%M} {m.title}")
     print(f"Report source {REPORTS_DIR}, files={stats.get('report_files_total', 0)}, parsed_predictions={stats.get('report_predictions_total', 0)}, completed={stats.get('completed_total', 0)}")
+    print(f"Bet recommendation records={bet_stats.get('records_total', 0)}, settled={bet_stats.get('settled_total', 0)}, hit_rate={bet_stats.get('rate')}")
     return 0
 
 if __name__ == "__main__":

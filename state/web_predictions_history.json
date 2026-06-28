@@ -2380,9 +2380,53 @@
             "平平": 4.16,
             "平胜": 5.65,
             "胜平": 15.63
+          },
+          "upset_scores": {
+            "0-1": 8.11,
+            "1-2": 11.73
+          },
+          "upset_half_full": {
+            "平负": 6.51,
+            "负胜": 12.89
           }
         },
-        "analysis": "两队实力几乎相当，比赛更可能由临场效率、定位球和换人质量决定。两队实力几乎相当，首球与定位球将主导走势，低比分平局概率最高。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+        "analysis": "两队实力几乎相当，比赛更可能由临场效率、定位球和换人质量决定。两队实力几乎相当，首球与定位球将主导走势，低比分平局概率最高。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。",
+        "upset_scores": [
+          "0-1",
+          "1-2"
+        ],
+        "upset_score_pairs": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "upset_half_full": [
+          "平负",
+          "负胜"
+        ]
+      },
+      "completed": true,
+      "actual": {
+        "home_score": 0,
+        "away_score": 0,
+        "score": "0-0",
+        "outcome": "平",
+        "status": "Full Time",
+        "half_time_score": "0-0",
+        "half_full": "平平"
+      },
+      "hit": {
+        "exact_score": true,
+        "outcome": true,
+        "half_full": true,
+        "upset_score": false,
+        "upset_half_full": false,
+        "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
       }
     },
     "760470": {
@@ -2458,9 +2502,53 @@
             "平负": 4.98,
             "平平": 4.33,
             "负负": 3.8
+          },
+          "upset_scores": {
+            "1-0": 7.06,
+            "2-2": 17.74
+          },
+          "upset_half_full": {
+            "胜胜": 7.89,
+            "负胜": 14.29
           }
         },
-        "analysis": "两队差距有限，美国略有上风，但首球和定位球将显著改变比赛走势。客队略有上风，主队主场动力可能制造变数，平局可防。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+        "analysis": "两队差距有限，美国略有上风，但首球和定位球将显著改变比赛走势。客队略有上风，主队主场动力可能制造变数，平局可防。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。",
+        "upset_scores": [
+          "1-0",
+          "2-2"
+        ],
+        "upset_score_pairs": [
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "upset_half_full": [
+          "胜胜",
+          "负胜"
+        ]
+      },
+      "completed": true,
+      "actual": {
+        "home_score": 3,
+        "away_score": 2,
+        "score": "3-2",
+        "outcome": "主胜",
+        "status": "Full Time",
+        "half_time_score": "2-1",
+        "half_full": "胜胜"
+      },
+      "hit": {
+        "exact_score": false,
+        "outcome": false,
+        "half_full": false,
+        "upset_score": false,
+        "upset_half_full": true,
+        "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
       }
     },
     "760475": {
@@ -2472,7 +2560,7 @@
       "home_zh": "挪威",
       "away_zh": "法国",
       "title": "挪威 vs 法国",
-      "predicted_at": "2026-06-26T09:09:03.047679+08:00",
+      "predicted_at": "2026-06-26T23:44:07.526922+08:00",
       "prediction": {
         "match_id": "760475",
         "generated_for_date": "2026-06-27",
@@ -2565,6 +2653,24 @@
           }
         },
         "analysis": "法国整体实力、阵地推进和替补深度明显占优，挪威需要高效反击才能制造变数。客队整体更强，但在中立/主场氛围下主队会拼死防守，需防低比分意外。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+      },
+      "completed": true,
+      "actual": {
+        "home_score": 1,
+        "away_score": 4,
+        "score": "1-4",
+        "outcome": "客胜",
+        "status": "Full Time",
+        "half_time_score": "1-3",
+        "half_full": "负负"
+      },
+      "hit": {
+        "exact_score": false,
+        "outcome": true,
+        "half_full": true,
+        "upset_score": false,
+        "upset_half_full": false,
+        "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
       }
     },
     "760474": {
@@ -2576,7 +2682,7 @@
       "home_zh": "塞内加尔",
       "away_zh": "伊拉克",
       "title": "塞内加尔 vs 伊拉克",
-      "predicted_at": "2026-06-26T09:09:03.047679+08:00",
+      "predicted_at": "2026-06-26T23:44:07.526922+08:00",
       "prediction": {
         "match_id": "760474",
         "generated_for_date": "2026-06-27",
@@ -2669,6 +2775,24 @@
           }
         },
         "analysis": "塞内加尔整体实力、阵地推进和替补深度明显占优，伊拉克需要高效反击才能制造变数。主队整体实力占优明显，但世界杯氛围下弱队防守投入度高，首球关键。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+      },
+      "completed": true,
+      "actual": {
+        "home_score": 5,
+        "away_score": 0,
+        "score": "5-0",
+        "outcome": "主胜",
+        "status": "Full Time",
+        "half_time_score": "1-0",
+        "half_full": "胜胜"
+      },
+      "hit": {
+        "exact_score": false,
+        "outcome": true,
+        "half_full": true,
+        "upset_score": false,
+        "upset_half_full": false,
+        "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
       }
     },
     "760478": {
@@ -2680,7 +2804,7 @@
       "home_zh": "佛得角",
       "away_zh": "沙特阿拉伯",
       "title": "佛得角 vs 沙特阿拉伯",
-      "predicted_at": "2026-06-26T09:09:03.047679+08:00",
+      "predicted_at": "2026-06-26T23:44:07.526922+08:00",
       "prediction": {
         "match_id": "760478",
         "generated_for_date": "2026-06-27",
@@ -2773,6 +2897,24 @@
           }
         },
         "analysis": "两队实力几乎相当，比赛更可能由临场效率、定位球和换人质量决定。两队实力几乎相当，首球与定位球将主导走势，低比分平局概率最高。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+      },
+      "completed": true,
+      "actual": {
+        "home_score": 0,
+        "away_score": 0,
+        "score": "0-0",
+        "outcome": "平",
+        "status": "Full Time",
+        "half_time_score": "0-0",
+        "half_full": "平平"
+      },
+      "hit": {
+        "exact_score": true,
+        "outcome": true,
+        "half_full": true,
+        "upset_score": false,
+        "upset_half_full": false,
+        "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
       }
     },
     "760479": {
@@ -2784,7 +2926,7 @@
       "home_zh": "乌拉圭",
       "away_zh": "西班牙",
       "title": "乌拉圭 vs 西班牙",
-      "predicted_at": "2026-06-26T09:09:03.047679+08:00",
+      "predicted_at": "2026-06-26T23:44:07.526922+08:00",
       "prediction": {
         "match_id": "760479",
         "generated_for_date": "2026-06-27",
@@ -2871,6 +3013,24 @@
           }
         },
         "analysis": "西班牙略占上风，但乌拉圭具备通过防守密度和转换制造麻烦的空间。客队整体更稳，但杯赛小组赛节奏可能偏谨慎。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+      },
+      "completed": true,
+      "actual": {
+        "home_score": 0,
+        "away_score": 1,
+        "score": "0-1",
+        "outcome": "客胜",
+        "status": "Full Time",
+        "half_time_score": "0-1",
+        "half_full": "负负"
+      },
+      "hit": {
+        "exact_score": true,
+        "outcome": true,
+        "half_full": true,
+        "upset_score": false,
+        "upset_half_full": false,
+        "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
       }
     },
     "760476": {
@@ -2882,7 +3042,7 @@
       "home_zh": "埃及",
       "away_zh": "伊朗",
       "title": "埃及 vs 伊朗",
-      "predicted_at": "2026-06-26T09:09:03.047679+08:00",
+      "predicted_at": "2026-06-26T23:44:07.526922+08:00",
       "prediction": {
         "match_id": "760476",
         "generated_for_date": "2026-06-27",
@@ -2975,6 +3135,24 @@
           }
         },
         "analysis": "两队实力几乎相当，比赛更可能由临场效率、定位球和换人质量决定。两队实力几乎相当，首球与定位球将主导走势，低比分平局概率最高。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+      },
+      "completed": true,
+      "actual": {
+        "home_score": 1,
+        "away_score": 1,
+        "score": "1-1",
+        "outcome": "平",
+        "status": "Full Time",
+        "half_time_score": "1-1",
+        "half_full": "平平"
+      },
+      "hit": {
+        "exact_score": true,
+        "outcome": true,
+        "half_full": true,
+        "upset_score": false,
+        "upset_half_full": false,
+        "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
       }
     },
     "760477": {
@@ -2986,7 +3164,7 @@
       "home_zh": "新西兰",
       "away_zh": "比利时",
       "title": "新西兰 vs 比利时",
-      "predicted_at": "2026-06-26T09:09:03.047679+08:00",
+      "predicted_at": "2026-06-26T23:44:07.526922+08:00",
       "prediction": {
         "match_id": "760477",
         "generated_for_date": "2026-06-27",
@@ -3079,6 +3257,930 @@
           }
         },
         "analysis": "比利时整体实力、阵地推进和替补深度明显占优，新西兰需要高效反击才能制造变数。客队整体更强，但在中立/主场氛围下主队会拼死防守，需防低比分意外。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+      },
+      "completed": true,
+      "actual": {
+        "home_score": 1,
+        "away_score": 5,
+        "score": "1-5",
+        "outcome": "客胜",
+        "status": "Full Time",
+        "half_time_score": "0-1",
+        "half_full": "负负"
+      },
+      "hit": {
+        "exact_score": false,
+        "outcome": true,
+        "half_full": true,
+        "upset_score": false,
+        "upset_half_full": false,
+        "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
+      }
+    },
+    "760480": {
+      "match_id": "760480",
+      "date_bj": "2026-06-28T05:00:00+08:00",
+      "date": "2026-06-28",
+      "home": "Croatia",
+      "away": "Ghana",
+      "home_zh": "克罗地亚",
+      "away_zh": "加纳",
+      "title": "克罗地亚 vs 加纳",
+      "predicted_at": "2026-06-27T22:28:32.897451+08:00",
+      "prediction": {
+        "match_id": "760480",
+        "generated_for_date": "2026-06-28",
+        "tendency": "主胜",
+        "primary_outcome": "主胜",
+        "scores": [
+          "2-0",
+          "3-1",
+          "2-1",
+          "1-0"
+        ],
+        "score_pairs": [
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "upset_scores": [
+          "1-1",
+          "0-1"
+        ],
+        "upset_score_pairs": [
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "half_full": [
+          "胜胜",
+          "平胜",
+          "胜平",
+          "平平"
+        ],
+        "upset_half_full": [
+          "平负",
+          "负负"
+        ],
+        "half_full_pairs": [
+          [
+            "主胜",
+            "主胜"
+          ],
+          [
+            "平",
+            "主胜"
+          ],
+          [
+            "主胜",
+            "平"
+          ],
+          [
+            "平",
+            "平"
+          ]
+        ],
+        "odds": {
+          "source": "模型参考赔付系数（按体彩玩法格式推算，非体彩官方实际赔率）",
+          "outcome": {
+            "胜": 1.31,
+            "平": 3.92,
+            "负": 9.66
+          },
+          "outcome_pick": {
+            "label": "胜",
+            "odds": 1.31
+          },
+          "scores": {
+            "2-0": 5.97,
+            "3-1": 14.7,
+            "2-1": 8.67,
+            "1-0": 5.28
+          },
+          "upset_scores": {
+            "1-1": 7.67,
+            "0-1": 13.58
+          },
+          "half_full": {
+            "胜胜": 3.2,
+            "平胜": 3.54,
+            "胜平": 14.03,
+            "平平": 5.83
+          },
+          "upset_half_full": {
+            "平负": 26.14,
+            "负负": 48.69
+          }
+        },
+        "analysis": "克罗地亚整体实力、阵地推进和替补深度明显占优，加纳需要高效反击才能制造变数。主队整体实力占优明显，但世界杯氛围下弱队防守投入度高，首球关键。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+      },
+      "completed": true,
+      "actual": {
+        "home_score": 2,
+        "away_score": 1,
+        "score": "2-1",
+        "outcome": "主胜",
+        "status": "Full Time",
+        "half_time_score": "1-0",
+        "half_full": "胜胜"
+      },
+      "hit": {
+        "exact_score": true,
+        "outcome": true,
+        "half_full": true,
+        "upset_score": false,
+        "upset_half_full": false,
+        "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
+      }
+    },
+    "760485": {
+      "match_id": "760485",
+      "date_bj": "2026-06-28T05:00:00+08:00",
+      "date": "2026-06-28",
+      "home": "Panama",
+      "away": "England",
+      "home_zh": "巴拿马",
+      "away_zh": "英格兰",
+      "title": "巴拿马 vs 英格兰",
+      "predicted_at": "2026-06-27T22:28:32.897451+08:00",
+      "prediction": {
+        "match_id": "760485",
+        "generated_for_date": "2026-06-28",
+        "tendency": "客胜",
+        "primary_outcome": "客胜",
+        "scores": [
+          "0-3",
+          "0-2",
+          "1-3",
+          "0-4"
+        ],
+        "score_pairs": [
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            0,
+            4
+          ]
+        ],
+        "upset_scores": [
+          "1-1",
+          "1-0"
+        ],
+        "upset_score_pairs": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "half_full": [
+          "负负",
+          "平负",
+          "负平",
+          "平平"
+        ],
+        "upset_half_full": [
+          "平胜",
+          "胜胜"
+        ],
+        "half_full_pairs": [
+          [
+            "客胜",
+            "客胜"
+          ],
+          [
+            "平",
+            "客胜"
+          ],
+          [
+            "客胜",
+            "平"
+          ],
+          [
+            "平",
+            "平"
+          ]
+        ],
+        "odds": {
+          "source": "模型参考赔付系数（按体彩玩法格式推算，非体彩官方实际赔率）",
+          "outcome": {
+            "胜": 12,
+            "平": 4.55,
+            "负": 1.18
+          },
+          "outcome_pick": {
+            "label": "负",
+            "odds": 1.18
+          },
+          "scores": {
+            "0-3": 9.46,
+            "0-2": 5.26,
+            "1-3": 17.35,
+            "0-4": 22.68
+          },
+          "upset_scores": {
+            "1-1": 8.05,
+            "1-0": 13.42
+          },
+          "half_full": {
+            "负负": 3.2,
+            "平负": 3.32,
+            "负平": 15.58,
+            "平平": 7.14
+          },
+          "upset_half_full": {
+            "平胜": 66.64,
+            "胜胜": 120
+          }
+        },
+        "analysis": "英格兰实力大幅领先，技术、体系和阵容深度全面压制巴拿马。客队实力大幅领先，高比分客胜概率较高，主队难以组织有效进攻。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+      },
+      "completed": true,
+      "actual": {
+        "home_score": 0,
+        "away_score": 2,
+        "score": "0-2",
+        "outcome": "客胜",
+        "status": "Full Time",
+        "half_time_score": "0-0",
+        "half_full": "平负"
+      },
+      "hit": {
+        "exact_score": true,
+        "outcome": true,
+        "half_full": true,
+        "upset_score": false,
+        "upset_half_full": false,
+        "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
+      }
+    },
+    "760481": {
+      "match_id": "760481",
+      "date_bj": "2026-06-28T07:30:00+08:00",
+      "date": "2026-06-28",
+      "home": "Colombia",
+      "away": "Portugal",
+      "home_zh": "哥伦比亚",
+      "away_zh": "葡萄牙",
+      "title": "哥伦比亚 vs 葡萄牙",
+      "predicted_at": "2026-06-27T22:28:32.897451+08:00",
+      "prediction": {
+        "match_id": "760481",
+        "generated_for_date": "2026-06-28",
+        "tendency": "客胜，防平",
+        "primary_outcome": "客胜",
+        "scores": [
+          "1-2",
+          "0-1",
+          "1-1",
+          "0-0"
+        ],
+        "score_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "upset_scores": [
+          "2-1"
+        ],
+        "upset_score_pairs": [
+          [
+            2,
+            1
+          ]
+        ],
+        "half_full": [
+          "平负",
+          "负负",
+          "平平",
+          "负平"
+        ],
+        "upset_half_full": [
+          "胜胜",
+          "负胜"
+        ],
+        "half_full_pairs": [
+          [
+            "平",
+            "客胜"
+          ],
+          [
+            "客胜",
+            "客胜"
+          ],
+          [
+            "平",
+            "平"
+          ],
+          [
+            "客胜",
+            "平"
+          ]
+        ],
+        "odds": {
+          "source": "模型参考赔付系数（按体彩玩法格式推算，非体彩官方实际赔率）",
+          "outcome": {
+            "胜": 4.05,
+            "平": 3.38,
+            "负": 1.72
+          },
+          "outcome_pick": {
+            "label": "负",
+            "odds": 1.72
+          },
+          "scores": {
+            "1-2": 9.75,
+            "0-1": 6.51,
+            "1-1": 6.08,
+            "0-0": 8.12
+          },
+          "upset_scores": {
+            "2-1": 11.37
+          },
+          "half_full": {
+            "平负": 4.31,
+            "负负": 3.2,
+            "平平": 4.66,
+            "负平": 13.97
+          },
+          "upset_half_full": {
+            "胜胜": 12.37,
+            "负胜": 16.73
+          }
+        },
+        "analysis": "葡萄牙略占上风，但哥伦比亚具备通过防守密度和转换制造麻烦的空间。客队整体更稳，但杯赛小组赛节奏可能偏谨慎。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+      },
+      "completed": true,
+      "actual": {
+        "home_score": 0,
+        "away_score": 0,
+        "score": "0-0",
+        "outcome": "平",
+        "status": "Full Time",
+        "half_time_score": "0-0",
+        "half_full": "平平"
+      },
+      "hit": {
+        "exact_score": true,
+        "outcome": false,
+        "half_full": true,
+        "upset_score": false,
+        "upset_half_full": false,
+        "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
+      }
+    },
+    "760482": {
+      "match_id": "760482",
+      "date_bj": "2026-06-28T07:30:00+08:00",
+      "date": "2026-06-28",
+      "home": "Congo DR",
+      "away": "Uzbekistan",
+      "home_zh": "刚果（金）",
+      "away_zh": "乌兹别克斯坦",
+      "title": "刚果（金） vs 乌兹别克斯坦",
+      "predicted_at": "2026-06-27T22:28:32.897451+08:00",
+      "prediction": {
+        "match_id": "760482",
+        "generated_for_date": "2026-06-28",
+        "tendency": "主胜，防平",
+        "primary_outcome": "主胜",
+        "scores": [
+          "2-1",
+          "1-0",
+          "1-1",
+          "0-0"
+        ],
+        "score_pairs": [
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "upset_scores": [
+          "1-2"
+        ],
+        "upset_score_pairs": [
+          [
+            1,
+            2
+          ]
+        ],
+        "half_full": [
+          "平胜",
+          "胜胜",
+          "平平",
+          "胜平"
+        ],
+        "upset_half_full": [
+          "负负",
+          "胜负"
+        ],
+        "half_full_pairs": [
+          [
+            "平",
+            "主胜"
+          ],
+          [
+            "主胜",
+            "主胜"
+          ],
+          [
+            "平",
+            "平"
+          ],
+          [
+            "主胜",
+            "平"
+          ]
+        ],
+        "odds": {
+          "source": "模型参考赔付系数（按体彩玩法格式推算，非体彩官方实际赔率）",
+          "outcome": {
+            "胜": 1.81,
+            "平": 3.33,
+            "负": 3.7
+          },
+          "outcome_pick": {
+            "label": "胜",
+            "odds": 1.81
+          },
+          "scores": {
+            "2-1": 8.82,
+            "1-0": 6.03,
+            "1-1": 6.42,
+            "0-0": 8.77
+          },
+          "upset_scores": {
+            "1-2": 13.65
+          },
+          "half_full": {
+            "平胜": 4.5,
+            "胜胜": 3.2,
+            "平平": 4.54,
+            "胜平": 14.16
+          },
+          "upset_half_full": {
+            "负负": 10.58,
+            "胜负": 15.74
+          }
+        },
+        "analysis": "刚果（金）略占上风，但乌兹别克斯坦具备通过防守密度和转换制造麻烦的空间。主队纸面与节奏略优，平局风险来自打不开局面。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+      },
+      "completed": true,
+      "actual": {
+        "home_score": 3,
+        "away_score": 1,
+        "score": "3-1",
+        "outcome": "主胜",
+        "status": "Full Time",
+        "half_time_score": "0-1",
+        "half_full": "负胜"
+      },
+      "hit": {
+        "exact_score": false,
+        "outcome": true,
+        "half_full": false,
+        "upset_score": false,
+        "upset_half_full": false,
+        "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
+      }
+    },
+    "760484": {
+      "match_id": "760484",
+      "date_bj": "2026-06-28T10:00:00+08:00",
+      "date": "2026-06-28",
+      "home": "Algeria",
+      "away": "Austria",
+      "home_zh": "阿尔及利亚",
+      "away_zh": "奥地利",
+      "title": "阿尔及利亚 vs 奥地利",
+      "predicted_at": "2026-06-27T22:28:32.897451+08:00",
+      "prediction": {
+        "match_id": "760484",
+        "generated_for_date": "2026-06-28",
+        "tendency": "平局倾向，双方不败均可防",
+        "primary_outcome": "平",
+        "scores": [
+          "1-1",
+          "0-0",
+          "1-0",
+          "2-2"
+        ],
+        "score_pairs": [
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "upset_scores": [
+          "0-1",
+          "1-2"
+        ],
+        "upset_score_pairs": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "half_full": [
+          "平平",
+          "平胜",
+          "胜平",
+          "平负"
+        ],
+        "upset_half_full": [
+          "负胜"
+        ],
+        "half_full_pairs": [
+          [
+            "平",
+            "平"
+          ],
+          [
+            "平",
+            "主胜"
+          ],
+          [
+            "主胜",
+            "平"
+          ],
+          [
+            "平",
+            "客胜"
+          ]
+        ],
+        "odds": {
+          "source": "模型参考赔付系数（按体彩玩法格式推算，非体彩官方实际赔率）",
+          "outcome": {
+            "胜": 2.68,
+            "平": 3.12,
+            "负": 2.33
+          },
+          "outcome_pick": {
+            "label": "平",
+            "odds": 3.12
+          },
+          "scores": {
+            "1-1": 6.1,
+            "0-0": 8.41,
+            "1-0": 6.76,
+            "2-2": 17.69
+          },
+          "upset_scores": {
+            "0-1": 7.59,
+            "1-2": 11.01
+          },
+          "half_full": {
+            "平平": 4.16,
+            "平胜": 6.51,
+            "胜平": 17.28,
+            "平负": 5.65
+          },
+          "upset_half_full": {
+            "负胜": 13.45
+          }
+        },
+        "analysis": "两队实力几乎相当，比赛更可能由临场效率、定位球和换人质量决定。两队实力几乎相当，首球与定位球将主导走势，低比分平局概率最高。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+      },
+      "completed": true,
+      "actual": {
+        "home_score": 3,
+        "away_score": 3,
+        "score": "3-3",
+        "outcome": "平",
+        "status": "Full Time",
+        "half_time_score": "1-1",
+        "half_full": "平平"
+      },
+      "hit": {
+        "exact_score": false,
+        "outcome": true,
+        "half_full": true,
+        "upset_score": false,
+        "upset_half_full": false,
+        "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
+      }
+    },
+    "760483": {
+      "match_id": "760483",
+      "date_bj": "2026-06-28T10:00:00+08:00",
+      "date": "2026-06-28",
+      "home": "Jordan",
+      "away": "Argentina",
+      "home_zh": "约旦",
+      "away_zh": "阿根廷",
+      "title": "约旦 vs 阿根廷",
+      "predicted_at": "2026-06-27T22:28:32.897451+08:00",
+      "prediction": {
+        "match_id": "760483",
+        "generated_for_date": "2026-06-28",
+        "tendency": "客胜",
+        "primary_outcome": "客胜",
+        "scores": [
+          "0-3",
+          "0-2",
+          "1-3",
+          "0-4"
+        ],
+        "score_pairs": [
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            0,
+            4
+          ]
+        ],
+        "upset_scores": [
+          "1-1",
+          "1-0"
+        ],
+        "upset_score_pairs": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "half_full": [
+          "负负",
+          "平负",
+          "负平",
+          "平平"
+        ],
+        "upset_half_full": [
+          "平胜",
+          "胜胜"
+        ],
+        "half_full_pairs": [
+          [
+            "客胜",
+            "客胜"
+          ],
+          [
+            "平",
+            "客胜"
+          ],
+          [
+            "客胜",
+            "平"
+          ],
+          [
+            "平",
+            "平"
+          ]
+        ],
+        "odds": {
+          "source": "模型参考赔付系数（按体彩玩法格式推算，非体彩官方实际赔率）",
+          "outcome": {
+            "胜": 12,
+            "平": 5.28,
+            "负": 1.18
+          },
+          "outcome_pick": {
+            "label": "负",
+            "odds": 1.18
+          },
+          "scores": {
+            "0-3": 7.63,
+            "0-2": 4.67,
+            "1-3": 16.95,
+            "0-4": 16.62
+          },
+          "upset_scores": {
+            "1-1": 9.52,
+            "1-0": 17.49
+          },
+          "half_full": {
+            "负负": 3.2,
+            "平负": 3.23,
+            "负平": 17.77,
+            "平平": 8.57
+          },
+          "upset_half_full": {
+            "平胜": 120,
+            "胜胜": 120
+          }
+        },
+        "analysis": "阿根廷实力大幅领先，技术、体系和阵容深度全面压制约旦。客队实力大幅领先，高比分客胜概率较高，主队难以组织有效进攻。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
+      },
+      "completed": true,
+      "actual": {
+        "home_score": 1,
+        "away_score": 3,
+        "score": "1-3",
+        "outcome": "客胜",
+        "status": "Full Time",
+        "half_time_score": "0-2",
+        "half_full": "负负"
+      },
+      "hit": {
+        "exact_score": true,
+        "outcome": true,
+        "half_full": true,
+        "upset_score": false,
+        "upset_half_full": false,
+        "half_full_note": "已从 ESPN summary linescores 读取半场比分。"
+      }
+    },
+    "760486": {
+      "match_id": "760486",
+      "date_bj": "2026-06-29T03:00:00+08:00",
+      "date": "2026-06-29",
+      "home": "South Africa",
+      "away": "Canada",
+      "home_zh": "南非",
+      "away_zh": "加拿大",
+      "title": "南非 vs 加拿大",
+      "predicted_at": "2026-06-28T12:50:57.123454+08:00",
+      "prediction": {
+        "match_id": "760486",
+        "generated_for_date": "2026-06-29",
+        "tendency": "客胜，防平",
+        "primary_outcome": "客胜",
+        "scores": [
+          "0-1",
+          "1-2",
+          "1-1",
+          "0-0"
+        ],
+        "score_pairs": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "upset_scores": [
+          "1-0",
+          "2-2"
+        ],
+        "upset_score_pairs": [
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "half_full": [
+          "平负",
+          "平平",
+          "负负",
+          "负平"
+        ],
+        "upset_half_full": [
+          "胜胜",
+          "负胜"
+        ],
+        "half_full_pairs": [
+          [
+            "平",
+            "客胜"
+          ],
+          [
+            "平",
+            "平"
+          ],
+          [
+            "客胜",
+            "客胜"
+          ],
+          [
+            "客胜",
+            "平"
+          ]
+        ],
+        "odds": {
+          "source": "模型参考赔付系数（按体彩玩法格式推算，非体彩官方实际赔率）",
+          "outcome": {
+            "胜": 3.12,
+            "平": 3.22,
+            "负": 2.03
+          },
+          "outcome_pick": {
+            "label": "负",
+            "odds": 2.03
+          },
+          "scores": {
+            "0-1": 7.13,
+            "1-2": 10.42,
+            "1-1": 6.07,
+            "0-0": 8.3
+          },
+          "upset_scores": {
+            "1-0": 7.06,
+            "2-2": 17.74
+          },
+          "half_full": {
+            "平负": 4.98,
+            "平平": 4.33,
+            "负负": 3.8,
+            "负平": 14.75
+          },
+          "upset_half_full": {
+            "胜胜": 7.89,
+            "负胜": 14.29
+          }
+        },
+        "analysis": "两队差距有限，加拿大略有上风，但首球和定位球将显著改变比赛走势。客队略有上风，主队主场动力可能制造变数，平局可防。 预测仅按赛前公开赛程与基础强弱模型生成，临近开赛请结合首发、伤停和天气。"
       }
     }
   }

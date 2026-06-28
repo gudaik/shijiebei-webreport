@@ -26,6 +26,15 @@ try {
 }
 
 try {
+  $BridgeScript = "/mnt/c/nginx-1.24.0/html/worldcup2/web/refresh_bridge.py"
+  $BridgeCmd = "cd /mnt/c/nginx-1.24.0/html/worldcup2 && if ! ss -ltn 2>/dev/null | grep -q ':8765 '; then nohup python3 '$BridgeScript' >/mnt/c/nginx-1.24.0/html/worldcup2/logs/refresh_bridge_stdout.log 2>&1 & fi"
+  Log "Ensuring refresh bridge is running on 127.0.0.1:8765"
+  Start-Process -FilePath $WslExe -ArgumentList @("-d", "Ubuntu", "--", "bash", "-lc", $BridgeCmd) -WindowStyle Hidden | Out-Null
+} catch {
+  Log "ERROR starting refresh bridge: $($_.Exception.Message)"
+}
+
+try {
   $NginxRoot = "C:\nginx-1.24.0"
   $NginxExe = Join-Path $NginxRoot "nginx.exe"
   $Running = Get-Process nginx -ErrorAction SilentlyContinue

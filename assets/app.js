@@ -1,4 +1,4 @@
-const state = { data: null, allMatches: [], exporting: false, autoRefreshTimer: null, chartInstance: null, countdownTimer: null };
+const state = { data: null, allMatches: [], exporting: false, autoRefreshTimer: null, chartInstance: null, betChartInstance: null, countdownTimer: null };
 const $ = (id) => document.getElementById(id);
 
 function fmtDateTime(iso){
@@ -114,11 +114,8 @@ function halfFullScoreTable(r){
   </div>`;
 }
 function setupAutoRefresh(shouldRefresh){
-  if(shouldRefresh && !state.autoRefreshTimer){
-    state.autoRefreshTimer = setInterval(()=>load().catch(()=>{}), 5 * 60 * 1000);
-  }else if(!shouldRefresh && state.autoRefreshTimer){
-    clearInterval(state.autoRefreshTimer); state.autoRefreshTimer = null;
-  }
+  // 后台定时任务已取消：页面不再每 5 分钟轮询，只在用户点击“生成最新数据并刷新”时重新生成。
+  if(state.autoRefreshTimer){ clearInterval(state.autoRefreshTimer); state.autoRefreshTimer = null; }
 }
 function renderLiveStatsNotice(data){
   const st = data.stats || {}; const today = data.dates?.today; const yesterday = data.dates?.yesterday;
@@ -131,7 +128,7 @@ function renderLiveStatsNotice(data){
   const names = pendingToday.slice(0,3).map(r => `${r.time || ''} ${r.title || ''}`.trim()).filter(Boolean);
   const extra = pendingToday.length > 3 ? ` 等 ${pendingToday.length} 场` : names.join('、');
   if(todayTotal && pendingToday.length){
-    $('liveStatsNotice').innerHTML = `<div class="live-dot"></div><div><strong>${today} 的预测赛果正在结算中</strong><p>当前已出结果 ${todayCompleted}/${todayTotal} 场，还有 ${pendingToday.length} 场没出结果${extra ? `：${esc(extra)}` : ''}。页面会每 5 分钟自动刷新；后台数据更新后，这里会自动纳入最新完赛结果。</p></div>`;
+    $('liveStatsNotice').innerHTML = `<div class="live-dot"></div><div><strong>${today} 的预测赛果正在结算中</strong><p>当前已出结果 ${todayCompleted}/${todayTotal} 场，还有 ${pendingToday.length} 场没出结果${extra ? `：${esc(extra)}` : ''}。后台定时刷新已取消；需要最新结果时，请点击页面右上角“生成最新数据并刷新”。</p></div>`;
     setupAutoRefresh(true);
   }else if(todayTotal){
     $('liveStatsNotice').innerHTML = `<div class="live-dot done"></div><div><strong>${today} 的预测赛果已全部结算</strong><p>今日 ${todayCompleted}/${todayTotal} 场已出结果，命中率已按最新完赛比分统计。</p></div>`;
@@ -215,16 +212,11 @@ function renderPredictions(data){
     </div>
     <div class="badge">${esc(m.status)}</div>
   </div>
-  <p class="tendency">胜平负倾向：${esc(p.tendency)} ${oddsBadge(odds.outcome_pick?.odds)}</p>
-  <div class="sporttery-odds-block">
-    <div class="odds-title">胜平负模型参考系数（体彩玩法格式）</div>
-    <div class="pill-row odds-row">${['胜','平','负'].map(k=>oddsPill(k, odds.outcome?.[k])).join('')}</div>
-    <div class="odds-source">${esc(odds.source || '模型参考赔付系数，非体彩官方实际赔率')}</div>
-  </div>
-  <div class="label">3个比分预测</div><div class="pill-row">${p.scores.map(x=>oddsPill(x, odds.scores?.[x])).join('')}</div>
-  ${Array.isArray(p.upset_scores) && p.upset_scores.length ? `<div class="upset-score-block"><div class="label">防爆冷比分小选项</div><div class="pill-row upset-row">${p.upset_scores.map(x=>oddsPill(x, odds.upset_scores?.[x])).join('')}</div><div class="upset-note">小注防冷：用于补平局/反向小胜等冷门比分，不改变主预测方向。</div></div>` : ''}
-  <div class="label">3个半全场预测</div><div class="pill-row hf">${p.half_full.map(x=>oddsPill(x, odds.half_full?.[x])).join('')}</div>
-  ${Array.isArray(p.upset_half_full) && p.upset_half_full.length ? `<div class="upset-score-block upset-hf-block"><div class="label">防爆冷半全场小选项</div><div class="pill-row upset-row hf">${p.upset_half_full.map(x=>oddsPill(x, odds.upset_half_full?.[x])).join('')}</div><div class="upset-note">小注防冷：用于补慢热、反转或弱队爆冷走势，不改变主半全场预测方向。</div></div>` : ''}
+  <p class="tendency">胜平负倾向：${esc(p.tendency)}</p>
+  <div class="label">${(p.scores||[]).length || 4}个比分预测</div><div class="pill-row">${(p.scores||[]).map(x=>oddsPill(x)).join('')}</div>
+  ${Array.isArray(p.upset_scores) && p.upset_scores.length ? `<div class="upset-score-block"><div class="label">防爆冷比分小选项</div><div class="pill-row upset-row">${p.upset_scores.map(x=>oddsPill(x)).join('')}</div><div class="upset-note">小注防冷：用于补平局/反向小胜等冷门比分，不改变主预测方向。</div></div>` : ''}
+  <div class="label">${(p.half_full||[]).length || 4}个半全场预测</div><div class="pill-row hf">${(p.half_full||[]).map(x=>oddsPill(x)).join('')}</div>
+  ${Array.isArray(p.upset_half_full) && p.upset_half_full.length ? `<div class="upset-score-block upset-hf-block"><div class="label">防爆冷半全场小选项</div><div class="pill-row upset-row hf">${p.upset_half_full.map(x=>oddsPill(x)).join('')}</div><div class="upset-note">小注防冷：用于补慢热、反转或弱队爆冷走势，不改变主半全场预测方向。</div></div>` : ''}
   <p class="analysis">${esc(p.analysis)}</p>
   <a href="${esc(m.link)}" target="_blank" rel="noopener">ESPN 比赛页</a>
 </article>`;
@@ -248,9 +240,9 @@ function renderUpsets(data){
     return `<article class="upset-card">
       <div class="upset-card-head"><span>第 ${i+1} 场 · ${fmtDateTime(m.date_bj)}</span><b>${esc(m.home_zh)} vs ${esc(m.away_zh)}</b></div>
       <div class="upset-mainline">主方向：${esc(p.tendency || p.primary_outcome || '待')}</div>
-      <div class="upset-pick-block"><div class="label">防爆冷比分</div><div class="pill-row upset-row">${(p.upset_scores||[]).map(x=>oddsPill(x, odds.upset_scores?.[x])).join('') || '<span class="score-chip muted">暂无</span>'}</div></div>
-      <div class="upset-pick-block"><div class="label">防爆冷半全场</div><div class="pill-row upset-row hf">${(p.upset_half_full||[]).map(x=>oddsPill(x, odds.upset_half_full?.[x])).join('') || '<span class="score-chip muted">暂无</span>'}</div></div>
-      <div class="upset-risk-line">最高参考系数：比分 ${fmtOdds(scoreMax)} · 半全场 ${fmtOdds(hfMax)}；建议只作小注防冷观察。</div>
+      <div class="upset-pick-block"><div class="label">防爆冷比分</div><div class="pill-row upset-row">${(p.upset_scores||[]).map(x=>oddsPill(x)).join('') || '<span class="score-chip muted">暂无</span>'}</div></div>
+      <div class="upset-pick-block"><div class="label">防爆冷半全场</div><div class="pill-row upset-row hf">${(p.upset_half_full||[]).map(x=>oddsPill(x)).join('') || '<span class="score-chip muted">暂无</span>'}</div></div>
+      <div class="upset-risk-line">建议只作小注防冷观察，不改变主预测方向。</div>
     </article>`;
   }).join('') : empty('暂无可展示的爆冷预测。');
   const byDate = (st.by_date || []).slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
@@ -353,6 +345,156 @@ function renderStats(data){
   renderAccuracyChart(data);
 }
 
+function betCategoryLabel(cat){
+  return {main:'主线推荐', upset:'防爆冷推荐', parlay:'串关补充'}[cat] || cat || '未分类';
+}
+function renderBetStats(data){
+  const st = data.bet_stats || {};
+  const cards = $('betStatCards');
+  if(cards){
+    const cat = st.by_category || {}; const typ = st.by_type || {};
+    cards.innerHTML = [
+      ['购买推荐总命中率', pct(st.rate), `${st.hits ?? 0}/${st.settled_total ?? 0}，待结算 ${st.pending_total ?? 0} 项`],
+      ['主线推荐命中率', pct(cat.main?.rate), `${cat.main?.hits ?? 0}/${cat.main?.total ?? 0}`],
+      ['防爆冷推荐命中率', pct(cat.upset?.rate), `${cat.upset?.hits ?? 0}/${cat.upset?.total ?? 0}`],
+      ['胜平负命中率', pct(typ['胜平负']?.rate), `${typ['胜平负']?.hits ?? 0}/${typ['胜平负']?.total ?? 0}`],
+      ['比分推荐命中率', pct(typ['比分']?.rate), `${typ['比分']?.hits ?? 0}/${typ['比分']?.total ?? 0}`],
+      ['半全场命中率', pct(typ['半全场']?.rate), `${typ['半全场']?.hits ?? 0}/${typ['半全场']?.total ?? 0}`],
+    ].map(([label,num,hint])=>`<div class="stat-card"><div class="label">${label}</div><div class="num">${num}</div><div class="hint">${hint}</div></div>`).join('');
+  }
+  const note = $('betStatsNote');
+  if(note) note.textContent = st.note || '每日自动记录购买推荐，完赛后逐项结算命中率。';
+  const rows = (st.by_date || []).slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
+  const bars = $('betDateBars');
+  if(bars){
+    bars.innerHTML = rows.length ? rows.map(d=>`<div class="bar-row rich">
+      <div class="bar-date"><strong>${esc(d.date || '')}</strong><span>${d.total || 0} 项${d.pending ? ` · 待${d.pending}` : ''}</span></div>
+      <div class="bar-metric"><span>总体 ${d.hits || 0}/${d.total || 0}</span><div class="track"><div class="fill outcome" style="width:${d.rate || 0}%"></div></div><b>${d.rate == null ? '待' : `${d.rate}%`}</b></div>
+      <div class="bar-metric"><span>主线 ${d.main?.hits || 0}/${d.main?.total || 0}</span><div class="track"><div class="fill hf-fill" style="width:${d.main?.rate || 0}%"></div></div><b>${d.main?.rate == null ? '待' : `${d.main.rate}%`}</b></div>
+      <div class="bar-metric"><span>防冷 ${d.upset?.hits || 0}/${d.upset?.total || 0}</span><div class="track"><div class="fill score-fill" style="width:${d.upset?.rate || 0}%"></div></div><b>${d.upset?.rate == null ? '待' : `${d.upset.rate}%`}</b></div>
+    </div>`).join('') : empty('暂无购买推荐结算记录；今天起会每天自动记录，完赛后显示趋势。');
+  }
+  const suggestions = $('betSuggestions');
+  if(suggestions){
+    suggestions.innerHTML = (st.suggestions || []).length ? (st.suggestions || []).map(x=>`<div class="match-row"><div class="row-info"><div class="teams">${esc(x)}</div></div></div>`).join('') : empty('样本不足，等待更多购买推荐结算后生成加强建议。');
+  }
+  const recent = $('betRecent');
+  if(recent){
+    recent.innerHTML = renderBetRecentGroups(st.recent || []);
+  }
+  renderBetAccuracyChart(data);
+}
+
+function renderBetRecentGroups(rows){
+  if(!rows.length) return empty('暂无已结算购买推荐。');
+  const dayGroups = {};
+  rows.forEach(c=>{
+    const d = c.record_date || '未分日期';
+    (dayGroups[d] ||= []).push(c);
+  });
+  return Object.entries(dayGroups).sort((a,b)=>String(b[0]).localeCompare(String(a[0]))).map(([date,items])=>{
+    const hits = items.filter(x=>x.hit).length;
+    const matchGroups = groupBetItemsByMatch(items);
+    return `<section class="bet-audit-day match-mode">
+      <div class="bet-audit-day-head">
+        <div><span>购买日</span><strong>${esc(date)}</strong></div>
+        <div class="bet-audit-kpis">
+          <b>场次 ${matchGroups.length}</b>
+          <b>推荐项 ${items.length}</b>
+          <b>命中 ${hits}/${items.length}</b>
+        </div>
+      </div>
+      <div class="bet-match-audit-list">${matchGroups.map(renderBetMatchPanel).join('')}</div>
+    </section>`;
+  }).join('');
+}
+
+function groupBetItemsByMatch(items){
+  const groups = new Map();
+  items.forEach(c=>{
+    if(c.leg_results && c.leg_results.length){
+      const key = `__parlay__${c.title || c.pick || c.id}`;
+      if(!groups.has(key)) groups.set(key, {title:c.title || '串关补充', type:'parlay', items:[]});
+      groups.get(key).items.push(c);
+      return;
+    }
+    const key = c.match_id || c.title || c.id || '未知场次';
+    if(!groups.has(key)) groups.set(key, {title:c.title || '未知场次', type:'match', items:[]});
+    groups.get(key).items.push(c);
+  });
+  return Array.from(groups.values()).sort((a,b)=>{
+    const ap = a.type === 'parlay' ? 1 : 0;
+    const bp = b.type === 'parlay' ? 1 : 0;
+    if(ap !== bp) return ap - bp;
+    return String(a.title).localeCompare(String(b.title), 'zh-CN');
+  });
+}
+
+function renderBetMatchPanel(group){
+  const items = group.items || [];
+  const hits = items.filter(x=>x.hit).length;
+  const first = items[0] || {};
+  const actual = first.actual || {};
+  const isParlay = group.type === 'parlay';
+  const main = items.filter(x=>x.category === 'main');
+  const upset = items.filter(x=>x.category === 'upset');
+  const parlay = items.filter(x=>x.category === 'parlay');
+  const resultText = isParlay ? renderBetLegSummary(first.leg_results || []) : `${esc(actual.score || '—')}${actual.outcome ? ` · ${esc(actual.outcome)}` : ''}${actual.half_full ? ` · 半全场 ${esc(actual.half_full)}` : ''}`;
+  return `<article class="bet-match-audit-panel ${isParlay ? 'parlay' : ''} ${hits ? 'has-hit' : 'no-hit'}">
+    <div class="bet-match-audit-head">
+      <div>
+        <div class="bet-match-audit-eyebrow">${isParlay ? '串关补充' : '单场核对'}</div>
+        <h3>${esc(group.title || '')}</h3>
+      </div>
+      <div class="bet-match-audit-score">
+        <span>实际结果</span>
+        <strong>${resultText}</strong>
+      </div>
+      <div class="bet-match-audit-hit ${hits ? 'ok' : 'bad'}">
+        <span>本场命中</span>
+        <b>${hits}/${items.length}</b>
+      </div>
+    </div>
+    <div class="bet-match-audit-sections">
+      ${renderBetPickSection('主线预测', main, 'main')}
+      ${renderBetPickSection('防爆冷预测', upset, 'upset')}
+      ${renderBetPickSection('串关补充', parlay, 'parlay')}
+    </div>
+  </article>`;
+}
+
+function renderBetPickSection(title, items, kind){
+  if(!items.length) return '';
+  const hits = items.filter(x=>x.hit).length;
+  return `<section class="bet-pick-section ${kind}">
+    <div class="bet-pick-section-head"><strong>${esc(title)}</strong><span>${hits}/${items.length}</span></div>
+    <div class="bet-pick-rows">${items.map(renderBetPickRow).join('')}</div>
+  </section>`;
+}
+
+function renderBetPickRow(c){
+  const hit = c.hit === true;
+  const actual = c.leg_results ? renderBetLegSummary(c.leg_results) : renderBetActualInline(c.actual || {}, c.type);
+  return `<div class="bet-pick-row ${hit ? 'is-hit' : 'is-miss'}">
+    <div class="pick-type">${esc(c.type || c.play || '')}</div>
+    <div class="pick-main"><span>预测</span><b>${esc(c.pick || '')}</b><em>${esc(c.reason || '')}</em></div>
+    <div class="pick-vs">→</div>
+    <div class="pick-actual"><span>命中详情</span><b>${actual}</b></div>
+    <div class="pick-status">${hit ? '✓ 命中' : '× 未中'}</div>
+  </div>`;
+}
+
+function renderBetActualInline(actual, type){
+  if(!actual || (!actual.score && !actual.half_full && !actual.outcome)) return '—';
+  if(type === '胜平负') return esc(actual.outcome || '—');
+  if(type === '半全场') return esc(actual.half_full || '待统计');
+  return `${esc(actual.score || '—')}${actual.half_full ? ` · ${esc(actual.half_full)}` : ''}`;
+}
+
+function renderBetLegSummary(legs){
+  return (legs || []).map(leg=>`<em class="leg ${leg.hit ? 'ok' : 'bad'}">${esc(leg.title || '')} ${esc(leg.pick || '')} ${leg.hit ? '✓' : '×'}</em>`).join('') || '—';
+}
+
 function outcomeShort(pred){
   const raw = String(pred?.primary_outcome || pred?.tendency || '');
   if(raw.includes('客胜')) return '负';
@@ -404,10 +546,10 @@ function candidateOdds(match, type, pick){
   return null;
 }
 function oddsBadge(v){
-  return `<span class="odds-badge">参考系数 ${fmtOdds(v)}</span>`;
+  return '';
 }
 function oddsPill(label, v){
-  return `<span class="pill odds-pill"><span>${esc(label)}</span><b>${fmtOdds(v)}</b></span>`;
+  return `<span class="pill odds-pill"><span>${esc(label)}</span></span>`;
 }
 function estimatedReturn(c){
   const n = Number(c?.odds);
@@ -534,49 +676,53 @@ function allocateBetUnits(totalUnits, candidates){
 const BET_TYPE_CLS = {胜平负:'opt-blue', 比分:'opt-yellow', 半全场:'opt-green'};
 const BET_TYPE_FILL = {胜平负:'outcome', 比分:'score-fill', 半全场:'hf-fill'};
 function unitDots(n){ return n<=6 ? '<span class="udot"></span>'.repeat(n) : `<span class="udot"></span>×${n}`; }
+function isUpsetCandidate(c){ return /防冷|防爆冷/.test(String(c?.pick || '')) || /防冷|爆冷/.test(String(c?.reason || '')); }
 
-// ── 明细面板（色块区分玩法类型）────────────────────────────
+// ── 明细面板（按主线/防爆冷拆分）────────────────────────────
 function groupedBetPanels(plan){
   const singles = plan.filter(c=>c.play === '单关');
   const parlays = plan.filter(c=>c.play !== '单关');
-  const groups = [];
-  singles.forEach(c=>{
-    let g = groups.find(x=>x.title === c.title);
-    if(!g){ g = {title:c.title, matchNo:c.matchNo||'', matchIndex:c.matchIndex??99, rows:[]}; groups.push(g); }
-    g.rows.push(c);
-  });
-  groups.sort((a,b)=>a.matchIndex-b.matchIndex);
-  const matchPanels = groups.map(g=>`<section class="bet-match-panel">
-    <div class="bet-match-head"><span class="bet-match-no">${esc(g.matchNo)}</span><strong>${esc(g.title)}</strong></div>
-    <div class="bet-options">${g.rows.map(c=>`<div class="bet-option ${BET_TYPE_CLS[c.type]||''}">
-      <div class="bet-opt-main">
-        <span class="bet-type">${esc(c.type)}</span>
-        <span class="bet-choice-lg">${esc(c.pick)}</span>
-        ${oddsBadge(c.odds)}
-      </div>
-      <div class="bet-opt-stake">
-        <div class="bet-udots">${unitDots(c.units)}</div>
-        <div class="bet-stake-row"><b>${c.units}</b>注 <span class="bet-yuan">${c.units*2}元</span></div>
-        <div class="bet-return">预估返奖 ${estimatedReturn(c)}元</div>
-      </div>
-    </div>`).join('')}</div>
-  </section>`).join('');
-  const parlayPanel = parlays.length ? `<section class="bet-match-panel parlay-panel">
+  const renderCategory = (title, desc, rows) => {
+    const groups = [];
+    rows.forEach(c=>{
+      let g = groups.find(x=>x.title === c.title);
+      if(!g){ g = {title:c.title, matchNo:c.matchNo||'', matchIndex:c.matchIndex??99, rows:[]}; groups.push(g); }
+      g.rows.push(c);
+    });
+    groups.sort((a,b)=>a.matchIndex-b.matchIndex);
+    if(!groups.length) return '';
+    return `<section class="bet-category"><h3>${title}</h3><p class="section-note">${desc}</p>${groups.map(g=>`<section class="bet-match-panel">
+      <div class="bet-match-head"><span class="bet-match-no">${esc(g.matchNo)}</span><strong>${esc(g.title)}</strong></div>
+      <div class="bet-options">${g.rows.map(c=>`<div class="bet-option ${BET_TYPE_CLS[c.type]||''}">
+        <div class="bet-opt-main">
+          <span class="bet-type">${esc(c.type)}</span>
+          <span class="bet-choice-lg">${esc(c.pick)}</span>
+        </div>
+        <div class="bet-opt-stake">
+          <div class="bet-udots">${unitDots(c.units)}</div>
+          <div class="bet-stake-row"><b>${c.units}</b>注 <span class="bet-yuan">${c.units*2}元</span></div>
+          <div class="bet-return">按预算控制</div>
+        </div>
+      </div>`).join('')}</div>
+    </section>`).join('')}</section>`;
+  };
+  const mainPanels = renderCategory('主线推荐', '跟随胜平负主方向、首选比分和半全场的基础方案。', singles.filter(c=>!isUpsetCandidate(c)));
+  const upsetPanels = renderCategory('防爆冷推荐', '只作为小注防平/防冷门补充，不改变主线判断。', singles.filter(isUpsetCandidate));
+  const parlayPanel = parlays.length ? `<section class="bet-category"><h3>串关补充</h3><p class="section-note">串关风险显著更高，建议小仓位。</p><section class="bet-match-panel parlay-panel">
     <div class="bet-match-head"><span class="bet-match-no">串关</span><strong>过关组合</strong></div>
     <div class="bet-options">${parlays.map(c=>`<div class="bet-option opt-parlay">
       <div class="bet-opt-main">
         <span class="bet-type">${esc(c.play)}</span>
         <span class="bet-choice-lg">${esc(c.pick)}</span>
-        ${oddsBadge(c.odds)}
       </div>
       <div class="bet-opt-stake">
         <div class="bet-udots">${unitDots(c.units)}</div>
         <div class="bet-stake-row"><b>${c.units}</b>注 <span class="bet-yuan">${c.units*2}元</span></div>
-        <div class="bet-return">预估返奖 ${estimatedReturn(c)}元</div>
+        <div class="bet-return">按预算控制</div>
       </div>
     </div>`).join('')}</div>
-  </section>` : '';
-  return matchPanels + parlayPanel;
+  </section></section>` : '';
+  return mainPanels + upsetPanels + parlayPanel;
 }
 
 // ── 一览表（核心：一行=一场比赛，三列=三种玩法）─────────────
@@ -592,7 +738,7 @@ function betQuickTable(plan, matches){
   groups.sort((a,b)=>a.matchIndex-b.matchIndex);
 
   const cell=(c,cls)=>c
-    ? `<td class="qt-cell ${cls}"><div class="qt-pick">${esc(c.pick)} ${oddsBadge(c.odds)}</div><div class="qt-units">${c.units}注·${c.units*2}元 · 预估返奖${estimatedReturn(c)}元</div></td>`
+    ? `<td class="qt-cell ${cls}"><div class="qt-pick">${esc(c.pick)}</div><div class="qt-units">${c.units}注·${c.units*2}元</div></td>`
     : `<td class="qt-cell qt-nil">—</td>`;
 
   const bodyRows = groups.map((g,i)=>{
@@ -609,8 +755,8 @@ function betQuickTable(plan, matches){
   }).join('');
 
   const parlayRows = parlays.map(c=>`<tr class="qt-parlay-row">
-    <td class="qt-match" colspan="3"><span class="qt-parlay-tag">${esc(c.play)}</span>${esc(c.pick)} ${oddsBadge(c.odds)}</td>
-    <td class="qt-cell qt-yellow"><div class="qt-pick">${c.units}注</div><div class="qt-units">预估返奖${estimatedReturn(c)}元</div></td>
+    <td class="qt-match" colspan="3"><span class="qt-parlay-tag">${esc(c.play)}</span>${esc(c.pick)}</td>
+    <td class="qt-cell qt-yellow"><div class="qt-pick">${c.units}注</div><div class="qt-units">串关小注</div></td>
     <td class="qt-sub">${c.units*2}元</td>
   </tr>`).join('');
 
@@ -645,12 +791,12 @@ function longshotHighlights(plan){
     .slice(0,6);
   if(!rows.length) return '';
   return `<article class="panel longshot-panel">
-    <div class="bet-quick-head"><div><h2 style="margin:0">以小博大精选</h2><p class="section-note" style="margin:4px 0 0">按参考系数从当前方案里挑出高回报项，建议小注娱乐，不建议重仓。</p></div></div>
+    <div class="bet-quick-head"><div><h2 style="margin:0">以小博大精选</h2><p class="section-note" style="margin:4px 0 0">从当前方案里挑出比分/半全场/防冷等高风险项，建议小注娱乐，不建议重仓。</p></div></div>
     <div class="longshot-grid">${rows.map(c=>`<div class="longshot-card">
-      <div class="longshot-top"><span>${esc(c.play)}</span>${oddsBadge(c.odds)}</div>
+      <div class="longshot-top"><span>${esc(c.play)}</span><span>小注</span></div>
       <strong>${esc(c.title)}</strong>
       <div class="longshot-pick">${esc(c.type)} · ${esc(c.pick)}</div>
-      <div class="longshot-money">${c.units}注 / ${c.units*2}元 · 预估返奖 ${estimatedReturn(c)}元</div>
+      <div class="longshot-money">${c.units}注 / ${c.units*2}元 · 高风险防冷项</div>
     </div>`).join('')}</div>
   </article>`;
 }
@@ -660,35 +806,45 @@ function buildBetCopyText(plan, budget, spent, cfg, data, modeCfg){
   const date = data?.dates?.prediction_target || '';
   const singles = plan.filter(c=>c.play==='单关');
   const parlays  = plan.filter(c=>c.play!=='单关');
-  const groups = [];
-  singles.forEach(c=>{
-    let g=groups.find(x=>x.title===c.title);
-    if(!g){ g={title:c.title,matchIndex:c.matchIndex??99,rows:[]}; groups.push(g); }
-    g.rows.push(c);
-  });
-  groups.sort((a,b)=>a.matchIndex-b.matchIndex);
+  const groupRows = (rows) => {
+    const groups = [];
+    rows.forEach(c=>{
+      let g=groups.find(x=>x.title===c.title);
+      if(!g){ g={title:c.title,matchIndex:c.matchIndex??99,rows:[]}; groups.push(g); }
+      g.rows.push(c);
+    });
+    return groups.sort((a,b)=>a.matchIndex-b.matchIndex);
+  };
+  const pushGroups = (lines, heading, rows) => {
+    const groups = groupRows(rows);
+    if(!groups.length) return;
+    lines.push('');
+    lines.push(heading);
+    groups.forEach((g,i)=>{
+      lines.push(`${i+1}. ${g.title}`);
+      g.rows.forEach(c=>{
+        const pad = c.type==='半全场'?'  ': c.type.length===3?'    ':'      ';
+        lines.push(`   ${c.type}${pad}${c.pick}   ×${c.units}注/${c.units*2}元`);
+      });
+    });
+  };
   const lines=[
     `🏆 世界杯购买推荐 ${date}`,
     `💰 预算 ${budget}元  策略：${cfg.label} · ${modeCfg?.label || '常规均衡'}  实际分配 ${spent}元`,
-    '',
   ];
-  groups.forEach((g,i)=>{
-    lines.push(`${i+1}. ${g.title}`);
-    g.rows.forEach(c=>{
-      const pad = c.type==='半全场'?'  ': c.type.length===3?'    ':'      ';
-      lines.push(`   ${c.type}${pad}${c.pick} @${fmtOdds(c.odds)}   ×${c.units}注/${c.units*2}元  预估返${estimatedReturn(c)}元`);
-    });
-  });
+  pushGroups(lines, '✅ 主线预测', singles.filter(c=>!isUpsetCandidate(c)));
+  pushGroups(lines, '🧊 防爆冷预测（小注补充）', singles.filter(isUpsetCandidate));
   if(parlays.length){
     lines.push('');
-    lines.push('🔗 过关组合');
-    parlays.forEach(c=>lines.push(`   ${c.play}：${c.pick} @${fmtOdds(c.odds)}   ×${c.units}注/${c.units*2}元  预估返${estimatedReturn(c)}元`));
+    lines.push('🔗 串关补充');
+    parlays.forEach(c=>lines.push(`   ${c.play}：${c.pick}   ×${c.units}注/${c.units*2}元`));
   }
   const totalN=plan.reduce((a,c)=>a+c.units,0), totalY=plan.reduce((a,c)=>a+c.units*2,0);
   const byT=plan.reduce((acc,c)=>{ if(c.play==='单关'){acc[c.type]=(acc[c.type]||{n:0,y:0});acc[c.type].n+=c.units;acc[c.type].y+=c.units*2;} return acc;},{});
   lines.push('');
   lines.push(`📊 合计：${totalN}注 / ${totalY}元`);
   lines.push('   '+Object.entries(byT).map(([k,v])=>`${k} ${v.n}注·${v.y}元`).join('  |  '));
+  lines.push('⚠️ 仅供赛前分析和预算拆分参考，不展示回报系数或返奖估算。');
   return lines.join('\n');
 }
 
@@ -766,7 +922,7 @@ function renderBetAdvisor(data){
   </article>
 
   <article class="panel bet-warning">
-    <strong>说明：</strong>模拟推荐，不是官方投注指令；页面数字是按体彩玩法格式推算的模型参考赔付系数，不是体彩官方实际赔率，可能与终端即时赔率不一致。实际购买前请只以体彩终端/官方渠道即时赔率为准，请勿超预算。
+    <strong>说明：</strong>模拟推荐，不是官方投注指令；本页仅保留玩法、选择和预算分配，不展示回报系数或返奖估算。实际购买前请以官方渠道信息为准，请勿超预算。
   </article>`;
 
   $('copyBetBtn')?.addEventListener('click', ()=>copyBetText(plan, budget, spent, cfg, data, modeCfg));
@@ -908,6 +1064,53 @@ async function renderAccuracyChart(data){
     canvas.insertAdjacentHTML('afterend',`<p class="empty">图表加载失败：${e.message}</p>`);
   }
 }
+
+async function renderBetAccuracyChart(data){
+  const canvas = $('betAccuracyChart');
+  if(!canvas) return;
+  const st = data.bet_stats || {};
+  const byDate = (st.by_date || []).slice().filter(d=>d.total || d.pending).sort((a,b)=>String(a.date||'').localeCompare(String(b.date||'')));
+  if(!byDate.length){ canvas.parentElement.insertAdjacentHTML('beforeend','<p class="empty">暂无购买推荐趋势数据</p>'); return; }
+  try{
+    const ChartJs = await ensureChartJs();
+    if(state.betChartInstance){ state.betChartInstance.destroy(); state.betChartInstance = null; }
+    const labels = byDate.map(d=>String(d.date||'').slice(5));
+    const avgLine = (val)=> val == null ? [] : Array(labels.length).fill(val);
+    state.betChartInstance = new ChartJs(canvas, {
+      type:'line',
+      data:{ labels, datasets:[
+        {label:`总体 (均值 ${st.rate ?? '-'}%)`,data:byDate.map(d=>d.rate??null),borderColor:'#b388ff',backgroundColor:'rgba(179,136,255,0.08)',pointBackgroundColor:'#b388ff',fill:true,tension:0.35,pointRadius:5,borderWidth:2.5,spanGaps:true},
+        {label:`主线`,data:byDate.map(d=>d.main?.rate??null),borderColor:'#55e39b',backgroundColor:'rgba(85,227,155,0.06)',pointBackgroundColor:'#55e39b',fill:true,tension:0.35,pointRadius:5,borderWidth:2.2,spanGaps:true},
+        {label:`防爆冷`,data:byDate.map(d=>d.upset?.rate??null),borderColor:'#ffd166',backgroundColor:'rgba(255,209,102,0.06)',pointBackgroundColor:'#ffd166',fill:true,tension:0.35,pointRadius:5,borderWidth:2.2,spanGaps:true},
+        {label:'总体均线',data:avgLine(st.rate),borderColor:'rgba(179,136,255,0.42)',borderDash:[5,4],borderWidth:1.4,pointRadius:0,fill:false,tension:0},
+      ]},
+      options:{
+        responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
+        plugins:{
+          legend:{position:'top',labels:{color:'#9fb2d1',padding:16,font:{size:12,weight:'bold'},usePointStyle:true,filter:item=>!item.text.includes('均线')}},
+          tooltip:{backgroundColor:'rgba(6,16,35,0.94)',titleColor:'#eaf2ff',bodyColor:'#9fb2d1',borderColor:'rgba(179,136,255,0.3)',borderWidth:1,padding:12,
+            callbacks:{
+              title:items=>`${items[0].label} 购买日`,
+              label:ctx=>{
+                if(ctx.dataset.borderDash) return '';
+                const d=byDate[ctx.dataIndex]||{};
+                if(ctx.datasetIndex===0) return ` 总体 ${ctx.parsed.y??'-'}% (${d.hits??0}/${d.total??0})`;
+                if(ctx.datasetIndex===1) return ` 主线 ${ctx.parsed.y??'-'}% (${d.main?.hits??0}/${d.main?.total??0})`;
+                if(ctx.datasetIndex===2) return ` 防爆冷 ${ctx.parsed.y??'-'}% (${d.upset?.hits??0}/${d.upset?.total??0})`;
+                return '';
+              },
+              filter:item=>!item.dataset.borderDash
+            }
+          }
+        },
+        scales:{
+          x:{grid:{color:'rgba(255,255,255,0.06)'},ticks:{color:'#9fb2d1',font:{size:12}},border:{color:'rgba(255,255,255,0.12)'}},
+          y:{min:0,max:100,grid:{color:'rgba(255,255,255,0.06)'},ticks:{color:'#9fb2d1',font:{size:12},callback:v=>`${v}%`,stepSize:25},border:{color:'rgba(255,255,255,0.12)'}}
+        }
+      }
+    });
+  }catch(e){ canvas.insertAdjacentHTML('afterend',`<p class="empty">购买推荐趋势图加载失败：${e.message}</p>`); }
+}
 async function renderSectionCanvas(sectionId){
   const html2canvas = await ensureHtml2Canvas();
   const node = $(sectionId);
@@ -1004,13 +1207,34 @@ async function exportBetPdf(){
     await saveCanvasPdf(canvas, `worldcup-bet-recommendation-${date}-${budget}yuan.pdf`);
   });
 }
+async function refreshDataFromBridge(){
+  const btn = $('refreshBtn');
+  const status = $('refreshStatus');
+  const oldText = btn ? btn.textContent : '';
+  if(btn){ btn.disabled = true; btn.textContent = '正在生成数据…'; }
+  if(status) status.textContent = '正在调用本地刷新服务，生成最新赛程/赛果/预测数据…';
+  try{
+    const res = await fetch('http://127.0.0.1:8765/refresh', { method: 'POST' });
+    let info = {};
+    try{ info = await res.json(); }catch(_){ info = {}; }
+    if(!res.ok || !info.ok) throw new Error(info.message || `HTTP ${res.status}`);
+    if(status) status.textContent = `刷新完成，用时 ${info.elapsed_seconds || '?'} 秒；页面数据已重新读取。`;
+    await load();
+  }catch(e){
+    if(status) status.textContent = '本地刷新服务未启动或刷新失败；已改为只重读当前 JSON。可重新打开仪表盘启动刷新服务。';
+    await load();
+    alert('自动生成最新数据失败：' + e.message + '\n\n我已先重读当前本地 JSON。如果需要按钮直接生成数据，请重新打开世界杯仪表盘启动本地刷新服务。');
+  }finally{
+    if(btn){ btn.disabled = false; btn.textContent = oldText || '生成最新数据并刷新'; }
+  }
+}
 async function load(){
   const res = await fetch(`data/current.json?ts=${Date.now()}`);
   if(!res.ok) throw new Error(`HTTP ${res.status}`);
   const data = await res.json(); state.data = data;
-  renderSummary(data); renderPredictions(data); renderUpsets(data); renderStats(data); renderBetAdvisor(data); renderMatches(data);
+  renderSummary(data); renderPredictions(data); renderUpsets(data); renderStats(data); renderBetAdvisor(data); renderBetStats(data); renderMatches(data);
 }
-$('refreshBtn').addEventListener('click',()=>load().catch(e=>alert('刷新失败：'+e.message)));
+$('refreshBtn').addEventListener('click',()=>refreshDataFromBridge().catch(e=>alert('刷新失败：'+e.message)));
 $('exportPredictionsBtn').addEventListener('click', exportPredictionsImage);
 $('exportStatsBtn').addEventListener('click', exportStatsImage);
 $('exportStatsPdfBtn').addEventListener('click', exportStatsPdf);

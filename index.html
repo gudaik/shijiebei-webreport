@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>2026世界杯北京时间每日报告</title>
-  <link rel="stylesheet" href="assets/styles.css?v=20260626-upset-view" />
+  <link rel="stylesheet" href="assets/styles.css?v=20260627-manual-refresh" />
 </head>
 <body>
   <div class="bg"></div>
@@ -12,13 +12,13 @@
     <div>
       <p class="eyebrow">Beijing Time · FIFA World Cup 2026</p>
       <h1>世界杯每日报告 & 明天全量预测</h1>
-      <p class="sub">自动抓取赛程赛果，按北京时间生成日报；明天比赛每场给出胜平负、3个比分、3个半全场，并统计历史命中率。</p>
+      <p class="sub">自动抓取赛程赛果，按北京时间生成日报；明天比赛每场给出胜平负、4个比分、4个半全场，并统计历史命中率。</p>
     </div>
     <div class="hero-card">
       <div class="label">数据更新时间</div>
       <div id="generatedAt" class="big">加载中…</div>
-      <button id="refreshBtn" class="btn">重新读取最新数据</button>
-      <div class="mini refresh-hint">后台每 5 分钟自动更新 JSON；此按钮会立即重读本地最新文件。</div>
+      <button id="refreshBtn" class="btn">生成最新数据并刷新</button>
+      <div id="refreshStatus" class="mini refresh-hint">已取消后台每 5 分钟定时刷新；点击按钮会本地生成最新数据后重读页面。</div>
     </div>
   </header>
 
@@ -28,6 +28,7 @@
     <button data-tab="upsets">爆冷预测</button>
     <button data-tab="stats">命中率统计</button>
     <button data-tab="betAdvisor">购买推荐</button>
+    <button data-tab="betStats">购买命中率</button>
     <button data-tab="matches">全部赛程</button>
   </nav>
 
@@ -56,7 +57,7 @@
         <div class="prediction-toolbar">
           <div>
             <h2 id="predictionTitle">明天预测</h2>
-            <p>规则：每场固定展示 <strong>胜平负倾向 + 3个比分预测 + 3个半全场预测</strong>。预测为赛前模型与人工规则结合的娱乐向参考。</p>
+            <p>规则：每场固定展示 <strong>胜平负倾向 + 4个比分预测 + 4个半全场预测</strong>。预测为赛前模型与人工规则结合的娱乐向参考。</p>
           </div>
           <div class="toolbar-actions" data-html2canvas-ignore="true">
             <button id="exportPredictionsBtn" class="btn export-btn" type="button">导出预测图片</button>
@@ -78,7 +79,7 @@
       <div class="grid three" id="upsetStatCards"></div>
       <article class="panel">
         <h2>明天爆冷观察</h2>
-        <p class="section-note">按参考系数和冷门脚本列出每场可防的比分/半全场。</p>
+        <p class="section-note">按冷门脚本列出每场可防的比分/半全场。</p>
         <div id="upsetCards" class="upset-grid"></div>
       </article>
       <article class="panel">
@@ -139,7 +140,7 @@
         <div>
           <div class="eyebrow">China Sports Lottery Style Calculator</div>
           <h2>购买推荐计算器</h2>
-          <p>输入总预算后，按 2 元/注拆分，结合明天完整预测生成投注分配。新增常规均衡、博冷防平、比分高赔、半全场高赔、串关阶梯、极限以小博大等选择模式；页面展示的是按体彩玩法格式推算的模型参考赔付系数，并据此估算理论返奖，非体彩官方实际赔率。</p>
+          <p>输入总预算后，按 2 元/注拆分，结合明天完整预测生成投注分配。支持常规均衡、博冷防平、比分高赔、半全场高赔、串关阶梯、极限以小博大等模式；页面只保留玩法选择、主线推荐、防爆冷推荐和预算分配，不展示回报系数或返奖估算。</p>
         </div>
         <div class="risk-note">仅作预测分析参考，不保证中奖，请理性投注。</div>
       </article>
@@ -153,6 +154,36 @@
         <button id="calcBetBtn" class="btn" type="button">生成推荐</button>
       </article>
       <div id="betRecommendation" class="bet-recommendation"></div>
+    </section>
+
+    <section id="betStats" class="tab-panel export-surface">
+      <div class="stats-toolbar" data-html2canvas-ignore="true">
+        <div>
+          <div class="eyebrow">Bet Recommendation Accuracy</div>
+          <h2>购买推荐命中率</h2>
+        </div>
+      </div>
+      <div class="grid three" id="betStatCards"></div>
+      <article class="panel chart-panel">
+        <h2>购买推荐命中率趋势</h2>
+        <p class="section-note">每日自动记录一次购买推荐；完赛后按单关/串关逐项结算命中率。</p>
+        <div class="chart-wrap">
+          <canvas id="betAccuracyChart"></canvas>
+        </div>
+      </article>
+      <article class="panel">
+        <h2>每日购买命中率视图</h2>
+        <p class="section-note" id="betStatsNote">单关按对应玩法命中；串关需所有子项命中才算命中。</p>
+        <div id="betDateBars" class="bars"></div>
+      </article>
+      <article class="panel">
+        <h2>加强命中率建议</h2>
+        <div id="betSuggestions" class="list compact"></div>
+      </article>
+      <article class="panel">
+        <h2>最近购买推荐核对</h2>
+        <div id="betRecent" class="settled-list"></div>
+      </article>
     </section>
 
     <section id="matches" class="tab-panel">
@@ -171,6 +202,6 @@
     <span>预测仅供娱乐和信息参考，不构成投注建议。</span>
   </footer>
 
-  <script src="assets/app.js?v=20260626-upset-view"></script>
+  <script src="assets/app.js?v=20260627-manual-refresh"></script>
 </body>
 </html>

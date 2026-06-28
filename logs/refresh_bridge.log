@@ -1,0 +1,50 @@
+[2026-06-27 22:27:59] bridge listening on http://127.0.0.1:8765
+[2026-06-27 22:28:25] http "GET /health HTTP/1.1" 200 -
+[2026-06-27 22:28:31] refresh start: /mnt/c/nginx-1.24.0/html/worldcup2/web/generate_web_data.py
+[2026-06-27 22:28:33] generator: Generated /mnt/c/nginx-1.24.0/html/worldcup2/data/current.json
+[2026-06-27 22:28:33] generator: Prediction target 2026-06-28, matches=6
+[2026-06-27 22:28:33] generator: - 06-28 05:00 克罗地亚 vs 加纳
+[2026-06-27 22:28:33] generator: - 06-28 05:00 巴拿马 vs 英格兰
+[2026-06-27 22:28:33] generator: - 06-28 07:30 哥伦比亚 vs 葡萄牙
+[2026-06-27 22:28:33] generator: - 06-28 07:30 刚果（金） vs 乌兹别克斯坦
+[2026-06-27 22:28:33] generator: - 06-28 10:00 阿尔及利亚 vs 奥地利
+[2026-06-27 22:28:33] generator: - 06-28 10:00 约旦 vs 阿根廷
+[2026-06-27 22:28:33] generator: Report source /mnt/c/nginx-1.24.0/html/worldcup2/reports, files=10, parsed_predictions=32, completed=46
+[2026-06-27 22:28:33] generator: Bet recommendation records=7, settled=156, hit_rate=29.5
+[2026-06-27 22:28:33] refresh done: ok=True code=0 elapsed=2.1s
+[2026-06-27 22:28:33] http "POST /refresh HTTP/1.1" 200 -
+[2026-06-28 10:46:48] bridge listening on http://127.0.0.1:8765
+[2026-06-28 10:47:27] http "GET /health HTTP/1.1" 200 -
+[2026-06-28 10:47:27] refresh start: /mnt/c/nginx-1.24.0/html/worldcup2/web/generate_web_data.py
+[2026-06-28 10:47:29] generator: Generated /mnt/c/nginx-1.24.0/html/worldcup2/data/current.json
+[2026-06-28 10:47:29] generator: Prediction target 2026-06-29, matches=1
+[2026-06-28 10:47:29] generator: - 06-29 03:00 南非 vs 加拿大
+[2026-06-28 10:47:29] generator: Report source /mnt/c/nginx-1.24.0/html/worldcup2/reports, files=10, parsed_predictions=32, completed=50
+[2026-06-28 10:47:29] generator: Bet recommendation records=8, settled=177, hit_rate=28.8
+[2026-06-28 10:47:29] refresh done: ok=True code=0 elapsed=2.3s
+[2026-06-28 10:47:29] http "POST /refresh HTTP/1.1" 200 -
+[2026-06-28 10:47:43] http "GET /health HTTP/1.1" 200 -
+[2026-06-28 11:08:34] refresh start: /mnt/c/nginx-1.24.0/html/worldcup2/web/generate_web_data.py
+[2026-06-28 11:08:37] generator: Generated /mnt/c/nginx-1.24.0/html/worldcup2/data/current.json
+[2026-06-28 11:08:37] generator: Prediction target 2026-06-29, matches=1
+[2026-06-28 11:08:37] generator: - 06-29 03:00 南非 vs 加拿大
+[2026-06-28 11:08:37] generator: Report source /mnt/c/nginx-1.24.0/html/worldcup2/reports, files=10, parsed_predictions=32, completed=50
+[2026-06-28 11:08:37] generator: Bet recommendation records=8, settled=177, hit_rate=28.8
+[2026-06-28 11:08:37] refresh done: ok=True code=0 elapsed=2.4s
+[2026-06-28 11:08:37] http "POST /refresh HTTP/1.1" 200 -
+[2026-06-28 12:19:27] refresh start: /mnt/c/nginx-1.24.0/html/worldcup2/web/generate_web_data.py
+[2026-06-28 12:19:29] generator: Generated /mnt/c/nginx-1.24.0/html/worldcup2/data/current.json
+[2026-06-28 12:19:29] generator: Prediction target 2026-06-29, matches=1
+[2026-06-28 12:19:29] generator: - 06-29 03:00 南非 vs 加拿大
+[2026-06-28 12:19:29] generator: Report source /mnt/c/nginx-1.24.0/html/worldcup2/reports, files=10, parsed_predictions=32, completed=50
+[2026-06-28 12:19:29] generator: Bet recommendation records=8, settled=177, hit_rate=28.8
+[2026-06-28 12:19:29] refresh done: ok=True code=0 elapsed=2.2s
+[2026-06-28 12:19:29] http "POST /refresh HTTP/1.1" 200 -
+[2026-06-28 12:50:52] refresh start: /mnt/c/nginx-1.24.0/html/worldcup2/web/generate_web_data.py
+[2026-06-28 12:50:57] generator: Generated /mnt/c/nginx-1.24.0/html/worldcup2/data/current.json
+[2026-06-28 12:50:57] generator: Prediction target 2026-06-29, matches=1
+[2026-06-28 12:50:57] generator: - 06-29 03:00 南非 vs 加拿大
+[2026-06-28 12:50:57] generator: Report source /mnt/c/nginx-1.24.0/html/worldcup2/reports, files=10, parsed_predictions=32, completed=52
+[2026-06-28 12:50:57] generator: Bet recommendation records=8, settled=187, hit_rate=29.4
+[2026-06-28 12:50:57] refresh done: ok=True code=0 elapsed=5.1s
+[2026-06-28 12:50:57] http "POST /refresh HTTP/1.1" 200 -
